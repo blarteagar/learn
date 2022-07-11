@@ -9,21 +9,26 @@ Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
 * Inicializar, desarrollar y mantener aplicaciones en Angular.
 * Ejecutar tareas de testing.
 * Realizar despliegue de la aplicación a producción.
+
 # Estructura de un proyecto Angular
 En la carpeta root (directorio raíz) del proyecto, se puede encontrar toda una estructura de archivos y carpetas que conforman el proyecto de Angular. Entre ellos, destacan los siguientes:
+
 Un conjunto de archivos relacionados con la configuración de TypeScript:
 * tsconfig.app.json, que extiende desde tsconfig.json.
 * tsconfig.json, donde se expresa configuración de typescript para Angular.
 * tsconfig.spec.json, relacionado con los testings.
+
 El archivo package.json contiene la información de los paquetes que conforman el proyecto, la mayoría de ellos son similares a los de cualquier proyecto de node:
 * El apartado scripts muestra los scripts ejecutables.
 * El apartado dependencies muestra las dependencias de Angular instaladas por el CLI.
 * El apartado devDependencies contiene las dependencias que sólo utilizaremos durante el desarrollo de la aplicación. Entre ellos, Typescript, Karma para testing y tipos.
+
 El archivo angular.json está relacionado con la configuración del proyecto:
 * Aquí se configuran algunas opciones, como por ejemplo el directorio donde se guardarán los archivos al hacer el build (bundle final a publicar en un hosting u otros lugares). Normalmente estos archivos se almacenan en la carpeta dist (distribución).
 * Apartado styles: Si se desea trabajar con Bootstrap, por ejemplo, una vez terminada la instalación del paquete npm, se debe buscar este archivo, ir a esta propiedad y añadirlo. Se debe proceder de la misma manera con el apartado scripts.
 En la propiedad de configuración para producción, se maneja la información para construir el bundle final de la aplicación cuando va a ser publicada en un hosting. Esta propiedad permite establecer un budget que limite el peso (tamaño) de la misma.
-La mayor parte del trabajo de desarrollo se realiza dentro de la carpeta src. 
+La mayor parte del trabajo de desarrollo se realiza dentro de la carpeta `src`.
+
 * El archivo styles.scss contiene los estilos, utilities y reglas que apliquen para toda la app.
 * El archivo main.ts se encarga de levantar la aplicación según la plataforma. También se gestiona el bootstrap (componente de inicio) de la aplicación. 
 * El archivo index.html contiene la etiqueta <app-root></app-root>, donde Angular inyecta todo el código.
