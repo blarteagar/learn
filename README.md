@@ -89,8 +89,9 @@ Esto significa que el componente está coformado por varios archivos: uno de len
 Si se desea insertar una pequeña cantidad de código HTML en un componente, se puede cambiar la propiedad templateURL por template e insertar etiquetas HTML, con la sintaxis de backsticks. Del mismo modo, podría modificarse styleUrls por styles y escribir todos los estilos necesarios, pero esto no se considera una buena práctica. Lo más profesional es tener la hoja de estilos en un archivo aparte.
 
 Debajo del decorador hay una sentencia de exportación de la clase, que contiene el constructor y los métodos.
-Un componente A puede ser invocado desde un componente B, mediante una notación similar a las de la etiquetas HTML. Por ejemplo, un componente llamado app-button puede invocarse con la etiqueta:
-`<app-button></app-button>`
+Un componente B puede ser invocado desde un componente A, mediante una notación similar a las de la etiquetas HTML. Por ejemplo, un componente llamado app-button puede invocarse con la etiqueta: `<app-button></app-button>`
+
+En ese caso, se dice que el componente A es padre del componente B, y a su vez, el componente B será hijo del componente A.
 
 # One way data binding
 Texto texto texto
@@ -102,153 +103,50 @@ Texto texto texto
 Texto texto texto
 
 # Pipes
-El cometido principal de los Pipes es transformar datos.
-Por ejemplo, transformar un string que contenga un nombre propio, donde se deba poner la primera letra en mayúscula, y las demás en minúsculas.
-Es posible crear Pipes personalizados (custom Pipes).
-Los Pipes pueden ser Puros o Impuros:
-
+El cometido principal de los Pipes es transformar datos. Por ejemplo, dar formato a un string que contenga un nombre propio, donde se deba poner la primera letra en mayúscula, y las demás en minúsculas. Es posible crear Pipes (custom Pipes). Los Pipes pueden ser Puros o Impuros.
 * Puros: La transformación se realiza cuando el dato sufre un cambio.
 * Impuros: Se transforman cada vez que se ejecuta el ciclo de detección de cambios, aun cuando la data no haya cambiado.
 * Por defecto, los Pipes son puros.
-
-
-Ejemplo de uso de un Pipe dentro de una plantilla html:
-
-<p>{{‘6/15/15, 9:03 AM’ | date:’full}}</p>
-
-Lo anterior será impreso como una fecha larga:
-
-Monday, June 15, 2015 at 9:03:00 AM GMT+02:00
-
-Ejemplo de uso de más de un Pipe:
-
-<p>My birthday is {{‘6/15/15, 9:03 AM’ | date:’full’ | uppercase}}</p>
-
-Lo anterior será impreso como una fecha larga, completamente en mayúsculas:
-
-MONDAY, JUNE 15, 2015 AT 9:03:00 AM GMT+02:00
-
-
-Para crear un Pipe personalizado, se puede usar la terminal o puede ser creado desde cero como una Clase de TypeScript.
-
-Por ejemplo, se desea crear un filtro para encontrar los elementos de un array.
-
+Para crear un Pipe personalizado, se puede usar la terminal o puede ser creado desde cero como una Clase de TypeScript. Por ejemplo, se desea crear un filtro para encontrar los elementos de un array.
 El Pipe recibirá un array de strings, así como un criterio de búsqueda (tipo string), y devolverá los valores del listado que coincidan con el criterio.
-
 Se debe crear una carpeta llamada pipes y dentro de ella un archivo llamado filter.pipe.ts.
-
 El Pipe es una Clase de TypeScript, que será llamada FilterPipe y debe implementar una interface que se llama PipeTransform:
-
 Es importante asegurarse siempre de tener los métodos e interfaces necesarios, debidamente importados e implementados.
-
-En del archivo, debajo de la línea de exportación, se aplicará el decorador @Pipe({}). Dentro de las llaves del Pipe se colocarán propiedades y valores. Una de ellas es name, la otra es pure, pero por defecto los Pipes son puros (“pure”), así que no es necesario indicarlo aquí.
-Cómo funciona el Pipe: Recibe un array de valores values y un argumento arg. Estos parámetros deben ser tipados, de esta manera:
-values: string[] (un array de strings donde se realizará la búsqueda).
-arg: string (el string que ingresa el usuario en un elemento HTML input para compararlo con los strings del array principal).
-El método devolverá un array de strings: string[] que contendrá todos los valores que coincidan con el criterio de búsqueda.
-Se debe crear el método transform( ). Para ello se establece un bucle for con una variable iteradora value que recorrerá el array principal values, y va comprobando si ese valor value coincide con el criterio; para ello se utiliza el bloque de decisión if( ) y el método indexOf( ); este último busca dentro de un substring para tratar de encontrar el argumento arg. Este argumento será introducido por el usuario en  El método indexOf( ), si encuentra coincidencias, devuelve la posición (el índice); de lo contrario, devuelve el valor numérico -1. Entonces, si lo que encuentra es un número mayor a -1 (porque ha encontrado coincidencias), esto será incorporado a un array llamado result. Esa variable result debe ser declarada al inicio del método transform( ). Este array será inicializado en blanco y su tipo es: array de strings. Luego, con notación de parámetros REST, la variable result será igual a lo que haya inicialmente en ella, más el valor value que coincida con el criterio y se agregue al array. Una vez que se tenga un resultado, se debe retornarlo.
-Esta es la primera parte del Pipe.
-En el archivo app.component.html se inserta un input, se le asigna la clase “form-control”, se le agrega un placeholder “Filter...”, y también dentro de la etiqueta HTML del input se agregará un ngModel que estará amarrado a una propiedad llamada “criteria” (que crearemos enseguida).
-En el archivo app.component.ts. Al final del listado de propiedades escritas al inicio de class AppComponent escribiremos el nombre de la propiedad:
-criteria = ' ', que por ahora quedará como un string vacío.
+En las líneas superiores, debajo de la línea export, se escribe el decorador @Pipe({}). Dentro de las llaves del Pipe se colocarán las propiedades y valores que definen al Pipe, como por ejemplo el nombre y su naturaleza (pure o impure).
+El Pipe recibe un array de valores values y un argumento arg. Estos parámetros deben ser tipados, de esta manera: values: string[] (un array de strings donde se realizará la búsqueda); arg: string (el string que ingresa el usuario en un input para compararlo con los strings del array principal).
+El método devolverá un array de strings que contendrá todos los valores que coincidan con el criterio de búsqueda.
+* En el archivo filter.pipe.ts se crea el método transform( ), que en primer lugar verifica con un if ( ) si el argumento es null, es vacío o es cero; o bien, si su longitud es mayor a 3 caracteres. En esos casos, se debe devolver el array de valores. Luego, se implementa un bucle for, cuya variable iteradora value, recorrerá el array principal values, e irá comprobando si ese valor value coincide con el criterio arg; para ello se utiliza el bloque de decisión if( ) y el método indexOf( ); este último busca dentro de un substring para tratar de encontrar el argumento arg (introducido por el usuario en el input). Es necesario asegurar que tanto la entrada en el filtro de búsqueda, como los elementos del array, estén todos en minúsculas, de modo que se pueda hacer esa comparación, independientemente de si la entrada está escrita en minúsculas, mayúsculas, o todas las posibles combinaciones. Entonces todo será transformado a minúsculas aplicando el método toLowerCase( ) tanto al valor value que estamos buscando dentro del array, como al criterio de búsqueda arg que estamos introduciendo en el input de filtrado.
+* Si el método indexOf() encuentra coincidencias, devuelve la posición (el índice); de lo contrario, devuelve el valor numérico -1. Entonces, si lo que encuentra es un número mayor a -1 (porque ha encontrado coincidencias), esto será incorporado a un array llamado result. Esa variable result debe ser declarada al inicio del método transform( ). Este array será inicializado en blanco y su tipo es: array de strings. Luego, con notación de parámetros REST, la variable result será igual a lo que haya inicialmente en ella, más el valor value que coincida con el criterio y se agregue al array. Una vez construido el resultado, se retorna.
+* En el archivo app.component.html se inserta un input type=”text”, se le asigna la clase “form-control”, se le agrega un placeholder “Filter...”, y el atributo ngModel, con sintaxis de two-way binding, que estará asignado a una propiedad llamada “criteria”; esta última debe declararse en el archivo app.component.ts. 
+* En el archivo app.component.ts, al final del listado de propiedades escritas al inicio de la Clase AppComponent, se declara la propiedad: criteria = ‘’ (inicializada como string vacío)
+* En el archivo app.component.html, donde se invoca el componente app-cities, en la directiva `*ngFor` donde se renderiza el array cities, se aplicará el Pipe: ngFor=”let city of (cities | filter:criteria)”
 
 
-Ir al archivo app.component.html para aplicar el Pipe. En el componente <app-cities>, en la directiva *ngFor donde se renderiza la lista de ciudades (array cities), se aplicará el Pipe, de este modo:
-*ngFor=”let city of (cities | filter:’Barcelona’)” 
-
-La palabra “Barcelona” está “hardcodeada” como criterio de búsqueda para probar el Pipe.
-Es necesario declarar el Pipe en app.modules.ts. Si hubiéramos creado el Pipe usando la CLI de Angular, este proceso se habría realizado automáticamente. En el archivo app.module.ts, en el apartado @NgModule, bajo el apartado declarations, se agrega el nombre del Pipe: FilterPipe,. Guardar y cerrar.
-Ahora lo vamos a hacer dinámico. Para ello, debemos darle como argumento al Pipe, la variable criteria:
-*ngFor=”let city of (cities | filter:criteria)” 
-
-  
-probando la app y el filtro. Si en el input se coloca “bar”, no busca nada; pero si ponemos “Barce” ya devuelve “Barcelona”. Si añadimos la ciudad de “Badalona”, cuando en el input del filter ponemos “Ba”, ya devuelve “Barcelona” y “Badalona”. 
-14:46 Tenemos que hacer varias cosas, porque si intentamos buscar en vacío, no nos retorna nada, entonces, es importante controlar un poco ese Pipe, para que valide un poco mejor los datos.
-18:02 Abrir el archivo filter.pipe.ts, y al inicio del método transform asociado a FilterPipe crearemos un if () donde devolveremos directamente los valores que recibimos si el argumento es null, es vacío o es cero. O si nuestro argumento tiene una longitud mayor a 3 caracteres. 
-  
-  El Pipe queda de esta forma:
-  
-  
-import { Pipe, PipeTransform } from "@angular/core";
-import { City } from "../services/data.service";
-@Pipe({
-  name: 'filter',
-})
-export class FilterPipe implements PipeTransform {
-
-  transform(cities: City[], arg: string): City[] {
-    if(!arg || arg?.length < 3) return cities;
-    let result: City[] = [];
-    for (const city of cities) {
-      if(city.name.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
-        result = [...result, city];
-      }
-    }
-    return result;
-
-  }
-
-}
-
-  
-  
-  
-
-
-probando lo hecho. Al poner “ba” no devuelve nada; tampoco si ponemos “bar”, ya que hace búsqueda estricta en mayúscula/minúscula.
-Para que no haya problema entre mayúsculas y minúsculas, debemos asegurarnos de que tanto nuestra entrada en el filtro de búsqueda, como los elementos que tenemos en nuestro array, estén todos en minúsculas, de modo que se pueda hacer esa comparación, independientemente de si la entrada es en minúsculas, mayúsculas, o todas las posibles combinaciones. Entonces todo será trasladado a minúsculas.
-Podemos aplicar el método toLowerCase() tanto al valor value que estamos buscando dentro del array como al criterio de búsqueda arg que estamos introduciendo en el input de filtrado.
-export class FilterPipe implements PipeTransform {
-transform{ values: string[], arg: string): string[] {
-if(!arg || arg?.length < 3) return values;
-let result: string[] = [];
-for (const value of values) {
-if (value.toLowerCase()indexOf(arg.toLowerCase()) > -1) {
-result = [...result, value];
-}
-}
-return result;
-}
-
-19:44 Comprobando que, si en el input de filtrado, ponemos “BAR”, obtendremos como resultado “Barcelona”. Ya tenemos un filtro. Pipe creado el día de hoy:
-import { Pipe, PipeTransform } from "@angular/core";
-@Pipe({
-name: 'filter',
-})
-export class FilterPipe implements PipeTransform {
-transform{ values: string[], arg: string): string[] {
-if(!arg || arg?.length < 3) return values;
-let result: string[] = [];
-for (const value of values) {
-if (value.toLowerCase()indexOf(arg.toLowerCase()) > -1) {
-result = [...result, value];
-}
-}
-return result;
-}
-
-19:50 Resumiendo: este es un Pipe muy sencillo pero es solamente una demostración para hacernos conscientes de que podemos crear nuestros propios Pipes.
-20:00.
-El inconveniente del filter con el Pipe es que, cuando no hay ningún resultado, no se muestra nada. Lo recomendable es la programación reactiva, que permite hacer filtros en las aplicaciones, de manera mucho más óptima.
-Resumen. Un Pipe recibe una data y la transforma. Hay Pipes Puros e Impuros. Los Puros son aquellos que cambian cuando la data de entrada al Pipe cambia. Los Impuros son aquellos que cambian cada vez que Angular ejecuta su ciclo de detección de cambios. Hay Pipes creados por Angular que podemos utilizar, y hay otros que nosotros mismos podemos crear. En aplicaciones complejas y grandes, ciertamente podríamos requerir Pipes para la transformación de nuestra Data.
 # Template-driven forms
 Texto texto texto
+
 # Reactive forms
 Texto texto texto
+
 # Routing
 Texto texto texto
 Texto texto texto
+
 # Lazy Loading
 Texto texto texto
 Texto texto texto
+
 # Guards
 Texto texto texto
 Texto texto texto
+
 # Observers
 Texto texto texto
 Texto texto texto
+
 # HTTP requests
 Texto texto texto
 Texto texto texto
+
 # Services
 Texto texto texto 
