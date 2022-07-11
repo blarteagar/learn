@@ -169,21 +169,26 @@ probando la app y el filtro. Si en el input se coloca “bar”, no busca nada; 
   El Pipe queda de esta forma:
   
   
-```export class FilterPipe implements PipeTransform {```
-  
-```transform{ values: string[], arg: string): string[] {```
-  
-```if(!arg || arg?.length < 3) return values;```                      
-  
-```let result: string[] = [];```
-                              
-``for (const value of values) {``
-                              
-``if (value.indexOf(arg) > -1) {``
-  
-``result = [...result, value];``
-  
-``}``
+import { Pipe, PipeTransform } from "@angular/core";
+import { City } from "../services/data.service";
+@Pipe({
+  name: 'filter',
+})
+export class FilterPipe implements PipeTransform {
+
+  transform(cities: City[], arg: string): City[] {
+    if(!arg || arg?.length < 3) return cities;
+    let result: City[] = [];
+    for (const city of cities) {
+      if(city.name.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+        result = [...result, city];
+      }
+    }
+    return result;
+
+  }
+
+}
   
 ``}``
   
