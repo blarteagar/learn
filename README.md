@@ -55,7 +55,7 @@ Esto significa que el componente está coformado por varios archivos: uno de len
 Si se desea insertar una pequeña cantidad de código HTML en un componente, se puede cambiar la propiedad templateURL por template e insertar etiquetas HTML, con la sintaxis de backsticks. Del mismo modo, podría modificarse styleUrls por styles y escribir todos los estilos necesarios, pero esto no se considera una buena práctica. Lo más profesional es tener la hoja de estilos en un archivo aparte.
 Debajo del decorador hay una sentencia de exportación de la clase, que contiene el constructor y los métodos.
 Un componente A puede ser invocado desde un componente B, mediante una notación similar a las de la etiquetas HTML. Por ejemplo, un componente llamado app-button puede invocarse con la etiqueta:
-<app-button></app-button>
+`<app-button></app-button>`
 # One way data binding
 Texto texto texto
 # Two way data binding
