@@ -1,5 +1,38 @@
 # Angular Roadmap
 
+Proyecto generado con:
+
+* Angular CLI v.13.3.7.
+* Node v.16.15.0
+* npm v8.11.0
+
+
+Algunos de los tópicos cubiertos aquí fueron:
+
+    • One way data binding
+    • Two way data binding
+    • Events binding
+    • Pipes
+    • Template-driven forms
+    • Reactive forms
+    • Routing
+    • Lazy Loading
+    • Guards
+    • Observers
+    • HTTP requests
+    
+¿Qué es Angular / Angular CLI?
+* Angular es un framework para aplicaciones web.
+* Desarrollado en TypeScript (TS), de código abierto, mantenido por Google.
+* Su punto fuerte es la creación de SPA (single page applications).
+Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
+* Crear nuevos proyectos.
+* Crear nuevos módulos, componentes, servicios, directivas, y otras piezas de código de la aplicación.
+* Inicializar, desarrollar y mantener aplicaciones en Angular.
+* Ejecutar tareas de testing.
+* Realizar despliegue de la aplicación a producción.
+
+
 # ¿Qué es Angular / Angular CLI?
 * Angular es un framework para aplicaciones web.
 * Desarrollado en TypeScript (TS), de código abierto, mantenido por Google.
@@ -76,20 +109,34 @@ Los Pipes pueden ser Puros o Impuros.
 
 
 Ejemplo de uso de un Pipe dentro de una plantilla html:
+
 <p>{{‘6/15/15, 9:03 AM’ | date:’full}}</p>
+
 Lo anterior será impreso como una fecha larga:
+
 Monday, June 15, 2015 at 9:03:00 AM GMT+02:00
+
 Ejemplo de uso de más de un Pipe:
+
 <p>My birthday is {{‘6/15/15, 9:03 AM’ | date:’full’ | uppercase}}</p>
+
 Lo anterior será impreso como una fecha larga, completamente en mayúsculas:
+
 MONDAY, JUNE 15, 2015 AT 9:03:00 AM GMT+02:00
 
 
-Para crear un Pipe personalizado, se puede usar la terminal o puede ser creado desde cero como una Clase de TypeScript. Por ejemplo, se desea crear un filtro para encontrar los elementos de un array.
+Para crear un Pipe personalizado, se puede usar la terminal o puede ser creado desde cero como una Clase de TypeScript.
+
+Por ejemplo, se desea crear un filtro para encontrar los elementos de un array.
+
 El Pipe recibirá un array de strings, así como un criterio de búsqueda (tipo string), y devolverá los valores del listado que coincidan con el criterio.
+
 Se debe crear una carpeta llamada pipes y dentro de ella un archivo llamado filter.pipe.ts.
+
 El Pipe es una Clase de TypeScript, que será llamada FilterPipe y debe implementar una interface que se llama PipeTransform:
+
 Es importante asegurarse siempre de tener los métodos e interfaces necesarios, debidamente importados e implementados.
+
 En las líneas superiores, debajo de la línea export, se aplicará el decorador @Pipe({}). Dentro de las llaves del Pipe se colocarán propiedades y valores. Una de ellas es name, la otra es pure, pero por defecto los Pipes son puros (“pure”), así que no es necesario indicarlo aquí.
 Cómo funciona el Pipe: Recibe un array de valores values y un argumento arg. Estos parámetros deben ser tipados, de esta manera:
 values: string[] (un array de strings donde se realizará la búsqueda).
