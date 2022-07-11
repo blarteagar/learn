@@ -2,6 +2,7 @@
 * Angular es un framework para aplicaciones web.
 * Desarrollado en TypeScript (TS), de código abierto, mantenido por Google.
 * Su punto fuerte es la creación de SPA (single page applications).
+
 Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
 * Crear nuevos proyectos.
 * Crear nuevos módulos, componentes, servicios, directivas, y otras piezas de código de la aplicación.
