@@ -39,14 +39,14 @@ Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
 Antes de describir cada una de estas características, se debe definir qué es Angular, los archivos que componen un proyecto de desarrollo web y cuáles son las piezas de código que conforman esta Plataforma.
 
 ## 2. Resumen del proyecto
-En este proyecto se llevó a cabo la práctica de las principales características de Angular, la Plataforma de Google para el Desarrollo Web, a través de la construcción de una aplicación, generada con:
+En este proyecto se llevó a cabo la práctica de las principales características de Angular, la Plataforma de Google para el Desarrollo Web, a través de la construcción de una aplicación generada con:
 
 * Angular CLI v.13.3.7
 * Node v.16.15.0
 * npm v8.11.0
 
 ## 3. Estructura de un proyecto de Angular
-En la carpeta root (directorio raíz) del proyecto, se puede encontrar toda una estructura de archivos y carpetas que conforman el proyecto de Angular. Entre ellos, destacan los siguientes:
+En la carpeta root (directorio raíz) del proyecto, se puede encontrar la estructura de archivos y carpetas que conforman el proyecto de Angular. Entre ellos, destacan los siguientes:
 
 Un conjunto de archivos relacionados con la configuración de TypeScript:
 * tsconfig.app.json, que extiende desde tsconfig.json.
@@ -102,79 +102,6 @@ Angular está conformado por diversas piezas de código, entre ellas se cuentan 
 
 Cada uno de estos artefactos es, en esencia, una Clase de TypeScript modificada por un decorador, el cual por su parte es un tipo de atributo o declaración, capaz de transformar el comportamiento de dicha clase mediante una configuración.
 
-### Scripts / Archivos
-
-#### General
-
-##### `README.md`
-
-Debe contener lo siguiente:
-
-* Un título con el nombre de tu proyecto.
-* Un resumen de 1 o 2 líneas de qué se trata tu proyecto.
-* La imagen final de tu proyecto.
-* Investigación UX:
-Lista numerada:
-
-  1. Explicar quiénes son los usuarios y los objetivos en relación con el
-    producto.
-  2. Explicar cómo el producto soluciona los problemas/necesidades de dichos
-    usuarios.
-  3. Luego colocarás la foto de tu primer prototipo en papel.
-  4. Agregar un resumen del feedback recibido indicando las mejoras a realizar.
-  5. Imagen del prototipo final.
-
-A continuación describimos los archivos que utilizarás:
-
-##### `src/index.html`
-
-En este archivo va el contenido que se mostrará al usuario (esqueleto HTML).
-Encontrarás 3 etiquetas iniciales, las cuales si deseas puedes borrar y empezar
-de cero:
-
-* `<header>`: encabezado de tu proyecto.
-* `<main>`: contenido principal de tu proyecto.
-* `<footer>`: pie de página de tu proyecto.
-
-
-##### `src/validator.js`
-
-Acá escribirás las funciones necesarias para que el usuario pueda verificar la
-tarjeta de crédito y ocultar los dígitos de su número de tarjeta.
-Esta función debe ser pura e independiente del DOM.
-    Ejemplo de uso
-
-    ```js
-    maskify('4556364607935616') === '############5616'
-    maskify(     '64607935616') ===      '#######5616'
-    maskify(               '1') ===                '1'
-    maskify(               '')  ===                ''
-    ```
-
-***
-
-### Primeros pasos
-
-1. Antes que nada, asegúrate de tener un :pencil: editor de texto en
-  condiciones
-2. Para ejecutar los comandos a continuación necesitarás una :shell:
-  [UNIX Shell](https://github.com/Laboratoria/bootcamp/tree/master/topics/shell),
-3. Una de las integrantes del equipo debe realizar un :fork_and_knife:
-  [fork](https://help.github.com/articles/fork-a-repo/) 
-  [configurar](https://gist.github.com/BCasal/026e4c7f5c71418485c1) un `remote`
-  hacia el mismo.
-4. :arrow_down: [Clona](https://help.github.com/articles/cloning-a-repository/)
-  tu _fork_ a tu computadora (copia local).
-5. 📦 Instala las dependencias del proyecto con el comando `npm install`. Esto
-  asume que has instalado [Node.js](https://nodejs.org/) (que incluye [npm](https://docs.npmjs.com/)).
-6. Si todo ha ido bien, deberías poder ejecutar las :traffic_light:
-  pruebas unitarias (unit tests) con el comando `npm test`.
-7. Para ver la interfaz de tu programa en el navegador, usa el comando
-  `npm start` para arrancar el servidor web y dirígete a
-  `http://localhost:5000` en tu navegador.
-8. A codear se ha dicho! :rocket:
-
-
 ## 5. Componentes
 El bloque más pequeño de Angular es el Component (componente). En este caso el decorador se llama @Component y le otorga las siguientes propiedades:
 * selector: es el nombre del componente.
@@ -207,7 +134,7 @@ El cometido principal de los Pipes es transformar datos. Por ejemplo, dar format
 * Puros: La transformación se realiza cuando el dato sufre un cambio.
 * Impuros: Se transforman cada vez que se ejecuta el ciclo de detección de cambios, aun cuando la data no haya cambiado.
 * Por defecto, los Pipes son puros.
-* 
+
 Para crear un Pipe personalizado, se puede usar la terminal o puede ser creado desde cero como una Clase de TypeScript. Por ejemplo, se desea crear un filtro para encontrar los elementos de un array.
 
 El Pipe recibirá un array de strings, así como un criterio de búsqueda (tipo string), y devolverá los valores del listado que coincidan con el criterio.
@@ -217,7 +144,7 @@ El Pipe es una Clase de TypeScript, que será llamada FilterPipe y debe implemen
 
 Es importante asegurarse siempre de tener los métodos e interfaces necesarios, debidamente importados e implementados, cada vez que se trabaje con un artefacto de Angular (Module, Component, Directive, Service, Pipe, Observer, etc.).
 
-En las líneas superiores, debajo de la línea de importación de la clase, se escribe el decorador @Pipe({}). Dentro de las llaves del Pipe se colocarán las propiedades y valores que definen al Pipe, como por ejemplo el nombre y su naturaleza (pure o impure).
+En las líneas superiores, debajo del área de importación, se escribe el decorador @Pipe({}). Dentro de las llaves del Pipe se colocarán las propiedades y valores que definen al Pipe, como por ejemplo el nombre y su naturaleza (pure o impure).
 
 El Pipe recibe un array de valores `values` y un argumento `arg`. Estos parámetros deben ser tipados, de esta manera: <code>values: string[]</code> (un array de strings donde se realizará la búsqueda); arg: string (el string que ingresa el usuario en un input para compararlo con los strings del array principal).
 El método devolverá un array de strings que contendrá todos los valores que coincidan con el criterio de búsqueda.
@@ -230,55 +157,13 @@ El método devolverá un array de strings que contendrá todos los valores que c
 
 * En el archivo app.component.ts, al final del listado de propiedades escritas al inicio de la Clase AppComponent, se declara la propiedad: criteria = ‘’ (inicializada como string vacío)
 
-* En el archivo app.component.html, donde se invoca el componente app-cities, en la directiva `*ngFor` donde se renderiza el array cities, se aplicará el Pipe: ngFor=”let city of (cities | filter:criteria)”
-
-* Con este procedimiento, la palabra que se introduzca en el input
-
+* En el archivo app.component.html, donde se invoca el componente app-cities, en la directiva `*ngFor` donde se renderiza el array cities, se aplicará el Pipe: `ngFor=”let city of (cities | filter:criteria)”`.
 
 ## 10. Template-driven Forms
-
-* Se crea un nuevo componente. En el ejemplo se le dio el nombre “contact”.
-* En el archivo contact.component.html, se inserta una etiqueta HTML para el título del formulario.
-* La siguiente etiqueta es form, donde se anidarán las restantes etiquetas input necesarias para delimitar los campos que conforman el formulario (Opcionalmente, estos campos se maquetan con clases de Bootstrap).
-* Para cada campo, la estructura de etiquetas consta de: un `<div>` que envuelva todo el campo; un `<label>` para dar un título al campo; un `<input>` (de tipo variable según el propósito; a saber: “text”, “checkbox”, “select” y “textarea”) y un `<div>` para alojar el mensaje de error en caso de que el campo sea inválido.
-* El primer campo corresponde al nombre del usuario. El input será type = “text”. La etiqueta label pondrá el texto “Nombre”. Los atributos label, id, name serán iguales a “name”.
-* El segundo campo corresponde a la verificación de la edad. El input será type = “checkbox” debemos agregar la clase llamada form-check. La etiqueta label pondrá el texto “Are you over 18 years of age?”. Los atributos label, id, name serán iguales a “checkAdult”.
-* El tercer campo corresponde a un erá un <select>, se le adjudicará la clase form-select form-select-sm, Tendremos 3 opciones. En aplicaciones reales estas opciones aquí dentro son dinámicas, vienen del backend o una API, en este caso, serán hardcodeadas: “marketing”, “sales”, “other”.
-
-  
-  
 ## 11. Reactive Forms
-  
-  
-
 ## 12. Routing
-  
 ## 13. Lazy Loading
-  
 ## 14. Guards
-  
 ## 15. Observables
-  
 ## 16. Services
-  
 ## 17. HTTP Requests
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
