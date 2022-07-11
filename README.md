@@ -67,7 +67,7 @@ Angular, durante el desarrollo, utiliza el archivo environment.ts, y cuando se e
 A continuación, se describen los artefactos de Angular que permiten construir una aplicación web.
 
 # Artefactos de Angular
-Angular está conformado por diversas piezas de código, entre ellas se cuentan los siguientes:
+Angular está conformado por diversas piezas de código, entre ellas se cuentan las siguientes:
 * Modules
 * Directives
 * Components
@@ -76,10 +76,10 @@ Angular está conformado por diversas piezas de código, entre ellas se cuentan 
 * Services
 * Observers
 
-Cada uno de estos artefactos es, en esencia, una Clase de TypeScript modificada por un decorador, el cual por su parte es un tipo de atributo o declaración, capaz de transformar una Clase de TypeScript a través de una configuración.
+Cada uno de estos artefactos es, en esencia, una Clase de TypeScript modificada por un decorador, el cual por su parte es un tipo de atributo o declaración, capaz de transformar el comportamiento de dicha clase mediante una configuración.
 
 # Componentes
-La pieza de código más pequeña de Angular es el Component (componente). Consta de una Clase de TypeScript, modificada por el decorador @Component, que contiene las propiedades:
+El bloque más pequeño de Angular es el Component (componente). En este caso el decorador se llama @Component y le otorga las siguientes propiedades:
 * selector: es el nombre del componente.
 * templateURL: es el enlace hacia el archivo HTML, también llamado template o plantilla.
 * styleUrls: es el enlace hacia la hoja de estilos, que normalmente están en código SCSS.
