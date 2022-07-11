@@ -42,7 +42,7 @@ La mayor parte del trabajo de desarrollo se realiza dentro de la carpeta src.
 
 * El archivo styles.scss contiene los estilos, utilities y reglas que apliquen para toda la app.
 * El archivo main.ts se encarga de levantar la aplicación según la plataforma. También se gestiona el bootstrap (componente de inicio) de la aplicación. 
-* El archivo index.html contiene la etiqueta <app-root></app-root>, donde Angular inyecta todo el código.
+* El archivo index.html contiene la etiqueta app-root, donde Angular inyecta todo el código.
 * La carpeta app contiene todas las piezas de código de la aplicación: módulos, componentes, servicios, pipes, guards etc.
  
 Al crear un nuevo proyecto de Angular, se crean los archivos del componente app.component:
