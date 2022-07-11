@@ -1,41 +1,12 @@
 # Angular Roadmap
 
-Un recorrido por las principales características de Angular, la Plataforma de Google para el Desarrollo Web, a través de la construcción de una aplicación.
-
-Proyecto generado con:
+Un recorrido por las principales características de Angular, la Plataforma de Google para el Desarrollo Web, a través de la construcción de una aplicación, generada con:
 
 * Angular CLI v.13.3.7
 * Node v.16.15.0
 * npm v8.11.0
 
-
-Algunos de los tópicos cubiertos en este Roadmap son los siguientes:
-
-* One way data binding
-* Two way data binding
-* Events binding
-* Pipes
-* Template-driven forms
-* Reactive forms
-* Routing
-* Lazy Loading
-* Guards
-* Observers
-* HTTP requests
-    
-¿Qué es Angular / Angular CLI?
-
-* Angular es un framework para aplicaciones web.
-* Desarrollado en TypeScript (TS), de código abierto, mantenido por Google.
-* Su punto fuerte es la creación de SPA (single page applications).
-
-Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
-
-* Crear nuevos proyectos.
-* Crear nuevos módulos, componentes, servicios, directivas, y otras piezas de código de la aplicación.
-* Inicializar, desarrollar y mantener aplicaciones en Angular.
-* Ejecutar tareas de testing.
-* Realizar despliegue de la aplicación a producción.
+Antes de describir cada una de estas características, se debe definir qué es Angular, los archivos que componen un proyecto de desarrollo web y cuáles son las piezas de código que conforman esta Plataforma.
 
 # ¿Qué es Angular / Angular CLI?
 * Angular es un framework para aplicaciones web.
@@ -91,11 +62,23 @@ En la carpeta assets se almacenan las imágenes, fuentes, iconos y otros element
 
 En el apartado environment hay dos archivos: el environment.prod.ts y el environment.ts. Ambos se utilizan para crear variables en la aplicación. Por ejemplo, la URL de una API.
 
-Angular, durante el desarrollo, utiliza el archivo environment.ts, y cuando se efectúa el despliegue a producción, utiliza el archivo environment.prod.ts. 
+Angular, durante el desarrollo, utiliza el archivo environment.ts, y cuando se efectúa el despliegue a producción, utiliza el archivo environment.prod.ts.
 
-# Componentes en Angular
-Angular está conformado por diversas piezas de código, a saber: Modules, Directives, Components, Pipes, Guards, Services, Observers, entre otros. Cada uno de estos artefactos es, en esencia, una Clase de TypeScript modificada por un decorador, el cual por su parte es un tipo de atributo o declaración, capaz de transformar una Clase de TypeScript a través de una configuración.
+A continuación, se describen los artefactos de Angular que permiten construir una aplicación web.
 
+# Artefactos de Angular
+Angular está conformado por diversas piezas de código, entre ellas se cuentan los siguientes:
+* Modules
+* Directives
+* Components
+* Pipes
+* Guards
+* Services
+* Observers
+
+Cada uno de estos artefactos es, en esencia, una Clase de TypeScript modificada por un decorador, el cual por su parte es un tipo de atributo o declaración, capaz de transformar una Clase de TypeScript a través de una configuración.
+
+# Componentes
 La pieza de código más pequeña de Angular es el Component (componente). Consta de una Clase de TypeScript, modificada por el decorador @Component, que contiene las propiedades:
 * selector: es el nombre del componente.
 * templateURL: es el enlace hacia el archivo HTML, también llamado template o plantilla.
@@ -122,7 +105,7 @@ Texto texto texto
 El cometido principal de los Pipes es transformar datos.
 Por ejemplo, transformar un string que contenga un nombre propio, donde se deba poner la primera letra en mayúscula, y las demás en minúsculas.
 Es posible crear Pipes personalizados (custom Pipes).
-Los Pipes pueden ser Puros o Impuros.
+Los Pipes pueden ser Puros o Impuros:
 
 * Puros: La transformación se realiza cuando el dato sufre un cambio.
 * Impuros: Se transforman cada vez que se ejecuta el ciclo de detección de cambios, aun cuando la data no haya cambiado.
@@ -158,12 +141,12 @@ El Pipe es una Clase de TypeScript, que será llamada FilterPipe y debe implemen
 
 Es importante asegurarse siempre de tener los métodos e interfaces necesarios, debidamente importados e implementados.
 
-En las líneas superiores, debajo de la línea export, se aplicará el decorador @Pipe({}). Dentro de las llaves del Pipe se colocarán propiedades y valores. Una de ellas es name, la otra es pure, pero por defecto los Pipes son puros (“pure”), así que no es necesario indicarlo aquí.
+En del archivo, debajo de la línea de exportación, se aplicará el decorador @Pipe({}). Dentro de las llaves del Pipe se colocarán propiedades y valores. Una de ellas es name, la otra es pure, pero por defecto los Pipes son puros (“pure”), así que no es necesario indicarlo aquí.
 Cómo funciona el Pipe: Recibe un array de valores values y un argumento arg. Estos parámetros deben ser tipados, de esta manera:
 values: string[] (un array de strings donde se realizará la búsqueda).
 arg: string (el string que ingresa el usuario en un elemento HTML input para compararlo con los strings del array principal).
 El método devolverá un array de strings: string[] que contendrá todos los valores que coincidan con el criterio de búsqueda.
-Se debe crear el método transform( ). Para ello se establece un bucle for con una variable iteradora value que recorrerá el array principal values, y va comprobando si ese valor value coincide con el criterio; para ello se utiliza el bloque de decisión if( ) y el método indexOf(); este último busca dentro de un substring para tratar de encontrar el argumento arg. Este argumento será introducido por el usuario en  El método indexOf(), si encuentra coincidencias, devuelve la posición (el índice); de lo contrario, devuelve el valor numérico -1. Entonces, si lo que encuentra es un número mayor a -1 (porque ha encontrado coincidencias), esto será incorporado a un array llamado result. Esa variable result debe ser declarada al inicio del método transform( ). Este array será inicializado en blanco y su tipo es: array de strings. Luego, con notación de parámetros REST, la variable result será igual a lo que haya inicialmente en ella, más el valor value que coincida con el criterio y se agregue al array. Una vez que se tenga un resultado, se debe retornarlo.
+Se debe crear el método transform( ). Para ello se establece un bucle for con una variable iteradora value que recorrerá el array principal values, y va comprobando si ese valor value coincide con el criterio; para ello se utiliza el bloque de decisión if( ) y el método indexOf( ); este último busca dentro de un substring para tratar de encontrar el argumento arg. Este argumento será introducido por el usuario en  El método indexOf( ), si encuentra coincidencias, devuelve la posición (el índice); de lo contrario, devuelve el valor numérico -1. Entonces, si lo que encuentra es un número mayor a -1 (porque ha encontrado coincidencias), esto será incorporado a un array llamado result. Esa variable result debe ser declarada al inicio del método transform( ). Este array será inicializado en blanco y su tipo es: array de strings. Luego, con notación de parámetros REST, la variable result será igual a lo que haya inicialmente en ella, más el valor value que coincida con el criterio y se agregue al array. Una vez que se tenga un resultado, se debe retornarlo.
 Esta es la primera parte del Pipe.
 En el archivo app.component.html se inserta un input, se le asigna la clase “form-control”, se le agrega un placeholder “Filter...”, y también dentro de la etiqueta HTML del input se agregará un [(ngModel)] que estará amarrado a una propiedad llamada “criteria” (que crearemos enseguida).
 En el archivo app.component.ts. Al final del listado de propiedades escritas al inicio de class AppComponent escribiremos el nombre de la propiedad:
