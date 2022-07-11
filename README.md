@@ -117,16 +117,16 @@ Es necesario declarar el Pipe en app.modules.ts. Si hubiéramos creado el Pipe u
   
   
 ``export class FilterPipe implements PipeTransform {
-transform{ values: string[], arg: string): string[] {
-if(!arg || arg?.length < 3) return values;
-let result: string[] = [];
-for (const value of values) {
-if (value.indexOf(arg) > -1) {
-result = [...result, value];
-}
-}
-return result;
-}``
+``transform{ values: string[], arg: string): string[] {
+``if(!arg || arg?.length < 3) return values;
+``let result: string[] = [];
+``for (const value of values) {
+``if (value.indexOf(arg) > -1) {
+``result = [...result, value];
+``}
+``}
+``return result;
+``}``
 
 18:45 probando lo hecho. Al poner “ba” no devuelve nada; tampoco si ponemos “bar”, ya que hace búsqueda estricta en mayúscula/minúscula.
 19:03 Para que no haya problema entre mayúsculas y minúsculas, debemos asegurarnos de que tanto nuestra entrada en el filtro de búsqueda, como los elementos que tenemos en nuestro array, estén todos en minúsculas, de modo que se pueda hacer esa comparación, independientemente de si la entrada es en minúsculas, mayúsculas, o todas las posibles combinaciones. Entonces todo será trasladado a minúsculas.
