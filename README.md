@@ -1,7 +1,5 @@
 # Angular Roadmap
 
-# Tarjeta de crédito válida
-
 ## Índice
 
 * [1. Preámbulo](#1-preámbulo)
@@ -18,232 +16,14 @@
 * [12. Routing](#12-routing)
 * [13. Lazy Loading](#13-lazy-loading)
 * [14. Guards](#14-guards)
-* [15. Observers](#15-observers)
+* [15. Observables](#15-observables)
 * [16. Services](#16-services)
 * [17. HTTP Requests](#17-http-requests)
 
 ***
 
 ## 1. Preámbulo
-### Qué es Angular
-El [algoritmo de Luhn](https://es.wikipedia.org/wiki/Algoritmo_de_Luhn),
-
-Pasos del algoritmo:
-- Obtenemos la reversa del número a verificar (que solamente contiene dígitos [0-9])
-- A todos los números que ocupan una posición par se les debe multiplicar por dos, si este número es mayor o igual a 10,
-debemos sumar los dígitos del resultado
-- El número a verificar será válido si la suma de sus dígitos finales es un múltiplo de 10.
-
-## 2. Resumen del proyecto
-
-En este proyecto tendrás que construir una aplicación web que le permita a un
-usuario validar el número de una tarjeta de crédito. Además, tendrás que
-implementar funcionalidad para ocultar todos los dígitos de una tarjeta menos
-los últimos cuatro.
-
-La temática es libre. Tú debes pensar en qué situaciones de la vida real se
-necesitaría validar una tarjeta de crédito y pensar en cómo debe ser esa
-experiencia de uso (qué pantallas, explicaciones, mensajes, colores, ¿marca?)
-etc.
-
-## 3. Objetivos de aprendizaje
-
-Trabajando en parejas aprenderán a construir una aplicación web que interactuará
-con lx usuarix final a través del navegador, utilizando HTML, CSS y JavaScript
-como tecnologías.
-
-Reflexiona y luego marca los objetivos que has llegado a **entender** y
-**aplicar** en tu proyecto.
-
-### Checklist
-
-* [ ] Diseñar la aplicación pensando y entendiendo al usuario
-* [ ] [Testeo de tus funciones](https://jestjs.io/docs/es-ES/getting-started)
-* [ ] Comandos de git (`add` | `commit` | `pull` | `status` | `push`).
-* El equipo de coaches te dará un tiempo sugerido e indicaciones sobre si trabajar
-  sola o en equipo. Recuerda que cada una aprende a diferente ritmo.
-
-## 5. Criterios de aceptación mínimos del proyecto
-
-Usa solo caracteres numéricos (dígitos) en la tarjeta a validar [0-9].
-
-### Definición del producto
-
-En el `README.md`, cuéntanos cómo pensaste en los usuarios y cuál fue tu proceso
-para definir el producto final a nivel de experiencia y de interfaz.
-
-* Quiénes son los principales usuarios de producto.
-* Cuáles son los objetivos de estos usuarios en relación con tu producto.
-* Cómo crees que el producto que estás creando está resolviendo sus problemas.
-* Toma lo aprendido al momento de validar tu primer prototipo y desarrolla un
-  nuevo prototipo usando alguna herramienta para diseño de prototipos
-  ([Balsamiq](https://balsamiq.com/), [Figma](https://www.figma.com/),
-  [Google Slides](https://www.google.com/intl/es/slides/about/), etc.)
-Estos puntos los presentarás en el `README.md`.
-
-### Scripts / Archivos
-
-#### General
-
-##### `README.md`
-
-Debe contener lo siguiente:
-
-* Un título con el nombre de tu proyecto.
-* Un resumen de 1 o 2 líneas de qué se trata tu proyecto.
-* La imagen final de tu proyecto.
-* Investigación UX:
-  1. Explicar quiénes son los usuarios y los objetivos en relación con el
-    producto.
-  2. Explicar cómo el producto soluciona los problemas/necesidades de dichos
-    usuarios.
-  3. Luego colocarás la foto de tu primer prototipo en papel.
-  4. Agregar un resumen del feedback recibido indicando las mejoras a realizar.
-  5. Imagen del prototipo final.
-
-#### Visualmente (HTML y CSS)
-
-Deberás maquetar de forma exacta el prototipo final que hiciste en la herramienta
-de diseño de prototipos que escogiste utilizando HTML y CSS. En este momento elegirás
-los colores, tipo de fuente, etc a usar.
-
-A continuación describimos los archivos que utilizarás:
-
-##### `src/index.html`
-
-En este archivo va el contenido que se mostrará al usuario (esqueleto HTML).
-Encontrarás 3 etiquetas iniciales, las cuales si deseas puedes borrar y empezar
-de cero:
-
-* `<header>`: encabezado de tu proyecto.
-* `<main>`: contenido principal de tu proyecto.
-* `<footer>`: pie de página de tu proyecto.
-
-##### `src/style.css`
-
-Este archivo debe contener las reglas de estilo. Queremos que escribas tus
-propias reglas, por eso NO está permitido el uso de frameworks de CSS
-(Bootstrap, materialize, etc).
-
-#### Funcionalmente (JavaScript - pruebas unitarias)
-
-* La lógica del proyecto debe estar implementada completamente en JavaScript.
-
-Vas a tener 2 archivos JavaScript separando responsabilidades, a continuación
-indicamos qué harás en cada archivo:
-
-##### `src/validator.js`
-
-Acá escribirás las funciones necesarias para que el usuario pueda verificar la
-tarjeta de crédito y ocultar los dígitos de su número de tarjeta.
-Esta función debe ser pura e independiente del DOM.
-
-Para esto debes implementar el **objeto `validator`**, el cual ya se encuentra
-_exportado_ en el _boilerplate_. Este objeto (`validator`) contiene
-dos métodos (`isValid` y `maskify`):
-
-* **`validator.isValid(creditCardNumber)`**: `creditCardNumber` es un `string`
-con el número de tarjeta que se va a verificar. Esta función debe retornar un
-`boolean` dependiendo si es válida de acuerdo al [algoritmo de Luhn](https://es.wikipedia.org/wiki/Algoritmo_de_Luhn).
-
-
-    Ejemplo de uso
-
-    ```js
-    maskify('4556364607935616') === '############5616'
-    maskify(     '64607935616') ===      '#######5616'
-    maskify(               '1') ===                '1'
-    maskify(               '')  ===                ''
-    ```
-
-##### `src/index.js`
-
-Acá escribirás todo el código que tenga que ver con la interacción del DOM
-(seleccionar, actualizar y manipular elementos del DOM y eventos).
-Es decir, en este archivo deberás invocar las funciones `isValid` y `maskify`
-según sea necesario para actualizar el resultado en la pantalla (UI).
-
-##### `test/validator.spec.js`
-
-En este archivo tendrás que completar las pruebas unitarias de las funciones
-`validator.isValid(creditCardNumber)` y `validator.maskify(creditCardNumber)`
-implementadas en `validator.js` utilizando [Jest](https://jestjs.io/es-ES/).
-Tus pruebas unitarias deben dar un 70% en _coverage_ (cobertura),
-_statements_ (sentencias), _functions_ (funciones) y _lines_ (líneas); y un
-mínimo del 50% de _branches_ (ramas).
-
-***
-
-## 6. Pistas, tips y lecturas complementarias
-
-### Primeros pasos
-
-1. Antes que nada, asegúrate de tener un :pencil: editor de texto en
-  condiciones
-2. Para ejecutar los comandos a continuación necesitarás una :shell:
-  [UNIX Shell](https://github.com/Laboratoria/bootcamp/tree/master/topics/shell),
-3. Una de las integrantes del equipo debe realizar un :fork_and_knife:
-  [fork](https://help.github.com/articles/fork-a-repo/) 
-  [configurar](https://gist.github.com/BCasal/026e4c7f5c71418485c1) un `remote`
-  hacia el mismo.
-4. :arrow_down: [Clona](https://help.github.com/articles/cloning-a-repository/)
-  tu _fork_ a tu computadora (copia local).
-5. 📦 Instala las dependencias del proyecto con el comando `npm install`. Esto
-  asume que has instalado [Node.js](https://nodejs.org/) (que incluye [npm](https://docs.npmjs.com/)).
-6. Si todo ha ido bien, deberías poder ejecutar las :traffic_light:
-  pruebas unitarias (unit tests) con el comando `npm test`.
-7. Para ver la interfaz de tu programa en el navegador, usa el comando
-  `npm start` para arrancar el servidor web y dirígete a
-  `http://localhost:5000` en tu navegador.
-8. A codear se ha dicho! :rocket:
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Un recorrido por las principales características de Angular, la Plataforma de Google para el Desarrollo Web, a través de la construcción de una aplicación, generada con:
-
-* Angular CLI v.13.3.7
-* Node v.16.15.0
-* npm v8.11.0
-
-Antes de describir cada una de estas características, se debe definir qué es Angular, los archivos que componen un proyecto de desarrollo web y cuáles son las piezas de código que conforman esta Plataforma.
-
-# ¿Qué es Angular / Angular CLI?
+### ¿Qué es Angular / Angular CLI?
 * Angular es un framework para aplicaciones web.
 * Desarrollado en TypeScript (TS), de código abierto, mantenido por Google.
 * Su punto fuerte es la creación de SPA (single page applications).
@@ -256,7 +36,16 @@ Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
 * Ejecutar tareas de testing.
 * Realizar despliegue de la aplicación a producción.
 
-# Estructura de un proyecto Angular
+Antes de describir cada una de estas características, se debe definir qué es Angular, los archivos que componen un proyecto de desarrollo web y cuáles son las piezas de código que conforman esta Plataforma.
+
+## 2. Resumen del proyecto
+En este proyecto se llevó a cabo la práctica de las principales características de Angular, la Plataforma de Google para el Desarrollo Web, a través de la construcción de una aplicación, generada con:
+
+* Angular CLI v.13.3.7
+* Node v.16.15.0
+* npm v8.11.0
+
+## 3. Estructura de un proyecto de Angular
 En la carpeta root (directorio raíz) del proyecto, se puede encontrar toda una estructura de archivos y carpetas que conforman el proyecto de Angular. Entre ellos, destacan los siguientes:
 
 Un conjunto de archivos relacionados con la configuración de TypeScript:
@@ -301,7 +90,7 @@ Angular, durante el desarrollo, utiliza el archivo environment.ts, y cuando se e
 
 A continuación, se describen los artefactos de Angular que permiten construir una aplicación web.
 
-# Artefactos de Angular
+## 4. Artefactos de Angular
 Angular está conformado por diversas piezas de código, entre ellas se cuentan las siguientes:
 * Modules
 * Directives
@@ -313,7 +102,80 @@ Angular está conformado por diversas piezas de código, entre ellas se cuentan 
 
 Cada uno de estos artefactos es, en esencia, una Clase de TypeScript modificada por un decorador, el cual por su parte es un tipo de atributo o declaración, capaz de transformar el comportamiento de dicha clase mediante una configuración.
 
-# Componentes
+### Scripts / Archivos
+
+#### General
+
+##### `README.md`
+
+Debe contener lo siguiente:
+
+* Un título con el nombre de tu proyecto.
+* Un resumen de 1 o 2 líneas de qué se trata tu proyecto.
+* La imagen final de tu proyecto.
+* Investigación UX:
+Lista numerada:
+
+  1. Explicar quiénes son los usuarios y los objetivos en relación con el
+    producto.
+  2. Explicar cómo el producto soluciona los problemas/necesidades de dichos
+    usuarios.
+  3. Luego colocarás la foto de tu primer prototipo en papel.
+  4. Agregar un resumen del feedback recibido indicando las mejoras a realizar.
+  5. Imagen del prototipo final.
+
+A continuación describimos los archivos que utilizarás:
+
+##### `src/index.html`
+
+En este archivo va el contenido que se mostrará al usuario (esqueleto HTML).
+Encontrarás 3 etiquetas iniciales, las cuales si deseas puedes borrar y empezar
+de cero:
+
+* `<header>`: encabezado de tu proyecto.
+* `<main>`: contenido principal de tu proyecto.
+* `<footer>`: pie de página de tu proyecto.
+
+
+##### `src/validator.js`
+
+Acá escribirás las funciones necesarias para que el usuario pueda verificar la
+tarjeta de crédito y ocultar los dígitos de su número de tarjeta.
+Esta función debe ser pura e independiente del DOM.
+    Ejemplo de uso
+
+    ```js
+    maskify('4556364607935616') === '############5616'
+    maskify(     '64607935616') ===      '#######5616'
+    maskify(               '1') ===                '1'
+    maskify(               '')  ===                ''
+    ```
+
+***
+
+### Primeros pasos
+
+1. Antes que nada, asegúrate de tener un :pencil: editor de texto en
+  condiciones
+2. Para ejecutar los comandos a continuación necesitarás una :shell:
+  [UNIX Shell](https://github.com/Laboratoria/bootcamp/tree/master/topics/shell),
+3. Una de las integrantes del equipo debe realizar un :fork_and_knife:
+  [fork](https://help.github.com/articles/fork-a-repo/) 
+  [configurar](https://gist.github.com/BCasal/026e4c7f5c71418485c1) un `remote`
+  hacia el mismo.
+4. :arrow_down: [Clona](https://help.github.com/articles/cloning-a-repository/)
+  tu _fork_ a tu computadora (copia local).
+5. 📦 Instala las dependencias del proyecto con el comando `npm install`. Esto
+  asume que has instalado [Node.js](https://nodejs.org/) (que incluye [npm](https://docs.npmjs.com/)).
+6. Si todo ha ido bien, deberías poder ejecutar las :traffic_light:
+  pruebas unitarias (unit tests) con el comando `npm test`.
+7. Para ver la interfaz de tu programa en el navegador, usa el comando
+  `npm start` para arrancar el servidor web y dirígete a
+  `http://localhost:5000` en tu navegador.
+8. A codear se ha dicho! :rocket:
+
+
+## 5. Componentes
 El bloque más pequeño de Angular es el Component (componente). En este caso el decorador se llama @Component y le otorga las siguientes propiedades:
 * selector: es el nombre del componente.
 * templateURL: es el enlace hacia el archivo HTML, también llamado template o plantilla.
@@ -328,16 +190,18 @@ Un componente B puede ser invocado desde un componente A, mediante una notación
 
 En ese caso, se dice que el componente A es padre del componente B, y a su vez, el componente B será hijo del componente A.
 
-# One way data binding
-Texto texto texto
 
-# Two way data binding
-Texto texto texto
+## 6. One-way Data Binding
 
-# Events binding
-Texto texto texto
 
-# Pipes
+## 7. Two-way Data Binding
+
+
+## 8. Events Binding
+
+
+
+## 9. Pipes
 El cometido principal de los Pipes es transformar datos. Por ejemplo, dar formato a un string que contenga un nombre propio, donde se deba poner la primera letra en mayúscula, y las demás en minúsculas. Es posible crear Pipes (custom Pipes). Los Pipes pueden ser Puros o Impuros:
 
 * Puros: La transformación se realiza cuando el dato sufre un cambio.
@@ -371,38 +235,50 @@ El método devolverá un array de strings que contendrá todos los valores que c
 * Con este procedimiento, la palabra que se introduzca en el input
 
 
-# Template-driven forms
+## 10. Template-driven Forms
+
 * Se crea un nuevo componente. En el ejemplo se le dio el nombre “contact”.
 * En el archivo contact.component.html, se inserta una etiqueta HTML para el título del formulario.
 * La siguiente etiqueta es form, donde se anidarán las restantes etiquetas input necesarias para delimitar los campos que conforman el formulario (Opcionalmente, estos campos se maquetan con clases de Bootstrap).
 * Para cada campo, la estructura de etiquetas consta de: un `<div>` que envuelva todo el campo; un `<label>` para dar un título al campo; un `<input>` (de tipo variable según el propósito; a saber: “text”, “checkbox”, “select” y “textarea”) y un `<div>` para alojar el mensaje de error en caso de que el campo sea inválido.
 * El primer campo corresponde al nombre del usuario. El input será type = “text”. La etiqueta label pondrá el texto “Nombre”. Los atributos label, id, name serán iguales a “name”.
 * El segundo campo corresponde a la verificación de la edad. El input será type = “checkbox” debemos agregar la clase llamada form-check. La etiqueta label pondrá el texto “Are you over 18 years of age?”. Los atributos label, id, name serán iguales a “checkAdult”.
-* El tercer campo corresponde a un erá un <select>, se le adjudicará la clase form-select form-select-sm, Tendremos 3 opciones. En aplicaciones reales estas opciones aquí dentro son dinámicas, vienen del backend o una API, en este caso, serán hardcodeadas: “marketing”, “sales”, “other”
+* El tercer campo corresponde a un erá un <select>, se le adjudicará la clase form-select form-select-sm, Tendremos 3 opciones. En aplicaciones reales estas opciones aquí dentro son dinámicas, vienen del backend o una API, en este caso, serán hardcodeadas: “marketing”, “sales”, “other”.
+
+  
+  
+## 11. Reactive Forms
+  
+  
+
+## 12. Routing
+  
+## 13. Lazy Loading
+  
+## 14. Guards
+  
+## 15. Observables
+  
+## 16. Services
+  
+## 17. HTTP Requests
 
 
-# Reactive forms
-Texto texto texto
 
-# Routing
-Texto texto texto
-Texto texto texto
 
-# Lazy Loading
-Texto texto texto
-Texto texto texto
 
-# Guards
-Texto texto texto
-Texto texto texto
 
-# Observers
-Texto texto texto
-Texto texto texto
 
-# HTTP requests
-Texto texto texto
-Texto texto texto
 
-# Services
-Texto texto texto 
+
+
+
+
+
+
+
+
+
+
+
+
