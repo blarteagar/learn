@@ -111,8 +111,12 @@ Es necesario declarar el Pipe en app.modules.ts. Si hubiéramos creado el Pipe u
 *ngFor=”let city of (cities | filter:criteria)” 
 17:22 probando la app y el filtro. Si en el input se coloca “bar”, no busca nada; pero si ponemos “Barce” ya devuelve “Barcelona”. Si añadimos la ciudad de “Badalona”, cuando en el input del filter ponemos “Ba”, ya devuelve “Barcelona” y “Badalona”. 
 14:46 Tenemos que hacer varias cosas, porque si intentamos buscar en vacío, no nos retorna nada, entonces, es importante controlar un poco ese Pipe, para que valide un poco mejor los datos.
-18:02 Abrir el archivo filter.pipe.ts, y al inicio del método transform asociado a FilterPipe crearemos un if () donde devolveremos directamente los valores que recibimos si el argumento es null, es vacío o es cero. O si nuestro argumento tiene una longitud mayor a 3 caracteres. El Pipe queda de esta forma:
-`export class FilterPipe implements PipeTransform {
+18:02 Abrir el archivo filter.pipe.ts, y al inicio del método transform asociado a FilterPipe crearemos un if () donde devolveremos directamente los valores que recibimos si el argumento es null, es vacío o es cero. O si nuestro argumento tiene una longitud mayor a 3 caracteres. 
+  
+  El Pipe queda de esta forma:
+  
+  
+``export class FilterPipe implements PipeTransform {
 transform{ values: string[], arg: string): string[] {
 if(!arg || arg?.length < 3) return values;
 let result: string[] = [];
@@ -122,7 +126,7 @@ result = [...result, value];
 }
 }
 return result;
-}`
+}``
 
 18:45 probando lo hecho. Al poner “ba” no devuelve nada; tampoco si ponemos “bar”, ya que hace búsqueda estricta en mayúscula/minúscula.
 19:03 Para que no haya problema entre mayúsculas y minúsculas, debemos asegurarnos de que tanto nuestra entrada en el filtro de búsqueda, como los elementos que tenemos en nuestro array, estén todos en minúsculas, de modo que se pueda hacer esa comparación, independientemente de si la entrada es en minúsculas, mayúsculas, o todas las posibles combinaciones. Entonces todo será trasladado a minúsculas.
