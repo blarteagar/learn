@@ -1,8 +1,5 @@
 # Angular Roadmap
-
-## Índice
-
-* [1. Preámbulo: ¿Qué es Angular / Angular CLI?](#1-preámbulo-que-es-angular-angular-cli)
+* [1. Preámbulo](#1-preámbulo)
 * [2. Resumen del proyecto](#2-resumen-del-proyecto)
 * [3. Estructura de un proyecto de Angular](#3-estructura-de-un-proyecto-de-angular)
 * [4. Artefactos de Angular](#4-artefactos-de-angular)
@@ -37,12 +34,16 @@ Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
 
 Antes de describir cada una de estas características, se debe definir qué es Angular, los archivos que componen un proyecto de desarrollo web y cuáles son las piezas de código que conforman esta Plataforma.
 
+***
+
 ## 2. Resumen del proyecto
 En este proyecto se llevó a cabo la práctica de las principales características de Angular, la Plataforma de Google para el Desarrollo Web, a través de la construcción de una aplicación generada con:
 
 * Angular CLI v.13.3.7
 * Node v.16.15.0
 * npm v8.11.0
+
+***
 
 ## 3. Estructura de un proyecto de Angular
 En la carpeta root (directorio raíz) del proyecto, se puede encontrar la estructura de archivos y carpetas que conforman el proyecto de Angular. Entre ellos, destacan los siguientes:
@@ -89,6 +90,8 @@ Angular, durante el desarrollo, utiliza el archivo environment.ts, y cuando se e
 
 A continuación, se describen los artefactos de Angular que permiten construir una aplicación web.
 
+***
+
 ## 4. Artefactos de Angular
 Angular está conformado por diversas piezas de código, entre ellas se cuentan las siguientes:
 * Modules
@@ -100,6 +103,8 @@ Angular está conformado por diversas piezas de código, entre ellas se cuentan 
 * Observers
 
 Cada uno de estos artefactos es, en esencia, una Clase de TypeScript modificada por un decorador, el cual por su parte es un tipo de atributo o declaración, capaz de transformar el comportamiento de dicha clase mediante una configuración.
+
+***
 
 ## 5. Componentes
 El bloque más pequeño de Angular es el Component (componente). En este caso el decorador se llama @Component y le otorga las siguientes propiedades:
@@ -116,23 +121,31 @@ Un componente B puede ser invocado desde un componente A, mediante una notación
 
 En ese caso, se dice que el componente A es padre del componente B, y a su vez, el componente B será hijo del componente A.
 
+***
+
 ## 6. One-way Data Binding
 La interpolación (one-way data binding) permite colocar el valor de algunas propiedades o expresiones, entre elementos HTML. Dentro de un componente, en el archivo TS se declaran las propiedades (variables) y se pueden llamar desde el archivo HTML correspondiente. 
 Sintaxis de ejemplo: 
 `<p> The value of the property is: {{property}} </p>`
 Donde property es una propiedad declarada en el archivo TS del componente. En el One Way Data Binding, las propiedades creadas en el archivo typescript son de sólo lectura, no se pueden modificar.
 
+***
+
 ## 7. Two-way Data Binding
 El enlace bidireccional permite enlazar una propiedad en el TS, imprimirla o tenerla en el HTML y modificar su valor simultáneamente desde el input.
 La sintaxis del two-way data binding es conocida también como “banana in the box” porque la caja serían los corchetes y la bananita serían los paréntesis. Ejemplo:
 `<input type=”text” [(ngModel)]=”name”>`
 Para usarlo se debe importar el módulo de formularios en el archivo app.module.ts. 
-El two-way data binding genera un doble enlace que permite actualizar el valor de una propiedad renderizado en una UI, cada vez que cambia el valor de dicha propiedad en un input de HTML, o bien, si cambia su valor declarado en el archivo TS. 
+El two-way data binding genera un doble enlace que permite actualizar el valor de una propiedad renderizado en una UI, cada vez que cambia el valor de dicha propiedad en un input de HTML, o bien, si cambia su valor declarado en el archivo TS.
+
+***
 
 ## 8. Events Binding
 En enlace de eventos o “event binding” permite llamar un método en el momento en que ocurre un evento: Click de un botón, o bien, eventos personalizados. Suponiendo que estamos adjudicando un evento al click de un botón, su sintaxis puede resumirse como sigue:
 `< button (evento) = ” metodo() ” > Metodo < /button >`
 Cada método debe ser declarado en el archivo de lógica TypeScript correspondiente.
+
+***
 
 ## 9. Pipes
 El cometido principal de los Pipes es transformar datos. Por ejemplo, dar formato a un string que contenga un nombre propio, donde se deba poner la primera letra en mayúscula, y las demás en minúsculas. Es posible crear Pipes (custom Pipes). Los Pipes pueden ser Puros o Impuros:
@@ -165,11 +178,36 @@ El método devolverá un array de strings que contendrá todos los valores que c
 
 * En el archivo app.component.html, donde se invoca el componente app-cities, en la directiva `*ngFor` donde se renderiza el array cities, se aplicará el Pipe: `ngFor=”let city of (cities | filter:criteria)”`.
 
+***
+
 ## 10. Template-driven Forms
+
+***
+
 ## 11. Reactive Forms
+
+***
+
 ## 12. Routing
+
+***
+
 ## 13. Lazy Loading
+
+***
+
 ## 14. Guards
+
+***
+
 ## 15. Observables
+
+***
+
 ## 16. Services
+
+***
+
 ## 17. HTTP Requests
+
+***
