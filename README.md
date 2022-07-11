@@ -1,3 +1,5 @@
+# Angular Roadmap
+
 # ¿Qué es Angular / Angular CLI?
 * Angular es un framework para aplicaciones web.
 * Desarrollado en TypeScript (TS), de código abierto, mantenido por Google.
@@ -63,11 +65,17 @@ Texto texto texto
 # Events binding
 Texto texto texto
 # Pipes
-El cometido principal de los Pipes es transformar datos. Por ejemplo, transformar un string que contenga un nombre propio, donde se deba poner la primera letra en mayúscula, y las demás en minúsculas. El desarrollador puede crear sus propios Pipes (custom Pipes). Los Pipes pueden ser Puros o Impuros.
+El cometido principal de los Pipes es transformar datos.
+Por ejemplo, transformar un string que contenga un nombre propio, donde se deba poner la primera letra en mayúscula, y las demás en minúsculas.
+Es posible crear Pipes personalizados (custom Pipes).
+Los Pipes pueden ser Puros o Impuros.
+
 * Puros: La transformación se realiza cuando el dato sufre un cambio.
 * Impuros: Se transforman cada vez que se ejecuta el ciclo de detección de cambios, aun cuando la data no haya cambiado.
 * Por defecto, los Pipes son puros.
-Ejemplo de uso de un Pipe dentro de una plantilla html.
+
+
+Ejemplo de uso de un Pipe dentro de una plantilla html:
 <p>{{‘6/15/15, 9:03 AM’ | date:’full}}</p>
 Lo anterior será impreso como una fecha larga:
 Monday, June 15, 2015 at 9:03:00 AM GMT+02:00
@@ -75,6 +83,8 @@ Ejemplo de uso de más de un Pipe:
 <p>My birthday is {{‘6/15/15, 9:03 AM’ | date:’full’ | uppercase}}</p>
 Lo anterior será impreso como una fecha larga, completamente en mayúsculas:
 MONDAY, JUNE 15, 2015 AT 9:03:00 AM GMT+02:00
+
+
 Para crear un Pipe personalizado, se puede usar la terminal o puede ser creado desde cero como una Clase de TypeScript. Por ejemplo, se desea crear un filtro para encontrar los elementos de un array.
 El Pipe recibirá un array de strings, así como un criterio de búsqueda (tipo string), y devolverá los valores del listado que coincidan con el criterio.
 Se debe crear una carpeta llamada pipes y dentro de ella un archivo llamado filter.pipe.ts.
