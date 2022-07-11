@@ -9,17 +9,17 @@ Proyecto generado con:
 
 Algunos de los tópicos cubiertos aquí fueron:
 
-    • One way data binding
-    • Two way data binding
-    • Events binding
-    • Pipes
-    • Template-driven forms
-    • Reactive forms
-    • Routing
-    • Lazy Loading
-    • Guards
-    • Observers
-    • HTTP requests
+* One way data binding
+* Two way data binding
+* Events binding
+* Pipes
+* Template-driven forms
+* Reactive forms
+* Routing
+* Lazy Loading
+* Guards
+* Observers
+* HTTP requests
     
 ¿Qué es Angular / Angular CLI?
 * Angular es un framework para aplicaciones web.
