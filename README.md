@@ -2,7 +2,7 @@
 
 ## Índice
 
-* [1. Preámbulo](#1-preámbulo)
+* [1. Preámbulo: ¿Qué es Angular / Angular CLI?](#1-preámbulo-que-es-angular-angular-cli)
 * [2. Resumen del proyecto](#2-resumen-del-proyecto)
 * [3. Estructura de un proyecto de Angular](#3-estructura-de-un-proyecto-de-angular)
 * [4. Artefactos de Angular](#4-artefactos-de-angular)
@@ -22,8 +22,7 @@
 
 ***
 
-## 1. Preámbulo
-### ¿Qué es Angular / Angular CLI?
+## 1. Preámbulo: ¿Qué es Angular / Angular CLI?
 * Angular es un framework para aplicaciones web.
 * Desarrollado en TypeScript (TS), de código abierto, mantenido por Google.
 * Su punto fuerte es la creación de SPA (single page applications).
