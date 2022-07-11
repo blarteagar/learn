@@ -134,7 +134,9 @@ Donde property es una propiedad declarada en el archivo TS del componente. En el
 ## 7. Two-way Data Binding
 El enlace bidireccional permite enlazar una propiedad en el TS, imprimirla o tenerla en el HTML y modificar su valor simultáneamente desde el input.
 La sintaxis del two-way data binding es conocida también como “banana in the box” porque la caja serían los corchetes y la bananita serían los paréntesis. Ejemplo:
+
 `<input type=”text” [(ngModel)]=”name”>`
+
 Para usarlo se debe importar el módulo de formularios en el archivo app.module.ts. 
 El two-way data binding genera un doble enlace que permite actualizar el valor de una propiedad renderizado en una UI, cada vez que cambia el valor de dicha propiedad en un input de HTML, o bien, si cambia su valor declarado en el archivo TS.
 
@@ -142,7 +144,9 @@ El two-way data binding genera un doble enlace que permite actualizar el valor d
 
 ## 8. Events Binding
 En enlace de eventos o “event binding” permite llamar un método en el momento en que ocurre un evento: Click de un botón, o bien, eventos personalizados. Suponiendo que estamos adjudicando un evento al click de un botón, su sintaxis puede resumirse como sigue:
-`< button (evento) = ” metodo() ” > Metodo < /button >`
+
+`<button (evento)=”metodo()”> Metodo </button>`
+
 Cada método debe ser declarado en el archivo de lógica TypeScript correspondiente.
 
 ***
