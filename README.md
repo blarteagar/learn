@@ -148,34 +148,47 @@ arg: string (el string que ingresa el usuario en un elemento HTML input para com
 El método devolverá un array de strings: string[] que contendrá todos los valores que coincidan con el criterio de búsqueda.
 Se debe crear el método transform( ). Para ello se establece un bucle for con una variable iteradora value que recorrerá el array principal values, y va comprobando si ese valor value coincide con el criterio; para ello se utiliza el bloque de decisión if( ) y el método indexOf( ); este último busca dentro de un substring para tratar de encontrar el argumento arg. Este argumento será introducido por el usuario en  El método indexOf( ), si encuentra coincidencias, devuelve la posición (el índice); de lo contrario, devuelve el valor numérico -1. Entonces, si lo que encuentra es un número mayor a -1 (porque ha encontrado coincidencias), esto será incorporado a un array llamado result. Esa variable result debe ser declarada al inicio del método transform( ). Este array será inicializado en blanco y su tipo es: array de strings. Luego, con notación de parámetros REST, la variable result será igual a lo que haya inicialmente en ella, más el valor value que coincida con el criterio y se agregue al array. Una vez que se tenga un resultado, se debe retornarlo.
 Esta es la primera parte del Pipe.
-En el archivo app.component.html se inserta un input, se le asigna la clase “form-control”, se le agrega un placeholder “Filter...”, y también dentro de la etiqueta HTML del input se agregará un [(ngModel)] que estará amarrado a una propiedad llamada “criteria” (que crearemos enseguida).
+En el archivo app.component.html se inserta un input, se le asigna la clase “form-control”, se le agrega un placeholder “Filter...”, y también dentro de la etiqueta HTML del input se agregará un ngModel que estará amarrado a una propiedad llamada “criteria” (que crearemos enseguida).
 En el archivo app.component.ts. Al final del listado de propiedades escritas al inicio de class AppComponent escribiremos el nombre de la propiedad:
 criteria = ' ', que por ahora quedará como un string vacío.
-Aparece otro error, que se debe a que no se ha incorporado FormsModule dentro del apartado imports de app.module.ts. Debemos siempre recordar las importaciones necesarias.
-Probando la app. Usar la consola para comprobar que no haya errores.
+
+
 Ir al archivo app.component.html para aplicar el Pipe. En el componente <app-cities>, en la directiva *ngFor donde se renderiza la lista de ciudades (array cities), se aplicará el Pipe, de este modo:
 *ngFor=”let city of (cities | filter:’Barcelona’)” 
+
 La palabra “Barcelona” está “hardcodeada” como criterio de búsqueda para probar el Pipe.
 Es necesario declarar el Pipe en app.modules.ts. Si hubiéramos creado el Pipe usando la CLI de Angular, este proceso se habría realizado automáticamente. En el archivo app.module.ts, en el apartado @NgModule, bajo el apartado declarations, se agrega el nombre del Pipe: FilterPipe,. Guardar y cerrar.
 Ahora lo vamos a hacer dinámico. Para ello, debemos darle como argumento al Pipe, la variable criteria:
 *ngFor=”let city of (cities | filter:criteria)” 
-17:22 probando la app y el filtro. Si en el input se coloca “bar”, no busca nada; pero si ponemos “Barce” ya devuelve “Barcelona”. Si añadimos la ciudad de “Badalona”, cuando en el input del filter ponemos “Ba”, ya devuelve “Barcelona” y “Badalona”. 
+
+  
+probando la app y el filtro. Si en el input se coloca “bar”, no busca nada; pero si ponemos “Barce” ya devuelve “Barcelona”. Si añadimos la ciudad de “Badalona”, cuando en el input del filter ponemos “Ba”, ya devuelve “Barcelona” y “Badalona”. 
 14:46 Tenemos que hacer varias cosas, porque si intentamos buscar en vacío, no nos retorna nada, entonces, es importante controlar un poco ese Pipe, para que valide un poco mejor los datos.
 18:02 Abrir el archivo filter.pipe.ts, y al inicio del método transform asociado a FilterPipe crearemos un if () donde devolveremos directamente los valores que recibimos si el argumento es null, es vacío o es cero. O si nuestro argumento tiene una longitud mayor a 3 caracteres. 
   
   El Pipe queda de esta forma:
   
   
-``export class FilterPipe implements PipeTransform {``
-``transform{ values: string[], arg: string): string[] {``
-``if(!arg || arg?.length < 3) return values;``
-``let result: string[] = [];``
+```export class FilterPipe implements PipeTransform {```
+  
+```transform{ values: string[], arg: string): string[] {```
+  
+```if(!arg || arg?.length < 3) return values;```                      
+  
+```let result: string[] = [];```
+                              
 ``for (const value of values) {``
+                              
 ``if (value.indexOf(arg) > -1) {``
+  
 ``result = [...result, value];``
+  
 ``}``
+  
 ``}``
+  
 ``return result;``
+  
 ``}``
 
 probando lo hecho. Al poner “ba” no devuelve nada; tampoco si ponemos “bar”, ya que hace búsqueda estricta en mayúscula/minúscula.
