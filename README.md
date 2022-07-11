@@ -139,9 +139,9 @@ El método devolverá un array de strings que contendrá todos los valores que c
 # Template-driven forms
 * Se crea un nuevo componente. En el ejemplo se le dio el nombre “contact”.
 * En el archivo contact.component.html, se inserta una etiqueta HTML para el título del formulario.
-** La siguiente etiqueta es form, donde se anidarán las restantes etiquetas input necesarias para delimitar los campos que conforman el formulario (Opcionalmente, estos campos se maquetan con clases de Bootstrap).
-** Para cada campo, la estructura de etiquetas consta de: un `<div>` que envuelva todo el campo; un `<label>` para dar un título al campo; un `<input>` (de tipo variable según el propósito; a saber: “text”, “checkbox”, “select” y “textarea”) y un `<div>` para alojar el mensaje de error en caso de que el campo sea inválido.
-** El primer campo corresponde al nombre del usuario. El input será type = “text”. La etiqueta label pondrá el texto “Nombre”. Los atributos label, id, name serán iguales a “name”.
+* La siguiente etiqueta es form, donde se anidarán las restantes etiquetas input necesarias para delimitar los campos que conforman el formulario (Opcionalmente, estos campos se maquetan con clases de Bootstrap).
+* Para cada campo, la estructura de etiquetas consta de: un `<div>` que envuelva todo el campo; un `<label>` para dar un título al campo; un `<input>` (de tipo variable según el propósito; a saber: “text”, “checkbox”, “select” y “textarea”) y un `<div>` para alojar el mensaje de error en caso de que el campo sea inválido.
+* El primer campo corresponde al nombre del usuario. El input será type = “text”. La etiqueta label pondrá el texto “Nombre”. Los atributos label, id, name serán iguales a “name”.
 * El segundo campo corresponde a la verificación de la edad. El input será type = “checkbox” debemos agregar la clase llamada form-check. La etiqueta label pondrá el texto “Are you over 18 years of age?”. Los atributos label, id, name serán iguales a “checkAdult”.
 * El tercer campo corresponde a un erá un <select>, se le adjudicará la clase form-select form-select-sm, Tendremos 3 opciones. En aplicaciones reales estas opciones aquí dentro son dinámicas, vienen del backend o una API, en este caso, serán hardcodeadas: “marketing”, “sales”, “other”
 
