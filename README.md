@@ -117,16 +117,23 @@ Un componente B puede ser invocado desde un componente A, mediante una notación
 
 En ese caso, se dice que el componente A es padre del componente B, y a su vez, el componente B será hijo del componente A.
 
-
 ## 6. One-way Data Binding
-
+La interpolación (one-way data binding) permite colocar el valor de algunas propiedades o expresiones, entre elementos HTML. Dentro de un componente, en el archivo TS se declaran las propiedades (variables) y se pueden llamar desde el archivo HTML correspondiente. 
+Sintaxis de ejemplo: 
+`<p> The value of the property is: {{property}} </p>`
+Donde property es una propiedad declarada en el archivo TS del componente. En el One Way Data Binding, las propiedades creadas en el archivo typescript son de sólo lectura, no se pueden modificar.
 
 ## 7. Two-way Data Binding
-
+El enlace bidireccional permite enlazar una propiedad en el TS, imprimirla o tenerla en el HTML y modificar su valor simultáneamente desde el input.
+La sintaxis del two-way data binding es conocida también como “banana in the box” porque la caja serían los corchetes y la bananita serían los paréntesis. Ejemplo:
+`<input type=”text” [(ngModel)]=”name”>`
+Para usarlo se debe importar el módulo de formularios en el archivo app.module.ts. 
+El two-way data binding genera un doble enlace que permite actualizar el valor de una propiedad renderizado en una UI, cada vez que cambia el valor de dicha propiedad en un input de HTML, o bien, si cambia su valor declarado en el archivo TS. 
 
 ## 8. Events Binding
-
-
+En enlace de eventos o “event binding” permite llamar un método en el momento en que ocurre un evento: Click de un botón, o bien, eventos personalizados. Suponiendo que estamos adjudicando un evento al click de un botón, su sintaxis puede resumirse como sigue:
+`< button (evento) = ” metodo() ” > Metodo < /button >`
+Cada método debe ser declarado en el archivo de lógica TypeScript correspondiente.
 
 ## 9. Pipes
 El cometido principal de los Pipes es transformar datos. Por ejemplo, dar formato a un string que contenga un nombre propio, donde se deba poner la primera letra en mayúscula, y las demás en minúsculas. Es posible crear Pipes (custom Pipes). Los Pipes pueden ser Puros o Impuros:
