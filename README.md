@@ -299,6 +299,7 @@ Es importante realizar validaciones de los valores introducidos en los formulari
 4. También es posible validar el formulario desde contact.component.ts. Si en el método onSubmit( ) se recibe el formulario completo, se podrían invocar las propiedades del objeto. Si (property).valid es true, se activa el botón; de lo contrario, se mantiene desactivado.
 
 ## 11. Reactive Forms
+Formularios reactivos en Angular
 Se considera que los formularios template-driven se deben emplear cuando las tareas son de lógica sencilla y se tienen muy pocos campos. Los reactivos, por su parte, se emplean cuando los campos están anidados y se requiere una lógica más compleja, así como escalabilidad del componente. Sin embargo, es posible usar los dos enfoques en una misma aplicación, siempre y cuando cada tipo de formulario se utilice en la tarea más adecuada.
 
 Los Reactive Forms se originan en una clase que se llama AbstractControl, la cual tiene varias subclases.
@@ -316,7 +317,6 @@ Para ilustrar el funcionamiento de los formularios reactivos, se utilizará la m
 2. En app.component.html, se invoca el componente `<app-contact-reactive></app-contact-reactive>`.
 
 3. Para trabajar con formularios reactivos se debe importar el módulo de formularios reactivos `ReactiveFormsModule`: En app.module.ts, incorporarlo en el apartado de imports, y también escribir la sentencia de importación desde @angular/forms en el área de importaciones en la parte superior de ese mismo archivo.
-
 4. En el archivo del template-driven form, `contact.component.html`, se copia el código HTML y se pega en `contact-reactive.component.html`.
 
 5. Se elimina el código HTML que propicia la renderización del objeto asociado al form (`{{contactForm.value | json}}`) y el párrafo con el mensaje inicial del componente: `reactive.contact works!`.
@@ -327,17 +327,23 @@ Para ilustrar el funcionamiento de los formularios reactivos, se utilizará la m
 
 7. Para gestionar el formulario reactivo: En la etiqueta `<form>` que envuelve todo el formulario reactivo, se incorpora la directiva FormGroup y se iguala al nombre del formulario, (en este caso `contactForm`). Esa propiedad no existe, debe crearse en reactive-contact.component.ts.
 
-8. En reactive-contact.component.ts, debajo de la línea del constructor( ) y del método ngOnInit( ), se escribe el método onSubmit( ), que no devuelve nada, y que solamente consta de un console.log( ) que diga “Form”.
+8. En reactive-contact.component.ts, debajo del método ngOnInit( ), se escribe el método onSubmit( ), que no devuelve nada, y que solamente consta de un console.log( ) que muestre los valores del formulario:
+
+```
+onSubmit(): void {
+	console.log(‘Form -> ‘, this.contactForm.value);
+}
+```
 
 9. Debajo de la sentencia de exportación de la clase, se crea la propiedad contactForm, se le asigna el tipo FormGroup. Como no se está inicializando, se adjunta un signo de exclamación al nombre de la variable: `contactForm!: FormGroup;`
 
 *Existen varias clases para trabajar con los formularios reactivos. Por ejemplo, FormControl (cuando se tiene un solo input). En este caso se puede crear una propiedad (“`myField`”, por ejemplo) e igualarla a FormControl; así, este campo hereda del FormControl y da acceso a todas las propiedades de FormControl. Si se desea ver cada vez que cambie el valor de ese input (`this.myField.valueChanges`, esto realmente es un Observable), se puede hacer. No se hará aquí, pero es importante conocer esta opción.*
 
-10. Se utilizará el FormGroup. Se recomienda escribir el método initForm( ), que va a devolver un FormGroup. Aquí se declaran las propiedades del formulario, para ello se utiliza `formbuilder`, que se debe importar (inyectar?) en el constructor( ):
-`FormBuilder` y `FormGroup` se importan desde ‘@angular/forms’:
+10. Se utilizará FormGroup. Se recomienda escribir el método initForm( ), que va a devolver un FormGroup. Aquí se declaran las propiedades del formulario, para ello se utiliza `FormBuilder`, que se debe importar en el constructor( ). 
 `constructor(private readonly fb: FormBuilder) { }`
+`FormBuilder` y `FormGroup` se importan desde ‘@angular/forms’, asegurarse de tener las importaciones declaradas.
 
-11. El método initForm( ) trabajará con `this.fb.group`. Este es un método que espera un objeto, que define los campos. En cada uno, se sigue la misa sintaxis: En el caso de `name`, se ponen dos puntos, se abren corchetes, y el primer argumento es el valor por defecto (se dejará vacío). Se pone una coma y se escriben las validaciones, que puede ser sólo una, o bien, un array. Para trabajar con las validaciones se debe importar `validators` desde ‘@angular/forms’. Al poner un punto, se pueden ver todos los métodos y propiedades a los que se tiene acceso en el formulario. Por ejemplo, es posible validar que ese campo es requerido, o también, por ejemplo, que el campo `name` tenga un mínimo de, por ejemplo, tres caracteres. En cuanto a los otros campos: `checkAdult` y `comment`, estos son requeridos. Por su parte `department` no es requerido ni necesita validación; por lo tanto, el método initForm( ) quedará de esta manera:
+11. El método initForm( ) trabajará con `this.fb.group`. Este método espera un objeto, que define los campos. En cada uno, se sigue la misa sintaxis: En el caso de `name`, se ponen dos puntos, se abren corchetes, y el primer argumento es el valor por defecto (se dejará vacío). Se pone una coma y se escriben las validaciones, que puede ser sólo una, o bien, un array. Para trabajar con las validaciones se debe importar `validators` desde ‘@angular/forms’. Al poner un punto, se pueden ver todos los métodos y propiedades a los que se tiene acceso en el formulario. Por ejemplo, es posible validar que ese campo es requerido, o también, por ejemplo, que el campo `name` tenga un mínimo de, por ejemplo, tres caracteres. En cuanto a los otros campos: `checkAdult` y `comment`, estos son requeridos. Por su parte `department` no es requerido ni necesita validación; por lo tanto, el método initForm( ) quedará de esta manera:
 ```
 initForm(): FormGroup {
 	return this.fb.group({
@@ -356,7 +362,60 @@ ngOnInit(): void {
 }
 ```
 
+#### Validaciones en Reactive Forms
+En template-driven forms se utilizó una directiva/atributo `hidden` y se evaluaron las condiciones en que el campo era `valid` o `pristine` (no modificado por el usuario). En reactive forms, esa directiva será eliminada, y en su lugar se utiliza la directiva ngIf en el `<div>` con el mensaje de error, bajo la condición: será impreso si el campo ha sido tocado, y también, si el campo es inválido. 
 
+A. Para acceder al formulario se usa la propiedad contactForm.get(); entre paréntesis se debe pasar el nombre del campo en forma de string; en este caso, name. También se debe acceder a la propiedad `errors`, que sólo existe cuando se presentan errores, por eso, cuando esta se invoca se debe utilizar question mark (`?`): para asegurar que la propiedad existe (ya que pdría ser null). La directiva ngIf queda de la siguiente manera:
+
+`*ngIf=”contactForm.get(‘name’)?.touched && contactForm.get(‘name’)?.errors?.[‘required’]”`
+
+B. Para validar que el campo `name` sea de mínimo 3 caracteres, se usa una estructura de validación similar a la anterior. Debe verificarse, de nuevo, que el campo haya sido `touched` por el usuario, y en la segunda condición, en lugar del `required`, se incorpora la propiedad `minlength`. El mensaje de error en este caso es: `Name must be longer than 3 characters`:
+
+`*ngIf=”contactForm.get(‘name’)?.touched && contactForm.get(‘name’)?.errors?.[‘minlength’]”`
+
+Para especificar de manera dinámica la cantidad de caracteres de `name` en base a la cantidad establecida en minlength (método initForm( ) del archivo contact-reactive.component.ts), se interpola la lógica de validación de minlength utilizado en la línea anterior en el mensaje de error. al invocar la propiedad requiredlength. Posteriormente, en el método initForm( ) especificar un nuevo argumento para minlength (número entero). El `<div>` contentivo del mensaje de error queda como sigue:
+
+`<div *ngIf=”contactForm.get(‘name’)?.touched && contactForm.get(‘name’)?.errors?.[‘required’]” class=”alert alert-danger”> Name must be longer than {{ contactForm.get(‘name’)?.errors?.[‘minlength’].requiredlength }} characters </div>`
+
+Para manejar el error generado cuando el campo se deja en blanco y es obligatorio, el `<div>` contentivo del mensaje de error queda como sigue:
+
+`<div *ngIf=”contactForm.get(‘name’)?.touched && contactForm.get(‘name’)?.errors?.[‘required’]” class=”alert alert-danger”> Name must be longer than {{ contactForm.get(‘name’)?.errors?.[‘minlength’].requiredlength }} characters </div>`
+
+Las validaciones de errores se escribieron en el archivo HTML pero se pueden llevar a TS, mediante la escritura de varios métodos en los que se pueda comprobar el nombre del campo y manejar los errores generados. Esto da facilidad para agregar unit tests.
+
+#### Diferencia entre los Métodos patchValue( ) y setValue( )
+1. Dentro del archivo reactive-contact.component.ts se escribe el método onPatchValue( ), no va a devolver nada, y dentro del método se accede al formulario (this.contactForm). Se utiliza el método patchValue( ), al que se le puede pasar un objeto, donde se puede indicar uno o varios campos. El método onPatchValue() será llamado desde ngOnInit(), con la línea this.onPatchValue():
+```
+ngOnInit(): void {
+	this.contactForm = this.initForm();
+	this.onPatchValue();
+}
+ngOnInit(): void {
+	this.contactForm.patchValue({name: ‘Natalia’});
+}
+```
+
+2. Al abrir la aplicación en el navegador, se observa que en el campo de nombre del formulario, aparece el nombre asignado en el objeto (‘Natalia’), ya que patchValue( ) permite escoger algunas propiedades y asignarles valores sin ningún problema.
+
+3. Se escribe el método onSetValue( ), donde se invoca al método setValue( ). Este método también espera un objeto. Se le envía el siguiente: `{comment: ‘Hola Mundo!’}`. Y se llama en el método ngOnInit( ), al igual que onPatchValue( ); este último método será comentado temporalmente, a fin de ver el resultado de onSetValue( ).
+
+```
+ngOnInit(): void {
+	this.contactForm = this.initForm();
+	this.onPatchValue();
+	this.onSetValue();
+}
+//ngOnPatchValue(): void {
+	//this.contactForm.patchValue({name: ‘Natalia’});
+//}
+ngOnSetValue(): void {
+	this.contactForm.setValue({comment: ‘Hola Mundo!’});
+}
+```
+
+Al correr la aplicación en el navegador, en la consola se obtiene este error: `Must set a name for name property`. Esto ocurre porque el método setValue( ) obliga a asignar valores a todas las propiedades del formulario.
+
+Los formularios reactivos son muy potentes, es importante conocer más sobre ellos.
 
 ## 12. Routing
 
