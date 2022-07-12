@@ -299,18 +299,37 @@ Es importante realizar validaciones de los valores introducidos en los formulari
 4. También es posible validar el formulario desde contact.component.ts. Si en el método onSubmit( ) se recibe el formulario completo, se podrían invocar las propiedades del objeto. Si (property).valid es true, se activa el botón; de lo contrario, se mantiene desactivado.
 
 ## 11. Reactive Forms
-básicamente todo parte de una clase que se llama AbstractControl y esa clase tiene varias subclases; en este caso tenemos el FormControl. imaginemos que tengamos un input que sea un buscador, en el input del buscador no hace falta que creemos un grupo de inputs. Creamos un solo FormControl y lo podemos utilizar. Tenemos la opción de crear un FormGroup cuando tenemos un formulario con varios inputs, esto nos da la posibilidad de manejarlo con mayor facilidad. También está el FormArray, que lamentablemente no podremos cubrir aquí, pero nos van a dejar un enlace con un workshop que hizo el youtuber de más de 2 horas, con formularios reactivos. 
-Las directivas de reactive forms: FormGroup, FormControl, FormControlName, FormGroupName y FormArrayName.
-Veremos especialmente el FormControlName y el FormControl durante este ejemplo
-2:29 refactorizando el formulario de la parte anterior. Se genera un nuevo componente ng g c contact-reactive
-En app.component.html, en el compartimiento que tiene una columna de col-3 se invocará el componente <app-contact-reactive></app-contact-reactive>
-Como anteriormente las columnas tenían col-9 y col-3 de ancho, ahora van a tener col-6 cada una. Comentaremos el antiguo para que no nos moleste.
-Para trabajar con formularios reactivos debemos hacer la importación del módulo de  formularios reactivos; en app.module.ts, incorporarlo en el apartado de imports, y también en el área de importaciones en la parte superior del archivo, recordar que se importa desde @angular/forms.
-Si te preguntas ¿puedo usar los dos enfoques en una misma aplicación? La respuesta es sí. No tiene mucho sentido pero puede ocurrir que una app comenzó como una serie de formularios template-driven y ahora se están haciendo reactivos. O bien, se pueden utilizar los template-driven forms para componentes muy sencillos, como el campo de ingresar el email para suscribirmos al newsletter.
-4:52 Copiaremos el HTML del form anterior, lo pegaremos en contact-reactive.component.html y le haremos modificaciones.
-5:04 añadir y retirar algunos elementos en app.component.html. De momento comentaremos el div que mostraba las alertas si el campo era inválido, ya que esas validaciones se realizarán al final. 
-5:30 se escribirá el método onSubmit() para el envío del formulario. 
-5:40 comenzaremos a realizar modificaciones en los campos. Para reactive forms no se requiere ngModel ni template variable; en su lugar se emplea FormControlName y debe asociarse al name del campo. Esto debe hacerse para cada uno de los campos. 
+Se considera que los formularios template-driven se deben emplear cuando las tareas son de lógica sencilla y se tienen muy pocos campos. Los reactivos, por su parte, se emplean cuando los campos están anidados y se requiere una lógica más compleja, así como escalabilidad del componente. Sin embargo, es posible usar los dos enfoques en una misma aplicación, siempre y cuando cada tipo de formulario se utilice en la tarea más adecuada.
+
+Los Reactive Forms tienen su origen en una clase que se llama AbstractControl, la cual tiene varias subclases.
+
+Las directivas de Reactive Forms son: FormGroup, FormControl, FormControlName, FormGroupName y FormArrayName.
+
+* Para un formulario con un solo input, se usa el FormControl.
+* Para un formulario con varios inputs, se usa el FormGroup.
+
+Para ilustrar el funcionamiento de los formularios reactivos, se utilizará la misma estructura HTML del apartado anterior (Template-driven Forms), y a partir de la misma se realizarán los cambios necesarios. Específicamente se verá el uso de FormControlName y de FormControl.
+
+1. Se genera un nuevo componente con el siguiente comando de la CLI de Angular:
+`ng g c contact-reactive`.
+
+2. En app.component.html, se invoca el componente `<app-contact-reactive></app-contact-reactive>`.
+
+3. Para trabajar con formularios reactivos se debe importar el módulo de formularios reactivos `ReactiveFormsModule`: En app.module.ts, incorporarlo en el apartado de imports, y también escribir la sentencia de importación desde @angular/forms en el área de importaciones en la parte superior de ese mismo archivo.
+
+4. En el archivo del template-driven form, `contact.component.html`, se copia el código HTML y se pega en `contact-reactive.component.html`.
+
+5. Se elimina el código HTML que propicia la renderización del objeto asociado al form (`{{contactForm.value | json}}`) y el párrafo con el mensaje inicial del componente: `reactive.contact works!`.
+
+6. En reactive forms no se requiere ngModel ni template variable; en su lugar se emplea FormControlName y debe asociarse al `name` del campo. Esto debe hacerse para cada uno de los campos. Por ejemplo, para el campo `name`, la sintaxis de la etiqueta de apertura del input sería la siguiente:
+
+`<input type = “text” class = “form-control” id = “name” name= “name” formControlName=”name” required>` 
+
+7. Para gestionar el formulario reactivo: En la etiqueta `<form>` que envuelve todo el formulario reactivo, se incorpora la directiva FormGroup y se iguala al nombre del formulario, (en este caso `contactForm`). Esa propiedad no existe, debe crearse en reactive-contact.component.ts.
+
+8. En reactive-contact.component.ts, debajo de la línea del constructor( ) y del método ngOnInit( ), se escribe el método onSubmit( ), que no devuelve nada, y que tendrá un console.log( ) del Form. Se crea la propiedad contactForm, se le asigna el tipo FormGroup. Como no se está inicializando, se adjunta un signo de exclamación al nombre de la variable.
+
+*Existen varias clases para trabajar con los formularios reactivos. Por ejemplo, FormControl (cuando se tiene un solo input). En este caso se puede crear una propiedad (“`myField`”, por ejemplo) e igualarla a FormControl; así, este campo hereda del FormControl y da acceso a todas las propiedades de FormControl. Si se desea ver cada vez que cambie el valor de ese input (`this.myField.valueChanges`, esto realmente es un Observable), se puede hacer. No se hará aquí, pero es importante conocer esta opción.*
 
 ## 12. Routing
 
