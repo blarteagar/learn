@@ -226,7 +226,8 @@ Un ejemplo de formulario template-driven puede ser uno donde se solicite a un us
 	“checkAdult”: true,
 	“department”: “marketing”,
 	“comment”: “Hello World!”
-}```
+}``
+
 
 11. En el archivo contact.component.ts, debajo del área de importaciones y por arriba del decorador @Component, se crea la interface contactForm, que tiene la forma del objeto mostrado en el paso 10. Esta interface tendrá unos campos. Una interface permite llegar a un contrato de un modelo de datos, un modelado de datos. Entonces tenemos un name, que será un string, un checkAdult, que será un booleano, department que será un string, y comment, que también será un string:
 ```{
@@ -234,7 +235,8 @@ Un ejemplo de formulario template-driven puede ser uno donde se solicite a un us
 	“checkAdult”: boolean;
 	“department”: string;
 	“comment”: string;
-}```
+}``
+
 
 12. Se crea un objeto model, debajo de la declaración de la clase del componente, y por arriba del constructor( ), para ser enlazado con el formulario:
 ```{
