@@ -416,17 +416,17 @@ ngOnSetValue(): void {
 Al correr la aplicación en el navegador, en la consola se obtiene este error: `Must set a name for name property`. Esto ocurre porque el método setValue( ) obliga a asignar valores a todas las propiedades del formulario.
 
 
-## 12. Routing 🔀
+## 12. Routing
 
 
-## 13. Lazy Loading 🛌
+## 13. Lazy Loading
 
 
-## 14. Guards 💂
+## 14. Guards
 
 
-## 15. Observables 👀
+## 15. Observables
 
-## 16. Services 🍕
+## 16. Services
 
-## 17. HTTP Requests 📩
+## 17. HTTP Requests
