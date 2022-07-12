@@ -407,7 +407,7 @@ ngOnInit(): void {
 }
 //ngOnPatchValue(): void {
 	//this.contactForm.patchValue({name: ‘Natalia’});
-//}
+}
 ngOnSetValue(): void {
 	this.contactForm.setValue({comment: ‘Hola Mundo!’});
 }
