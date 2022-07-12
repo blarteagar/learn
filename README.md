@@ -221,12 +221,15 @@ Un ejemplo de formulario template-driven puede ser uno donde se solicite a un us
 9. Para casos donde se necesite cargar data en un formulario, se puede realizar un two-way data binding. 
 
 10. Se copia el modelo tipo objeto del formulario, que contiene las propiedades y valores generadas por el formulario:
-```{
+
+```
+{
 	“name”: “Blanca”,
 	“checkAdult”: true,
 	“department”: “marketing”,
 	“comment”: “Hello World!”
-}``
+}
+```
 
 
 11. En el archivo contact.component.ts, debajo del área de importaciones y por arriba del decorador @Component, se crea la interface contactForm, que tiene la forma del objeto mostrado en el paso 10. Esta interface tendrá unos campos. Una interface permite llegar a un contrato de un modelo de datos, un modelado de datos. Entonces tenemos un name, que será un string, un checkAdult, que será un booleano, department que será un string, y comment, que también será un string:
