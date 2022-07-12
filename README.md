@@ -323,7 +323,7 @@ Para ilustrar el funcionamiento de los formularios reactivos, se utilizará la m
 
 6. En reactive forms no se requiere ngModel ni template variable; en su lugar se emplea FormControlName y debe asociarse al `name` del campo. Esto debe hacerse para cada uno de los campos. Por ejemplo, para el campo `name`, la sintaxis de la etiqueta de apertura del input sería la siguiente:
 
-`<input type = “text” class = “form-control” id = “name” name= “name” formControlName=”name” required>` 
+`<input type=“text” class=“form-control” id=“name” name=“name” formControlName=”name” required>` 
 
 7. Para gestionar el formulario reactivo: En la etiqueta `<form>` que envuelve todo el formulario reactivo, se incorpora la directiva FormGroup y se iguala al nombre del formulario, (en este caso `contactForm`). Esa propiedad no existe, debe crearse en reactive-contact.component.ts.
 
