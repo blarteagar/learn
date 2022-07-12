@@ -415,7 +415,7 @@ ngOnSetValue(): void {
 
 Al correr la aplicación en el navegador, en la consola se obtiene este error: `Must set a name for name property`. Esto ocurre porque el método setValue( ) obliga a asignar valores a todas las propiedades del formulario.
 
-Los formularios reactivos son muy potentes, es importante conocer más sobre ellos.
+Los formularios reactivos son muy potentes, es importante conocer más sobre ellos. 💔 I love you 
 
 ## 12. Routing
 
