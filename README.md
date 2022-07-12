@@ -185,6 +185,69 @@ El método devolverá un array de strings que contendrá todos los valores que c
 ***
 
 ## 10. Template-driven Forms
+Los Formularios son una pieza fundamental de las aplicaciones, ya que permiten la interacción con el usuario a través del intercambio de datos.
+
+* Los formularios Template-driven form se recomiendan para tareas sencillas, como la recolección del correo electrónico para la suscripción a un newsletter, por ejemplo. 
+* Para formularios más avanzados, con campos anidados, y que requieran una lógica más compleja, así como escalabilidad, la mejor elección son los Formularios Reactivos.
+
+Para trabajar con los formularios template-driven, es muy importante que en el app.module.ts esté importado el módulo de los Forms de Angular FormsModule. 
+
+Un ejemplo de formulario template-driven puede ser uno donde se solicite a un usuario su nombre, la confirmación de su mayoría de edad, el departamento con el que se desea comunicar y el mensaje que desea enviar. Para ello:
+
+1. Se crea un nuevo componente con los comandos de la CLI de Angular: `ng g c contact`. En el ejemplo se le dio el nombre “contact”.
+
+2. En el archivo contact.component.html, se inserta una etiqueta HTML para el título del formulario.
+
+3. Se inserta la etiqueta form, donde se anidarán las restantes etiquetas para delimitar los campos que conforman el formulario.
+
+* Para cada campo, la estructura de etiquetas consta de: un `<div>` que envuelva todo el campo; un `<label>` para dar un título al campo; un `<input>` (cuyo tipo depende del propósito: “text”, “checkbox”, “select” y “textarea”) y finalmente un `<div>` para alojar el mensaje de error en caso de que el campo sea inválido.
+
+* El primer campo corresponde al nombre del usuario. El input será type = “text”. La etiqueta label pondrá el texto “Nombre”. Los atributos label, id, name serán iguales a “name”. Se agrega el atributo required.
+* El segundo campo corresponde a la verificación de la edad. El input será type = “checkbox”. La etiqueta label pondrá el texto “Are you over 18 years of age?”. Los atributos label, id, name serán iguales a “checkAdult”. Se agrega el atributo required.
+* El tercer campo corresponde a un select con opciones: “Open this menu”, “marketing”, “sales”, “other”. El input será type = “select”. Los atributos label, id, name serán iguales a “department”. Este campo no es obligatorio, por tanto no se agrega el atributo required.
+* El cuarto campo corresponde a un textarea, al que se le agrega un placeholder “Comment...” Los atributos label, id, name serán iguales a “comment”. Se agrega el atributo required.
+* Se crea un div para alojar un botón. El type será “button”.
+* La maquetación se hizo con Bootstrap.
+
+4. En la etiqueta form se incorpora una variable de referencia de plantilla (sintaxis: incorporar una almohadilla `# ` al inicio del nombre de la variable). En el caso presente, será `#contactForm`, y se igualará a la directiva ngForm: `#contactForm = ngForm `. A partir de allí se tendrá acceso a las propiedades de la directiva, automáticamente Angular hace un seguimiento del formulario y sus campos. 
+
+5. Para ver los valores del formulario, la variable de referencia #contactForm e interpolarla en etiquetas HTML al principio del formulario; pero antes se le debe aplicar el Pipe json, nativo de Angular, y transforma un objeto en JSON. También se debe llamar la propiedad value, que aloja el contenido del formulario: `<pre> {{ contactForm.value | json }} </pre>
+
+6. Para asociar los campos al formulario puede hacerse un enlace unidireccional (One-way Data Binding). A las etiquetas de apertura de los input de los campos, se les debe agregar la directiva ngModel.
+
+7. Se debe agregar funcionalidad al botón `Send`; para ello, en la etiqueta de apertura del formulario `<form>` se debe agregar el evento ngSubmit y asociarlo al método onSubmit(). Este método debe ser declarado en el archivo contact.component.ts; de momento consistirá en 
+
+8. El método onSubmit( ) será creado en contact.component.ts. El método no devuelve nada (: void)  y mostrará un console.log de los valores del fomulario: ‘Form Values’, y se imprimirá la propiedad `values` del objeto contactForm.
+9. Para casos donde se necesite cargar data en un formulario, se puede realizar un two-way data binding. 
+
+10. Se copia el modelo tipo objeto del formulario, que contiene las propiedades y valores generadas por el formulario:
+```{
+	“name”: “Blanca”,
+	“checkAdult”: true,
+	“department”: “marketing”,
+	“comment”: “Hello World!”
+}```
+
+11. En el archivo contact.component.ts, debajo del área de importaciones y por arriba del decorador @Component, se crea la interface contactForm, que tiene la forma del objeto mostrado en el paso 10. Esta interface tendrá unos campos. Una interface permite llegar a un contrato de un modelo de datos, un modelado de datos. Entonces tenemos un name, que será un string, un checkAdult, que será un booleano, department que será un string, y comment, que también será un string:
+```{
+	“name”: string;
+	“checkAdult”: boolean;
+	“department”: string;
+	“comment”: string;
+}```
+
+12. Se crea un objeto model, debajo de la declaración de la clase del componente, y por arriba del constructor( ), para ser enlazado con el formulario:
+```{
+	name: “”;
+	checkAdult: false;
+	department: “”;
+	comment: “”;
+}``
+
+13. En el archivo contact.component.html, se utiliza la directiva ngModel con sintaxis de two-way data binding, y para cada nombre de campo, se asocia a las propiedades del modelo: `[(ngModel)]=”name”`.
+
+14. Cada propiedad puede leerse como una propiedad del objeto model. Por ejemplo, el nombre se recupera de `model.name`. En la aplicación, los datos estarán enlazados en doble vía. Lo que se ingresa en el formulario en el navegador, modifica el objeto, pero si el modelo model en contact.component.ts se inicializa con otras variables, estas también modificarán los valores correspondientes en el formulario, ya que sus campos están enlazados con el model.
+
 
 ***
 
