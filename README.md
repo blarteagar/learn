@@ -226,7 +226,7 @@ Un ejemplo de formulario sencillo puede ser uno de contacto, donde se solicite a
 
 2. En el archivo contact.component.html, se inserta una etiqueta h1 para el título del formulario. A continuación, se inserta la etiqueta form, donde se anidarán las restantes etiquetas para delimitar los campos que conforman el formulario:
 
-3. Para cada campo, la estructura de etiquetas consta de: un `<div>` que envuelva todo el campo; un `<label>` para dar un título al campo; un `<input>` (cuyo tipo depende del propósito: “text”, “checkbox”, “select” y “textarea”) y finalmente un `<div>` para alojar el mensaje de error en caso de que el campo sea inválido.
+3. Para cada campo, la estructura de etiquetas consta de: un `<div>` que envuelva todo el campo; un `<label>` para dar un título al campo; un `<input>` (cuyo tipo depende del propósito: “text”, “checkbox”, “select” y “textarea”) y finalmente un `<div>` para alojar el mensaje de error en caso de que el campo sea inválido. Ese mensaje dice: "El campo es requerido".
 
 4. El primer campo corresponde al nombre del usuario. El input será type = “text”. La etiqueta label pondrá el texto “Nombre”. Los atributos label, id, name serán iguales a “name”. Se incluye también el atributo required.
 
