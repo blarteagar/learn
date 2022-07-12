@@ -282,11 +282,13 @@ C. Se crea un objeto model, debajo de la declaración de la clase del componente
 }
 ```
 
-D. En el archivo contact.component.html, se utiliza la directiva ngModel con sintaxis de two-way data binding, y para cada nombre de campo, se asocia a las propiedades del modelo: `[(ngModel)]=”name”`.
+D. En el archivo contact.component.html, se utiliza la directiva ngModel con sintaxis de two-way data binding, y para cada nombre de campo, se asocia a las propiedades del modelo. Por ejemplo, el valor `name` se recupera de `model.name`: `[(ngModel)]=”model.name”`.
 
-E. Cada propiedad puede leerse como una propiedad del objeto model. Por ejemplo, el nombre se recupera de model.name. En la aplicación, los datos estarán enlazados en doble vía. Lo que se ingresa en el formulario en el navegador, modifica el objeto, pero si el modelo `model` en el archivo contact.component.ts se inicializa con otras variables, estas también modificarán los valores correspondientes en el formulario, ya que sus campos están enlazados con el model de manera bidireccional.
+E. En la aplicación, los datos estarán enlazados en doble vía. Lo que se ingresa en el formulario en el navegador, modifica el objeto, pero si el modelo `model` en el archivo contact.component.ts se inicializa con otras variables, estas también modificarán los valores correspondientes en el formulario, ya que sus campos están enlazados con el model de manera bidireccional.
 
+Es importante realizar validaciones de los valores introducidos en los formularios. Para ello, Angular Forms cuenta con propiedades como `value`, `valid`, `pristine`, `dirty`, `touched`, que permiten validar el formulario en general, pero también cada uno de los campos de manera individual. Por ejemplo, `pristine` verifica que el campo no haya cambiado aún desde su valor inicial. También es necesario occultar mensajes de error que no correspondan. Para validar los valores en campos de formularios, se puede proceder como sigue:
 
+1. Para cada campo, en el `<div>` del mensaje de error, se incluye el atributo hidden y se iguala a (property).valid, para asegurar que el mensaje permanezca oculto mientras el campo en cuestión sea válido. Otra condición que debe cumplirse para mantener oculto el mensaje de error, es que el usuario no haya modificado el valor del input; para ello se usa la propiedad `pristine`. La condición del atributo hidden, en el campo name, quedaría de este modo: `[hidden]="name.valid || name.pristine"`
 
 ## 11. Reactive Forms
 
