@@ -299,12 +299,12 @@ Es importante realizar validaciones de los valores introducidos en los formulari
 4. También es posible validar el formulario desde contact.component.ts. Si en el método onSubmit( ) se recibe el formulario completo, se podrían invocar las propiedades del objeto. Si (property).valid es true, se activa el botón; de lo contrario, se mantiene desactivado.
 
 ## 11. Reactive Forms
-Formularios reactivos en Angular
-Se considera que los formularios template-driven se deben emplear cuando las tareas son de lógica sencilla y se tienen muy pocos campos. Los reactivos, por su parte, se emplean cuando los campos están anidados y se requiere una lógica más compleja, así como escalabilidad del componente. Sin embargo, es posible usar los dos enfoques en una misma aplicación, siempre y cuando cada tipo de formulario se utilice en la tarea más adecuada.
 
 Los Reactive Forms se originan en una clase que se llama AbstractControl, la cual tiene varias subclases.
 
 Las directivas de Reactive Forms son: FormGroup, FormControl, FormControlName, FormGroupName y FormArrayName.
+
+Se considera que los formularios template-driven se deben emplear cuando las tareas son de lógica sencilla y se tienen muy pocos campos. Los reactivos, por su parte, se emplean cuando los campos están anidados y se requiere una lógica más compleja, así como escalabilidad del componente. Sin embargo, es posible usar los dos enfoques en una misma aplicación, siempre y cuando cada tipo de formulario se utilice en la tarea más adecuada.
 
 * Para un formulario con un solo input, se usa el FormControl.
 * Para un formulario con varios inputs, se usa el FormGroup.
