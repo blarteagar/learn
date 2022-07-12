@@ -19,7 +19,8 @@
 
 ***
 
-## 1. Preámbulo: ¿Qué es Angular / Angular CLI?
+## 1. Preámbulo
+### ¿Qué es Angular / Angular CLI?
 * Angular es un framework para aplicaciones web.
 * Desarrollado en TypeScript (TS), de código abierto, mantenido por Google.
 * Su punto fuerte es la creación de SPA (single page applications).
@@ -31,8 +32,6 @@ Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
 * Inicializar, desarrollar y mantener aplicaciones en Angular.
 * Ejecutar tareas de testing.
 * Realizar despliegue de la aplicación a producción.
-
-Antes de describir cada una de estas características, se debe definir qué es Angular, los archivos que componen un proyecto de desarrollo web y cuáles son las piezas de código que conforman esta Plataforma.
 
 ## 2. Resumen del proyecto
 En este proyecto se practicaron las principales características de Angular mediante el desarrollo de una aplicación usando:
@@ -62,7 +61,7 @@ El Template-driven Form es un formulario construido con directivas ngModel, para
 Users es un componente que se creó para probar la reacción de los Guards cuando se intenta acceder a un recurso para el cual no se cuenta con los permisos necesarios. Por esta razón, muestra un alert por defecto indicando que el usuario no cuenta con los permisos necesarios.
 Si el usuario intenta acceder a un recurso que no existe, entonces se muestra una página 404.
 
-## 1. Componente principal (App.component)
+### Componente principal (App.component)
 Contiene un archivo src/app/app.component.ts, que contiene un decorador @Component.
 Un decorador que es una declaración que modifica el comportamiento de una clase.
 El decorador @Component se importa a este componente desde ‘@angular/core’.
@@ -71,7 +70,7 @@ Luego se declara la exportación de la clase.
 El componente no implementa métodos de ningún tipo.
 El archivo src/app/app.component.html contiene el llamado a otros componentes:
 
-### 1.1. app-spinner
+#### app-spinner
 Spinner.interceptor.ts: Contiene la lógica del HTTP interceptor, que se encarga de detectar el momento en que dichas peticiones se activan o desactivan.
 Spinner.service.ts: Se usa para alojar los métodos de mostrar y ocultar del spinner, que dependen del Observable isLoading$.
 Spinner.component.ts: En la parte superior contiene las importaciones necesarias.
@@ -79,13 +78,13 @@ En el decorador @Component, en el apartado template, se ha incorporado directame
 El servicio spinnerSvc se inyecta en el constructor de la clase. El servicio es privado y de sólo lectura.
 Spinner.component.scss: Contiene los estilos del spinner.
 
-### 1.2. app-navbar: 
+#### app-navbar: 
 Es la barra de navegación, que permite ir a las diferentes vistas de la aplicación.
 * Navbar.component.scss: Contiene algunos estilos de la barra de navegación. Otros estilos son aplicados con classes de Bootstrap.
 * Navbar.component.html: Contiene la plantilla HTML de la barra de navegación.
 
 
-### 1.3. router-outlet: 
+#### router-outlet: 
 Es el componente que renderiza cada vista en la aplicación principal, en un elemento tipo root ubicado en app.component.html. Renderiza el componente que coincide con el array de rutas declarado en app.routing.module.ts.
 
 ## 3. Estructura de un proyecto de Angular
@@ -226,7 +225,7 @@ Un ejemplo de formulario sencillo puede ser uno de contacto, donde se solicite a
 
 2. En el archivo contact.component.html, se inserta una etiqueta h1 para el título del formulario. A continuación, se inserta la etiqueta form, donde se anidarán las restantes etiquetas para delimitar los campos que conforman el formulario:
 
-3. Para cada campo, la estructura de etiquetas consta de: un `<div>` que envuelva todo el campo; un `<label>` para dar un título al campo; un `<input>` (cuyo tipo depende del propósito: “text”, “checkbox”, “select” y “textarea”) y finalmente un `<div>` para alojar el mensaje de error en caso de que el campo sea inválido. Ese mensaje dice: "El campo es requerido".
+3. Para cada campo, la estructura de etiquetas consta de: un `<div>` que envuelva todo el campo; un `<label>` para dar un título al campo; un `<input>` (cuyo tipo depende del propósito: “text”, “checkbox”, “select” y “textarea”) y finalmente un `<div>` para alojar un mensaje de error que ga "El campo es requerido", para el caso en que el campo sea inválido.
 
 4. El primer campo corresponde al nombre del usuario. El input será type = “text”. La etiqueta label pondrá el texto “Nombre”. Los atributos label, id, name serán iguales a “name”. Se incluye también el atributo required.
 
