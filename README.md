@@ -301,7 +301,7 @@ Es importante realizar validaciones de los valores introducidos en los formulari
 ## 11. Reactive Forms
 Se considera que los formularios template-driven se deben emplear cuando las tareas son de lógica sencilla y se tienen muy pocos campos. Los reactivos, por su parte, se emplean cuando los campos están anidados y se requiere una lógica más compleja, así como escalabilidad del componente. Sin embargo, es posible usar los dos enfoques en una misma aplicación, siempre y cuando cada tipo de formulario se utilice en la tarea más adecuada.
 
-Los Reactive Forms tienen su origen en una clase que se llama AbstractControl, la cual tiene varias subclases.
+Los Reactive Forms se originan en una clase que se llama AbstractControl, la cual tiene varias subclases.
 
 Las directivas de Reactive Forms son: FormGroup, FormControl, FormControlName, FormGroupName y FormArrayName.
 
@@ -321,15 +321,42 @@ Para ilustrar el funcionamiento de los formularios reactivos, se utilizará la m
 
 5. Se elimina el código HTML que propicia la renderización del objeto asociado al form (`{{contactForm.value | json}}`) y el párrafo con el mensaje inicial del componente: `reactive.contact works!`.
 
-6. En reactive forms no se requiere ngModel ni template variable; en su lugar se emplea FormControlName y debe asociarse al `name` del campo. Esto debe hacerse para cada uno de los campos. Por ejemplo, para el campo `name`, la sintaxis de la etiqueta de apertura del input sería la siguiente:
+6. En reactive forms no se requiere ngModel ni template variable; en su lugar se emplea FormControlName y debe asociarse al `name` del campo. Esto debe hacerse para cada uno de los campos. Por ejemplo, para el campo `name`, la etiqueta de apertura del input quedaría así:
 
-`<input type=“text” class=“form-control” id=“name” name=“name” formControlName=”name” required>` 
+`<input type=“text” class=“form-control” id=“name” name=“name” formControlName=”name” required>`
 
 7. Para gestionar el formulario reactivo: En la etiqueta `<form>` que envuelve todo el formulario reactivo, se incorpora la directiva FormGroup y se iguala al nombre del formulario, (en este caso `contactForm`). Esa propiedad no existe, debe crearse en reactive-contact.component.ts.
 
-8. En reactive-contact.component.ts, debajo de la línea del constructor( ) y del método ngOnInit( ), se escribe el método onSubmit( ), que no devuelve nada, y que tendrá un console.log( ) del Form. Se crea la propiedad contactForm, se le asigna el tipo FormGroup. Como no se está inicializando, se adjunta un signo de exclamación al nombre de la variable.
+8. En reactive-contact.component.ts, debajo de la línea del constructor( ) y del método ngOnInit( ), se escribe el método onSubmit( ), que no devuelve nada, y que solamente consta de un console.log( ) que diga “Form”.
+
+9. Debajo de la sentencia de exportación de la clase, se crea la propiedad contactForm, se le asigna el tipo FormGroup. Como no se está inicializando, se adjunta un signo de exclamación al nombre de la variable: `contactForm!: FormGroup;`
 
 *Existen varias clases para trabajar con los formularios reactivos. Por ejemplo, FormControl (cuando se tiene un solo input). En este caso se puede crear una propiedad (“`myField`”, por ejemplo) e igualarla a FormControl; así, este campo hereda del FormControl y da acceso a todas las propiedades de FormControl. Si se desea ver cada vez que cambie el valor de ese input (`this.myField.valueChanges`, esto realmente es un Observable), se puede hacer. No se hará aquí, pero es importante conocer esta opción.*
+
+10. Se utilizará el FormGroup. Se recomienda escribir el método initForm( ), que va a devolver un FormGroup. Aquí se declaran las propiedades del formulario, para ello se utiliza `formbuilder`, que se debe importar (inyectar?) en el constructor( ):
+`FormBuilder` y `FormGroup` se importan desde ‘@angular/forms’:
+`constructor(private readonly fb: FormBuilder) { }`
+
+11. El método initForm( ) trabajará con `this.fb.group`. Este es un método que espera un objeto, que define los campos. En cada uno, se sigue la misa sintaxis: En el caso de `name`, se ponen dos puntos, se abren corchetes, y el primer argumento es el valor por defecto (se dejará vacío). Se pone una coma y se escriben las validaciones, que puede ser sólo una, o bien, un array. Para trabajar con las validaciones se debe importar `validators` desde ‘@angular/forms’. Al poner un punto, se pueden ver todos los métodos y propiedades a los que se tiene acceso en el formulario. Por ejemplo, es posible validar que ese campo es requerido, o también, por ejemplo, que el campo `name` tenga un mínimo de, por ejemplo, tres caracteres. En cuanto a los otros campos: `checkAdult` y `comment`, estos son requeridos. Por su parte `department` no es requerido ni necesita validación; por lo tanto, el método initForm( ) quedará de esta manera:
+```
+initForm(): FormGroup {
+	return this.fb.group({
+		name: [‘’, [Validators.required, Validators.minlength(3)]],
+		checkAdult: [‘’, Validators.required],
+		department: [‘’],
+		comment: [‘’, Validators.required],
+	})
+}
+```
+
+12. Y en el método ngOnInit, la propiedad contactForm se igualará a lo que devuelva el método initForm( ). Ya esta propiedad tiene el modelo de datos descrito en initFom:
+```
+ngOnInit(): void {
+	this.contactForm = this.initForm();
+}
+```
+
+
 
 ## 12. Routing
 
