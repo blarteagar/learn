@@ -191,14 +191,15 @@ Un ejemplo de formulario template-driven puede ser uno donde se solicite a un us
 
 3. En la etiqueta form se incorpora una variable de referencia de plantilla (sintaxis: incorporar una almohadilla `#` al inicio del nombre de la variable). En el caso presente, será `#contactForm`, y se iguala con la directiva ngForm: `#contactForm = ngForm `. A partir de allí se tendrá acceso a las propiedades de la directiva, automáticamente Angular hace un seguimiento del formulario y sus campos. La variable de referencia #contactForm puede ser interpolada en etiquetas HTML al principio del formulario; pero antes se le debe aplicar el Pipe json, nativo de Angular, el cual transforma un objeto en JSON. De este objeto se debe seleccionar la propiedad value, que aloja el contenido del formulario: `<pre> {{ contactForm.value | json }} </pre>`
 
-6. Para asociar los campos al formulario puede hacerse un enlace unidireccional (One-way Data Binding). A las etiquetas de apertura de los input de los campos, se les debe agregar la directiva ngModel.
+4. Para asociar los campos al formulario puede hacerse un enlace unidireccional (One-way Data Binding). Se debe incluir la directiva `ngModel` en las etiquetas de apertura de los input de los campos.
 
-7. Se debe agregar funcionalidad al botón `Send`; para ello, en la etiqueta de apertura del formulario `<form>` se debe agregar el evento ngSubmit y asociarlo al método onSubmit(). Este método debe ser declarado en el archivo contact.component.ts; de momento consistirá en 
+5. Se debe agregar funcionalidad al botón `Send`; para ello, en la etiqueta de apertura del formulario `<form>` se debe agregar el evento ngSubmit y asociarlo al método onSubmit(). Este método debe ser declarado en el archivo contact.component.ts.
 
 8. El método onSubmit( ) será creado en contact.component.ts. El método no devuelve nada (: void)  y mostrará un console.log de los valores del fomulario: ‘Form Values’, y se imprimirá la propiedad `values` del objeto contactForm.
-9. Para casos donde se necesite cargar data en un formulario, se puede realizar un two-way data binding. 
 
-10. Se copia el modelo tipo objeto del formulario, que contiene las propiedades y valores generadas por el formulario:
+Con el procedimiento anterior, los datos de los campos quedan enlazados al modelo del formulario, y van en dirección desde el input hacia el modelo. Es comunicación en una sola dirección (One-way data binding). Para casos donde se necesite cargar data en un formulario, se puede realizar un two-way data binding:
+
+A. Se copia el modelo tipo objeto del formulario, que contiene las propiedades y valores generadas por el formulario:
 
 ```
 {
@@ -209,8 +210,7 @@ Un ejemplo de formulario template-driven puede ser uno donde se solicite a un us
 }
 ```
 
-
-11. En el archivo contact.component.ts, debajo del área de importaciones y por arriba del decorador @Component, se crea la interface contactForm, que tiene la forma del objeto mostrado en el paso 10. Esta interface tendrá unos campos. Una interface permite llegar a un contrato de un modelo de datos, un modelado de datos. Entonces tenemos un name, que será un string, un checkAdult, que será un booleano, department que será un string, y comment, que también será un string:
+B. En el archivo contact.component.ts, debajo del área de importaciones y por arriba del decorador @Component, se crea la interface contactForm, que tiene la forma del objeto mostrado en el apartado A. Una interface permite llegar a un contrato de un modelado de datos. Entonces tenemos un name, que será un string, un checkAdult, que será un booleano, department que será un string, y comment, que también será un string:
 
 ```
 {
@@ -221,8 +221,7 @@ Un ejemplo de formulario template-driven puede ser uno donde se solicite a un us
 }
 ```
 
-
-12. Se crea un objeto model, debajo de la declaración de la clase del componente, y por arriba del constructor( ), para ser enlazado con el formulario:
+C. Se crea un objeto model, debajo de la declaración de la clase del componente, y por arriba del constructor( ), para ser enlazado con el formulario:
 
 ```
 {
@@ -233,9 +232,9 @@ Un ejemplo de formulario template-driven puede ser uno donde se solicite a un us
 }
 ```
 
-13. En el archivo contact.component.html, se utiliza la directiva ngModel con sintaxis de two-way data binding, y para cada nombre de campo, se asocia a las propiedades del modelo: `[(ngModel)]=”name”`.
+D. En el archivo contact.component.html, se utiliza la directiva ngModel con sintaxis de two-way data binding, y para cada nombre de campo, se asocia a las propiedades del modelo: `[(ngModel)]=”name”`.
 
-14. Cada propiedad puede leerse como una propiedad del objeto model. Por ejemplo, el nombre se recupera de `model.name`. En la aplicación, los datos estarán enlazados en doble vía. Lo que se ingresa en el formulario en el navegador, modifica el objeto, pero si el modelo model en contact.component.ts se inicializa con otras variables, estas también modificarán los valores correspondientes en el formulario, ya que sus campos están enlazados con el model.
+E. Cada propiedad puede leerse como una propiedad del objeto model. Por ejemplo, el nombre se recupera de `model.name`. En la aplicación, los datos estarán enlazados en doble vía. Lo que se ingresa en el formulario en el navegador, modifica el objeto, pero si el modelo `model` en el archivo contact.component.ts se inicializa con otras variables, estas también modificarán los valores correspondientes en el formulario, ya que sus campos están enlazados con el model de manera bidireccional.
 
 ## 11. Reactive Forms
 
