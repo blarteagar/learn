@@ -161,17 +161,19 @@ En ese caso, se dice que el componente A es padre del componente B, y a su vez, 
 
 ## 6. One-way Data Binding
 La interpolación (one-way data binding) permite colocar el valor de algunas propiedades o expresiones, entre elementos HTML. Dentro de un componente, en el archivo TS se declaran las propiedades (variables) y se pueden llamar desde el archivo HTML correspondiente. 
-Sintaxis de ejemplo: 
+Sintaxis de ejemplo:
+
 `<p> The value of the property is: {{property}} </p>`
-Donde property es una propiedad declarada en el archivo TS del componente. En el One Way Data Binding, las propiedades creadas en el archivo typescript son de sólo lectura, no se pueden modificar.
+
+Donde property es una propiedad declarada en el archivo TS del componente. En el One Way Data Binding, las propiedades creadas en el archivo TypeScript son de sólo lectura, no se pueden modificar.
 
 ## 7. Two-way Data Binding
 El enlace bidireccional permite enlazar una propiedad en el TS, imprimirla o tenerla en el HTML y modificar su valor simultáneamente desde el input.
-La sintaxis del two-way data binding es conocida también como “banana in the box” porque la caja serían los corchetes y la bananita serían los paréntesis. Ejemplo:
+La sintaxis del two-way data binding es conocida también como “banana in the box” porque la caja serían los corchetes y la banana serían los paréntesis. Ejemplo:
 
 `<input type=”text” [(ngModel)]=”name”>`
 
-Para usarlo se debe importar el módulo de formularios en el archivo app.module.ts. 
+Para usarlo se debe importar el módulo de formularios AngularFormsModule en el archivo app.module.ts. 
 El two-way data binding genera un doble enlace que permite actualizar el valor de una propiedad renderizado en una UI, cada vez que cambia el valor de dicha propiedad en un input de HTML, o bien, si cambia su valor declarado en el archivo TS.
 
 ## 8. Events Binding
@@ -221,7 +223,7 @@ Los Formularios son una pieza muy importante en las aplicaciones, ya que permite
 
 Un ejemplo de formulario sencillo puede ser uno de contacto, donde se solicite a un usuario su nombre, la confirmación de su mayoría de edad, el departamento con el que se desea comunicar y el mensaje que desea enviar. Para ello:
 
-1. Se crea un nuevo componente con los comandos de la CLI de Angular: ng g c contact. En el ejemplo se le dio el nombre “contact”.
+1. Se crea un nuevo componente con los comandos de la CLI de Angular: `ng g c contact`. En el ejemplo se le dio el nombre “contact”.
 
 2. En el archivo contact.component.html, se inserta una etiqueta h1 para el título del formulario. A continuación, se inserta la etiqueta form, donde se anidarán las restantes etiquetas para delimitar los campos que conforman el formulario:
 
@@ -288,15 +290,36 @@ E. En la aplicación, los datos estarán enlazados en doble vía. Lo que se ingr
 
 Es importante realizar validaciones de los valores introducidos en los formularios. Para ello, Angular Forms cuenta con propiedades como `value`, `valid`, `pristine`, `dirty`, `touched`, que permiten validar el formulario en general, pero también cada uno de los campos de manera individual. Por ejemplo, `pristine` verifica que el campo no haya cambiado aún desde su valor inicial. También es necesario occultar mensajes de error que no correspondan. Para validar los valores en campos de formularios, se puede proceder como sigue:
 
-1. Para cada campo, en el `<div>` del mensaje de error, se incluye el atributo hidden y se iguala a (property).valid, para asegurar que el mensaje permanezca oculto mientras el campo en cuestión sea válido. Otra condición que debe cumplirse para mantener oculto el mensaje de error, es que el usuario no haya modificado el valor del input; para ello se usa la propiedad `pristine`. La condición del atributo hidden, en el campo name, quedaría de este modo: `[hidden]="name.valid || name.pristine"`
+1. Para cada campo, en el `<div>` del mensaje de error, se incluye el atributo hidden y se iguala a (property).valid, para asegurar que el mensaje permanezca oculto mientras el campo en cuestión sea válido. Otra condición que debe cumplirse para mantener oculto el mensaje de error, es que el usuario no haya modificado el valor del input; para ello se usa la propiedad `pristine`. La condición del atributo hidden, en el campo name, quedaría de este modo: `[hidden]="name.valid || name.pristine".
+
+2. Este procedimiento se repite para cada campo.
+
+3. El botón de Enviar puede permanecer deshabilitado mientras el formulario sea inválido. Sólo se podrá activar ese botón cuando el formulario sea válido. Para ello, en contact.component.html, en la etiqueta de apertura del botón se incorpora la directiva `[disabled]="contactForm.invalid"`
+
+4. También es posible validar el formulario desde contact.component.ts. Si en el método onSubmit( ) se recibe el formulario completo, se podrían invocar las propiedades del objeto. Si (property).valid es true, se activa el botón; de lo contrario, se mantiene desactivado.
 
 ## 11. Reactive Forms
+básicamente todo parte de una clase que se llama AbstractControl y esa clase tiene varias subclases; en este caso tenemos el FormControl. imaginemos que tengamos un input que sea un buscador, en el input del buscador no hace falta que creemos un grupo de inputs. Creamos un solo FormControl y lo podemos utilizar. Tenemos la opción de crear un FormGroup cuando tenemos un formulario con varios inputs, esto nos da la posibilidad de manejarlo con mayor facilidad. También está el FormArray, que lamentablemente no podremos cubrir aquí, pero nos van a dejar un enlace con un workshop que hizo el youtuber de más de 2 horas, con formularios reactivos. 
+Las directivas de reactive forms: FormGroup, FormControl, FormControlName, FormGroupName y FormArrayName.
+Veremos especialmente el FormControlName y el FormControl durante este ejemplo
+2:29 refactorizando el formulario de la parte anterior. Se genera un nuevo componente ng g c contact-reactive
+En app.component.html, en el compartimiento que tiene una columna de col-3 se invocará el componente <app-contact-reactive></app-contact-reactive>
+Como anteriormente las columnas tenían col-9 y col-3 de ancho, ahora van a tener col-6 cada una. Comentaremos el antiguo para que no nos moleste.
+Para trabajar con formularios reactivos debemos hacer la importación del módulo de  formularios reactivos; en app.module.ts, incorporarlo en el apartado de imports, y también en el área de importaciones en la parte superior del archivo, recordar que se importa desde @angular/forms.
+Si te preguntas ¿puedo usar los dos enfoques en una misma aplicación? La respuesta es sí. No tiene mucho sentido pero puede ocurrir que una app comenzó como una serie de formularios template-driven y ahora se están haciendo reactivos. O bien, se pueden utilizar los template-driven forms para componentes muy sencillos, como el campo de ingresar el email para suscribirmos al newsletter.
+4:52 Copiaremos el HTML del form anterior, lo pegaremos en contact-reactive.component.html y le haremos modificaciones.
+5:04 añadir y retirar algunos elementos en app.component.html. De momento comentaremos el div que mostraba las alertas si el campo era inválido, ya que esas validaciones se realizarán al final. 
+5:30 se escribirá el método onSubmit() para el envío del formulario. 
+5:40 comenzaremos a realizar modificaciones en los campos. Para reactive forms no se requiere ngModel ni template variable; en su lugar se emplea FormControlName y debe asociarse al name del campo. Esto debe hacerse para cada uno de los campos. 
 
 ## 12. Routing
 
+
 ## 13. Lazy Loading
 
+
 ## 14. Guards
+
 
 ## 15. Observables
 
