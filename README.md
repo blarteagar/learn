@@ -34,7 +34,7 @@ Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
 * Realizar despliegue de la aplicación a producción.
 
 ## 2. Resumen del proyecto
-En este proyecto se practicaron las principales características de Angular mediante el desarrollo de una aplicación usando:
+En este proyecto se practicaron las principales características de Angular, mediante el desarrollo de una aplicación, utilizando:
 
 * Angular CLI v.13.3.7
 * Node v.16.15.0
@@ -417,44 +417,181 @@ Al correr la aplicación en el navegador, en la consola se obtiene este error: `
 
 
 ## 12. Routing
-```
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { ContactReactiveComponent } from "./contact-reactive/contact-reactive.component";
-import { ContactComponent } from "./contact/contact.component";
-import { PermissionsGuard } from "./guards/permissions.guard";
-import { WithoutSaveGuard } from "./guards/without-save.guard";
-import { HomeComponent } from "./home/home.component";
-import { PagenotfoundComponent } from "./pagenotfound/pagenotfound.component";
-import { DataResolverService } from "./resolvers/data.resolver.service";
-import { DetailsComponent } from "./users/details/details.component";
-import { ListComponent } from "./users/list/list.component";
-import { UserComponent } from "./users/user/user.component";
+Las rutas permiten:
+* La navegación de un componente a otro.
+* Pasar parámetros.
+* Redireccionar si una ruta no es correcta.
+* Proteger rutas (guards) mediante clases que permiten proteger las rutas
+* Asegurarse de que la data esté lista antes de imprimir un componente (resolvers).
 
+Para comenzar a trabajar con rutas, se debe tener un módulo de rutas (el módulo app.routing.module.ts), el cual podría incluirse dentro de app.module.ts, pero lo recomendable es tenerlo en un módulo aparte. Se debe importar el módulo de rutas desde @angular/router. 
+
+En el apartado de imports se inyecta el RouterModule y luego se crean las rutas necesarias (`const routes`).
+
+Para utilizarlas se usa routerlink y la ruta (componente) que contiene la vista correspondiente.
+
+Por último, desde app.component.ts, se invoca la directiva `<router-outlet></router-outlet>` para que imprima el componente que coincida con la ruta.
+
+1. Se va a crear un nuevo componente utilizando la CLI de Angular:
+`ng g c home`
+
+2. Cuando se crea por primera vez el proyecto de Angular, la CLI pregunta si se desea que el proyecto tenga rutas. Si la respuesta es afirmativa, entonces se genera automáticamente el módulo de routing. Pero el presente proyecto fue creado omitiendo el paso de crear automáticamente las rutas, por lo tanto se deben generar los módulos y componentes de manera manual. En el directorio raíz (root) de la carpeta app se crea un archivo llamado app.routing.module.ts. 
+
+3. El módulo de rutas es una Clase de TypeScript (llamada AppRoutingModule en la línea que declara `export class AppRoutingModule`) decorada @NgModule( ), este decorador permite pasar una configuración a la clase a fin de modificar su comportamiento. En dicho decorador se insertarán dos propiedades:
+`imports`: se importa el RouterModule de Angular.forRoot( ).
+`exports`: únicamente RouterModule, pero requiere un argumento: el array de rutas a utilizar en la aplicación. Para ello se crea una constante llamada `routes`, que será igual a un array de tipo Routes, importado desde @angular/router, y esa constante se pasa al RouterModule.forRoot() como argumento. Se debe importar NgModule desde @angular/core.
+
+4. Se crean tres rutas: una para el template-driven form, otra para el reactive form, y la tercera para el home. En la constante `routes` se debe enviar un array de objetos, los cuales contienen varias propiedades: la primera es `path` (ruta), se escribe coma (`,`) y luego viene `component`. Por ejemplo, en el caso de ‘contact-reactive’, se requerirá que Angular imprima el ‘ContactReactiveComponent’. Se debe repetir este objeto tantas veces como rutas se requieran:
+
+5. Se deben tomar previsiones para cuando el usuario no especifica ninguna ruta, o la que indica es incorrecta, pues en ese caso la pantalla se queda en blanco. Para evitar esto, se puede crear una ruta específica para cuando no haya coincidencia de ruta; en ese caso se debe hacer una redirección.
+
+6. La ruta en blanco debe ser el primer elemento en el array de objetos, pues Angular lleva a cabo la evaluación en orden, desde el inicio. Si alguna ruta coincide, no evalúa las demás. La redirección se denota con un `redirectTo:`̣̣, donde se debe especificar la ruta a la cual será redirigida la navegación. Existe una propiedad (`pathMatch`) que determina el grado de coincidencia de la ruta; su valor debe establecerse en ‘full’:
+
+```
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'contact-reactive', loadChildren: ()=>
-  import('./contact-reactive/contact-reactive.module').then(m => m.ContactReactiveModule)
-},
-  { path: 'contact-template/:id', component: ContactComponent, resolve: { departments: DataResolverService }},
+  { path: '', redirectTo: ‘/home’, pathMatch: ‘full’ },
+  { path: 'contact-reactive', component: ContactReactiveComponent },
+  { path: 'contact-template', component: ContactComponent },
   { path: 'home', component: HomeComponent },
-  {
-    path: 'users', component: UserComponent, canActivate: [PermissionsGuard],
-    children: [{ path: 'list', component: ListComponent },
-    { path: 'details', component: DetailsComponent },
-    ]
-  },
-  { path: '**', component: PagenotfoundComponent }
-
 ];
+```
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+7. Se debe importar app.routing.module en app.modules.ts. En el apartado de `imports:` se agrega AppRoutingModule. Guardar y cerrar el archivo app,routing.module.ts. 
+
+8. Una vez creadas todas las rutas, se debe insertar la directiva `<router-outlet></router-outlet>` en el componente principal app.component.html. 
+
+9. Como se tiene un nuevo componente home, se traslada el código TypeScript y HTML. Se elimina el onInit y el constructor. Eliminando el implement y los imports que no se están realizando. Y con eso queda establecida la lógica de home.component.ts. Entonces app.component.html queda con esta estructura:
 
 ```
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+```
+
+10. Se crea un nuevo componente: Navbar: `ng g c navbar -m app`
+Como hay más de un módulo, se debe especificar en qué módulo se declara el componente, para ello debe adjuntarse el comando `-m app`, que indica que la declaración será en el module de `app`.
+
+11. En el app.component.html se incorpora el llamado a `<navbar></navbar>`.
+
+12. Como se tiene un link de CDN de Bootstrap en el `index.html` del proyecto, se elige un navbar en la documentación de Bootstrap, se copia y pega su código en el archivo navbar.component.html.
+
+13. Se colocan las rutas en enlaces, de momento, tipo `href`:
+
+```
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">cities</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=”/contact-reactive">Reactive</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=”/contact">Template-driven</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+```
+
+14. Cuando se hace click en cualquiera de los enlaces del menú, la página vuelve a recargar completamente. Para solventar esto, y convertir la app en una verdadera “Single-Page-Application” (SPA), Angular ofrece el `routerLink`, donde se sustituye `href` por `routerLink`:
+
+```
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">cities</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink=”/contact-reactive">Reactive</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink=”/contact">Template-driven</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+```
+
+15. La clase `active` de Bootstrap para un link activo, no se percibe con claridad por la similitud en la paleta de colores del link habilitado y el deshabilitado. Para resolver esa situación, se inspecciona el estilo del elemento en las herramientas del desarrollador en el navegador Chrome, se copian y se pegan en la hoja de estilos (navbar.component.scss):
+
+```
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
+color: rgb(188 16 16 / 90%);
+background: red;
+}
+```
+
+16. El enlace `home` está activo inicialmente, pero al seleccionar otra ruta, el enlace de home no pierde el estilo, y el seleccionado no toma el estilo correspondiente. Para solventar esto, Angular tiene una class llamada routerLinkActive, que se aplica como un atributo, y debe igualarse a “active”, que es la clase a aplicar cuando la ruta está activa:
+
+```
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">cities</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive=”active” routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive=”active” routerLink=”/contact-reactive">Reactive</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive=”active” routerLink=”/contact">Template-driven</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+```
+
+17. Es importante evaluar la forma en que Angular compara la coincidencia de las rutas. Como la ruta “/home” comienza con la barra diagonal `/`, todas las rutas coinciden. Para solventar esto, se sustituye la ruta `/` por `/home` en las referencias a las rutas en navbar.component.html. De igual forma, es posible modificar la manera en que Angular verifica la coincidencia de rutas. Para ello, en la primera alternativa de ruta, se puede aplicar el atributo [routerLinkActiveOptions], que se iguala al objeto: `{exact: true]`:
+
+```
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">cities</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive=”active” routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive=”active” [routerLinkActiveOptions]={exact: true] routerLink=”/contact-reactive">Reactive</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive=”active” routerLink=”/contact">Template-driven</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+```
+
 
 
 ## 13. Lazy Loading
