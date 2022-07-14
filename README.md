@@ -417,11 +417,12 @@ Al correr la aplicación en el navegador, en la consola se obtiene este error: `
 
 
 ## 12. Routing
-Rutas en Angular
+
 Las rutas permiten:
+
 * La navegación de un componente a otro.
-* Pasar parámetros.
-* Redireccionar si una ruta no es correcta.
+* Enviar parámetros.
+* Redirigir si una ruta no es correcta.
 * Proteger rutas (guards) mediante clases que permiten proteger las rutas
 * Asegurarse de que la data esté lista antes de imprimir un componente (resolvers).
 
