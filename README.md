@@ -417,6 +417,7 @@ Al correr la aplicación en el navegador, en la consola se obtiene este error: `
 
 
 ## 12. Routing
+Rutas en Angular
 Las rutas permiten:
 * La navegación de un componente a otro.
 * Pasar parámetros.
@@ -473,13 +474,15 @@ const routes: Routes = [
 ```
 
 10. Se crea un nuevo componente: Navbar: `ng g c navbar -m app`
-Como hay más de un módulo, se debe especificar en qué módulo se declara el componente, para ello debe adjuntarse el comando `-m app`, que indica que la declaración será en el module de `app`.
+Como hay más de un módulo, se debe especificar en qué módulo se declara el componente, para ello debe adjuntarse el comando `-m app`, que indica que la declaración será en app.
 
 11. En el app.component.html se incorpora el llamado a `<navbar></navbar>`.
 
-12. Como se tiene un link de CDN de Bootstrap en el `index.html` del proyecto, se elige un navbar en la documentación de Bootstrap, se copia y pega su código en el archivo navbar.component.html.
+12. En la documentación de Bootstrap se elige un código de navbar en Bootstrap y en el archivo navbar.component.html se copia el código. Se le da el formato deseado usando Bootstrap.
 
-13. Se colocan las rutas en enlaces, de momento, tipo `href`:
+13. Personalizando el `navbar`. De momento se eliminará la `class= “active”`, pero luego se volverá a incorporar de otra manera.
+
+14. Se colocan las rutas en enlaces, de momento, tipo href:
 
 ```
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -505,7 +508,7 @@ Como hay más de un módulo, se debe especificar en qué módulo se declara el c
 </nav>
 ```
 
-14. Cuando se hace click en cualquiera de los enlaces del menú, la página vuelve a recargar completamente. Para solventar esto, y convertir la app en una verdadera “Single-Page-Application” (SPA), Angular ofrece el `routerLink`, donde se sustituye `href` por `routerLink`:
+15. Cuando se hace click en cualquiera de los enlaces del menú, la página vuelve a recargar completamente. Para solventar esto, y convertir la app en una verdadera Single-Page-Application (SPA), Angular ofrece el `routerLink`, donde se sustituye `href` por `routerLink`:
 
 ```
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -531,7 +534,7 @@ Como hay más de un módulo, se debe especificar en qué módulo se declara el c
 </nav>
 ```
 
-15. La clase `active` de Bootstrap para un link activo, no se percibe con claridad por la similitud en la paleta de colores del link habilitado y el deshabilitado. Para resolver esa situación, se inspecciona el estilo del elemento en las herramientas del desarrollador en el navegador Chrome, se copian y se pegan en la hoja de estilos (navbar.component.scss):
+16. La clase `active` de Bootstrap para un link activo, no se percibe con claridad por la similitud en la paleta de colores del link habilitado con respecto al deshabilitado. Para resolver esa situación, se inspecciona el estilo del elemento en las herramientas del desarrollador en el navegador Chrome, y se pega (previa copia) en la hoja de estilos (`navbar.component.scss`):
 
 ```
 .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
@@ -540,7 +543,7 @@ background: red;
 }
 ```
 
-16. El enlace `home` está activo inicialmente, pero al seleccionar otra ruta, el enlace de home no pierde el estilo, y el seleccionado no toma el estilo correspondiente. Para solventar esto, Angular tiene una class llamada routerLinkActive, que se aplica como un atributo, y debe igualarse a “active”, que es la clase a aplicar cuando la ruta está activa:
+18. El enlace `home` está activo inicialmente, pero al seleccionar otra ruta, el enlace de home no pierde el estilo, y el seleccionado no toma el estilo correspondiente. Para solventar esto, Angular tiene una class llamada routerLinkActive, que se aplica como un atributo, y debe igualarse a “active”, que es la clase a aplicar cuando la ruta está activa:
 
 ```
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -566,7 +569,7 @@ background: red;
 </nav>
 ```
 
-17. Es importante evaluar la forma en que Angular compara la coincidencia de las rutas. Como la ruta “/home” comienza con la barra diagonal `/`, todas las rutas coinciden. Para solventar esto, se sustituye la ruta `/` por `/home` en las referencias a las rutas en navbar.component.html. De igual forma, es posible modificar la manera en que Angular verifica la coincidencia de rutas. Para ello, en la primera alternativa de ruta, se puede aplicar el atributo [routerLinkActiveOptions], que se iguala al objeto: `{exact: true]`:
+19. Es importante evaluar la forma en que Angular compara la coincidencia de las rutas. Como la ruta “/home” comienza con la barra diagonal `/`, todas las rutas coinciden. Para solventar esto, se sustituye la ruta `/` por `/home` en las referencias a las rutas en navbar.component.html. De igual forma, es posible modificar la manera en que Angular verifica la coincidencia de rutas. Para ello, en la primera alternativa de ruta, se puede aplicar el atributo [routerLinkActiveOptions], que se iguala al objeto: `{exact: true]`:
 
 ```
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -592,16 +595,242 @@ background: red;
 </nav>
 ```
 
+Para aquellos casos en que el usuario ingrese una ruta incorrecta, es importante tener una página que notifique la situación al usuario. Para ello, se debe:
 
+1. Crear un nuevo componente. Como se tiene más de un módulo, el comando de la CLI debe ser el siguiente:
+
+`ng g c pagenotfound -m app`.
+
+2. Una vez creado el componente, se arranca la aplicación y en el array `routes` del archivo `app.routing.module.ts`, se inscribe, al final del listado, una nueva ruta: `’**’`. Este tipo de rutas son conocidas como “wildcards”, donde todo lo que no coincida con lo anterior, se maneja con esa ruta comodín, y redirige al `PagenotfoundComponent`:
+
+```
+const routes: Routes = [
+   ...
+   { path: ‘**’, component: PagenotfoundComponent }
+];
+```
+
+3. Si el usuario pone una ruta que no existe, será redirigido a la Página 404 (componente `Pagenotfound`). También podría hacerse una redirección automática a otros componentes de la aplicación, pero esto no es muy recomendable. Es importante poner un mensaje al usuario indicando que el recurso al que está intentando acceder, no existe. 
+
+#### QueryParams
+Los `QueryParams` son conjuntos de propiedades y valores ubicados al final de una URL, después del símbolo de interrogación. 
+
+Si, por ejemplo, se requiere encontrar todos los clientes cuya ciudad de residencia sea Lima, podríamos utilizar la URL: `http://myapi.com/customers?city=lima`.
+
+Pueden usarse varios QueryParams, por ejemplo: http://myapi.com/customers?firstname=manuel&lastname=jerez&status=active. Esta URL podría utilizarse para buscar a todos los clientes donde el nombre es `manuel`, el apellido es `jerez` y el estatus es `activo`. Cuando se utiliza más de un QueryParam, es importante separar cada uno mediante el simbolo `&`.
+
+A continuación se describe el funcionamiento de los `QueryParams`, utilizando `navbar` y los formularios creados en los apartados anteriores. 
+
+Podría darse el caso en que se requiera enviar el nombre de un cliente como `QueryParam`, con la intención de que cuando este acceda al formulario de contacto, se pueda imprimir su nombre.
+
+1. En el archivo `navbar.component.ts`, en el `constructor( )`, se va a inyectar la clase `router`, de tipo `Router`, importada desde `’@angular/router’`.
+
+2. Se crea, dentro de esa clase, el método `goToReactive( )`, que devuleve `:void`. En este método podemos acceder a la instancia que tenemos del Router y vamos a buscar por aquí un método que es el navigate. A este método se le envía una URL que en este caso será `’contact-reactive’` , y como segundo parámetro se le pueden poner extras, se abren llaves, y se invoca la propiedad `queryParams`, dos puntos, a continuación las opciones, en este caso un objeto con una propiedad `name`, dos puntos, y un string que será ‘Gabriela’:
+
+```
+import { Component, onInit } from ‘@angular/core’;
+import { Router ] from ‘@angular/core’;
+
+@Component({
+   selector: ‘app-navbar’,
+   templateUrl: ‘./navbar.component.html’,
+   styleUrls: [‘./navbar.component.scss’]
+})
+export class NavbarComponent implements OnInit {
+
+   constructor(private readonly router: Router) { }
+
+   ngOnInit(): void {
+   }
+   goToReactive(): void {
+   this.router.navigate([‘contact-reactive’], {queryParams: {[name: ‘Gabriela’}});
+}
+```
+
+3. En el archivo `navbar.component.html`, en el enlace correspondiente al formulario reactivo, se sustituye`routerLink` por `(click)=”goToReactive( )”`. El click sobre el enlace activará el método `goToReactive( )`.
+
+4. Al hacer click en la barra de navegación en el enlace `Reactive`, se navega normalmente, pero en la barra de direcciones, en el URL, hay un queryParam, donde está el signo de interrogación, el nombre de la propiedad, que en este caso es `name`, un signo `=` y el valor asignado, en este caso, fue `Gabriela`. Esto significa que este valor está siendo enviado como queryParam.
+
+5. Para recuperar ese valor, se debe ir al archivo `contact-reactive.component.ts`, pues se espera recibir el valor en `contact-reactive.component.html`. Se crea una propiedad que se llame `name`, (que será un string, y como no está inicializado, se le adjunta el signo de exclamación); en esa variable se almacenará el valor enviado por la URL. A continuación, se utilizará una directiva que será llamada `route` y será de tipo `ActivatedRoute`. En el `constructor( )` se crea la propiedad `route`, tipada con la interface `ActivatedRoute`:
+
+```
+   name!: string;
+
+   constructor(
+   ...
+   private readonly router: ActivatedRoute) { }
+   )
+```
+
+6. En el mismo archivo, en el método `ngOnInit( )`, se accede a la propiedad `route`, y se invocan los `QueryParams`. Esta expresión es un Observable, según se indica al colocar el cursor sobre el nombre de la propiedad, por ello, es posible llamar al método `subscribe` para hacer seguimiento de esta variable. Esta suscripción devuelve todos los `params` (tipo `Params`), de los cuales se requiere la propiedad `name` recientemente creada. Se invoca `params` y se especifica que la propiedad a leer es `name`; (es la misma que proviene del `QueryParam` declarado en `navbar.component.ts`. Una vez escrito el método `ngOnInit( )`, se debe importar la interface `Param`. Se guarda el archivo.
+
+```
+   ...
+   ngOnInit(): void {
+      this.route.queryparams.subscribe {
+      (params: Params) => {
+         this.name = params[‘name’]}
+   }
+```
+
+7. En `contact-reactive.html`, en la etiqueta HTML del título del formulario, la propiedad `name` se puede interpolar:
+
+```
+   <h1>Contact form {{ name }}</h1>
+   ...
+```
+
+8. Debería aparecer la propiedad `name` en conjunto con el título del formulario. Si se realizan modificaciones en el query Param de la URL en la barra de direcciones, al refrescar la página, los cambios deben aparecer reflejados:
+
+#### Parámetros
+Los Parámetros son propiedades que pueden transmitirse desde un componente hacia otro, mediante una dirección URL.
+
+Por ejemplo, si se requiere imprimir el `id` de un usuario en el componente `template-driven`, se puede proceder de la siguiente manera:
+
+1. En el archivo `navbar.component.ts`, al listado de métodos se agregará uno llamado `goToTemplate( )`. Este método devuelve `void`, invoca `router.navigate`, y se le envía una ruta, que en el caso presente es `’contact-template’`. Se coloca una coma y se envía otro argumento (puede ser un string, o el nombre de una propiedad, pero se dejará un string). Se guardan los cambios: 
+
+```
+   ...
+   goToTemplate(): void {
+      this.route.navigate([‘contact-template’, ‘580’]);
+   }
+```
+
+2. En el archivo `navbar.component.html` se  duplica la ruta que conduce a `’contact-template’`, se comenta la original para no confundirlas, y se procede de forma similar al caso de `’contact-reactive’`: se sustituye `routerLink` por `(click)=”goToTemplate( )”`:
+
+3. Para hacer dinámico el parámetro que aparece luego de la barra diagonal, al final de la URL, se debe realizar una modificación en el módulo de rutas `app.routing.module.ts`: En la ruta que conduce a `’contact-template’`, a continuación se especifica una propiedad (se llamará `id`), que se debe recuperar al momento de imprimirla en otros componentes:
+
+```
+const routes: Routes = [
+   ...
+   { path: ‘contact-template/:id’, component: ContactComponent }
+];
+```
+
+4. En la aplicación, el routing debería reconocer la ruta con ese `id`, y si se modifica esa propiedad en la barra de direcciones, también debería reconocerla.
+
+5. Para recuperar el `id`, en el archivo `contact.component.ts`, se va a declarar un `id` (tipo string), y en el `constructor( )` se debe inyectar la interface `ActivatedRoute`. La interface se importa desde `’@angular/route’`. En el método `ngOnInit( )`, se accede a `route.params`, que es un Observable. Se activa la suscripción, y se reciben los `params`. (tipo `Params`), luego se inserta una función flecha, y se establece que lo recibido en el parámetro `id` será enviado a la propiedad `id`. Debe recordarse que `id` es un parámetro que existe en la ruta, especificado en `app.routing.module.ts`. Se debe importar `Params` desde `’@angular/route’`. 
+
+6. Posteriormente, en `contact.component.html` se interpola ese `id`:
+
+```
+   <h1>Contact form User id: {{ id }}</h1>
+```
+
+7. Al abrir la aplicación en el navegador, la ruta debe ser reconocida y el id es renderizado. Pero si volvemos a la homepage, recordemos que tenemos “hardcodeado” (asignado manualmente) el id = 580, y si volvemos a la ruta Template-driven, y lo que venga ya dinámicamente es lo que nosotros vamos a recuperar, y podríamos enviarlo a la API u otros lugares. 
+
+####Rutas hijas
+Rutas hijas: Provienen de una ruta común; por ejemplo las rutas `http:/home/components/ ruta_hija1` y `http:/home/components/ ruta_hija2`. Es un tema muy interesante y que podría requerirse en aplicaciones grandes, medianas o pequeñas. 
+
+1. Crear un componente con el siguiente comando de la CLI:
+`ng g c users/user -m app`
+2. Se desea crear un componente en una carpeta `users/` y que el componente a crear se llame `user`, y como ya en la aplicación se tiene más de un módulo, se establece que la declaración de este componente aparecerá en `app.module.ts`. Una vez creado el componente, dentro de esa misma carpeta se creará otro componente llamado `users/details`:
+`ng g c users/details -m app`
+3. Dentro de esa misma carpeta, se tendrá otro componente llamado `list`:
+`ng g c users/list -m app`
+4. Se cierra la terminal. Se tendrá la carpeta `users` y dentro de ella las carpetas de los componentes: `user`, `details` y `list`. 
+5. En primer lugar se definen las rutas en el módulo de routing (`app.routing.module.ts`). Debajo del objeto que contiene la ruta ‘home’, se crea una ruta para ‘users’ y se invoca el componente `UserComponent`:
+
+```
+const routes: Routes = [
+   ...
+   { path: ‘home’, component: HomeComponent },
+   { path: ‘users’, component: UserComponent }
+];
+```
+
+6. Dentro de esta misma ruta, debe insertarse una propiedad llamada `children`; en ella se especifican las rutas hijas. La propiedad `children` espera un array de rutas. Por tanto, se ponen dos puntos, se abren corchetes, y dentro de la propiedad se colocan rutas, con el mismo formato de las rutas principales; es decir, un `path` y un componente a imprimir. Todo lo que esté dentro del array `children` proviene de la ruta `users`. Entonces, en `children` tendremos un `path`, que será `list`, y un `component` que será `ListComponent`. Se coloca una coma y escribimos el siguiente objeto: `path: details, component: DetailsComponent`:
+
+```
+const routes: Routes = [
+   ...
+   { path: ‘home’, component: HomeComponent },
+   { path: ‘users’, component: UserComponent,
+   children: [
+      {path: ‘list’, component: ListComponent },
+      path: ‘details’, component: DetailsComponent }
+      ],
+...
+];
+```
+
+7. Debe prepararse al componente `users` para que sea realmente un padre. Para ello se debe ubicar el componente `user.component.html`. Se elimina el código existente en ese archivo, y se crea una estructura similar a la de `app.component.html`, con sus clases de Bootstrap: `container`, dentro del mismo se coloca un `row`, y dentro del mismo, dos columnas de 6: Una para un posible listado de usuarios, y la otra para ver posibles detalles del usuario. No se está escribiendo la lógica para estas funcionalidades en la aplicación; solamente se están creando componentes para ser impresos cuando sean llamados por el sistema de `routing`.
+
+8. En el `navbar` no se ha creado el enlace para la ruta `Users`, por lo tanto, debe generarse el mismo, usando la directiva `”routerLink”`:
+
+```
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">cities</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive=”active” routerLink="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive=”active” (click)=”goToReactive()”>Reactive</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive=”active” (click)=”goToTemplate()”>Template-driven</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive=”active” routerLink=”/users”>Users</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+```
+
+9. En la app desplegada en el navegador, en el `navbar` aparece la opción `Users`, junto con los textos (planos, sin enlaces) que corresponden a las rutas hijas `List` y `Details`. Esto significa que en realidad no se está accediendo a las rutas. Para ello, en el archivo `user.component.html` se crea un enlace para `Users List` con una etiqueta (`anchor`), y dentro de ella, la directiva `routerLink`. Se repite el procedimiento con `Details`. 
+
+10. Se agrega la directiva <router-outlet></router-outlet> y se guardan los cambios.
+
+```
+<div class="container">
+   <div class="row">
+      <div class="col-6”>
+         <a routerLink=”list”>Users List</a>
+      </div>
+      <div class="col-6">
+         <a routerLink=”details”>Details</a>
+      </div>
+   </div>
+</div>
+<router-outlet></router-outlet>
+```
+
+11. En la aplicación, los enlaces `Users List` y `Details` ya deben ser funcionales, en el sentido de imprimir el componente correspondiente a cada uno.
+En resumen, el uso de las rutas hijas consiste en: definir las mismas en el módulo de rutas, generar el enlace en la barra de navegación para el componente raíz de esas rutas hijas (`users`), invocar a los componentes de las rutas hijas en el HTML del componente raíz, en el cual debe insertarse también la directiva `<router-outlet></router-outlet>` para que estos puedan imprimirse.
 
 ## 13. Lazy Loading
+
+
+
 
 
 ## 14. Guards
 
 
+
+
+
 ## 15. Observables
+
+
+
 
 ## 16. Services
 
+
+
+
+
 ## 17. HTTP Requests
+
+
+
+
