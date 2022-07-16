@@ -88,17 +88,17 @@ Es la barra de navegación, que permite ir a las diferentes vistas de la aplicac
 Es el componente que renderiza cada vista en la aplicación principal, en un elemento tipo root ubicado en app.component.html. Renderiza el componente que coincide con el array de rutas declarado en app.routing.module.ts.
 
 ## 3. Estructura de un proyecto de Angular
-En la carpeta root (directorio raíz) del proyecto, se puede encontrar la estructura de archivos y carpetas que conforman el proyecto de Angular. Entre ellos, destacan los siguientes:
+En el directorio raíz del proyecto, se puede encontrar la estructura de archivos y carpetas que conforman el proyecto de Angular. Entre ellos, destacan los siguientes:
 
 Un conjunto de archivos relacionados con la configuración de TypeScript:
-* tsconfig.app.json, que extiende desde tsconfig.json.
-* tsconfig.json, donde se expresa configuración de typescript para Angular.
-* tsconfig.spec.json, relacionado con los testings.
+* `tsconfig.app.json`, que extiende desde tsconfig.json.
+* `tsconfig.json`, donde se expresa configuración de typescript para Angular.
+* `tsconfig.spec.json`, relacionado con los testings.
 
-El archivo package.json contiene la información de los paquetes que conforman el proyecto, la mayoría de ellos son similares a los de cualquier proyecto de node:
-* El apartado scripts muestra los scripts ejecutables.
-* El apartado dependencies muestra las dependencias de Angular instaladas por el CLI.
-* El apartado devDependencies contiene las dependencias que sólo utilizaremos durante el desarrollo de la aplicación. Entre ellos, Typescript, Karma para testing y tipos.
+El archivo `package.json` contiene la información de los paquetes que conforman el proyecto, la mayoría de ellos son similares a los de cualquier proyecto de node:
+* El apartado `scripts` muestra los scripts ejecutables.
+* El apartado `dependencies` muestra las dependencias de Angular instaladas por el CLI.
+* El apartado `devDependencies` contiene las dependencias que sólo utilizaremos durante el desarrollo de la aplicación. Entre ellos, Typescript, Karma para testing y tipos.
 
 El archivo angular.json está relacionado con la configuración del proyecto:
 * Aquí se configuran algunas opciones, como por ejemplo el directorio donde se guardarán los archivos al hacer el build (bundle final a publicar en un hosting u otros lugares). Normalmente estos archivos se almacenan en la carpeta dist (distribución).
