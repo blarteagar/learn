@@ -11,8 +11,8 @@
 * [10. Template-driven Forms](#10-template-driven-forms)
 * [11. Reactive Forms](#11-reactive-forms)
 * [12. Routing](#12-routing)
-* [13. Lazy Loading](#13-lazy-loading)
-* [14. Guards](#14-guards)
+* [13. Guards](#13-guards)
+* [14. Lazy Loading](#14-lazy-loading)
 * [15. Observables](#15-observables)
 * [16. Services](#16-services)
 * [17. HTTP Requests](#17-http-requests)
@@ -316,18 +316,18 @@ Para ilustrar el funcionamiento de los formularios reactivos, se utilizará la m
 
 2. En app.component.html, se invoca el componente `<app-contact-reactive></app-contact-reactive>`.
 
-3. Para trabajar con formularios reactivos se debe importar el módulo de formularios reactivos `ReactiveFormsModule`: En app.module.ts, incorporarlo en el apartado de imports, y también escribir la sentencia de importación desde @angular/forms en el área de importaciones en la parte superior de ese mismo archivo.
+3. Para trabajar con formularios reactivos se debe importar el módulo de formularios reactivos `ReactiveFormsModule`: En `app.module.ts`, incorporarlo en el apartado de imports, y también escribir la sentencia de importación desde @angular/forms en el área de importaciones en la parte superior de ese mismo archivo.
 4. En el archivo del template-driven form, `contact.component.html`, se copia el código HTML y se pega en `contact-reactive.component.html`.
 
 5. Se elimina el código HTML que propicia la renderización del objeto asociado al form (`{{contactForm.value | json}}`) y el párrafo con el mensaje inicial del componente: `reactive.contact works!`.
 
-6. En reactive forms no se requiere ngModel ni template variable; en su lugar se emplea FormControlName y debe asociarse al `name` del campo. Esto debe hacerse para cada uno de los campos. Por ejemplo, para el campo `name`, la etiqueta de apertura del input quedaría así:
+6. En reactive forms no se requiere `ngModel` ni template variable; en su lugar se emplea `FormControlName` y debe asociarse al `name` del campo. Esto debe hacerse para cada uno de los campos. Por ejemplo, para el campo `name`, la etiqueta de apertura del `input` quedaría así:
 
 `<input type=“text” class=“form-control” id=“name” name=“name” formControlName=”name” required>`
 
 7. Para gestionar el formulario reactivo: En la etiqueta `<form>` que envuelve todo el formulario reactivo, se incorpora la directiva FormGroup y se iguala al nombre del formulario, (en este caso `contactForm`). Esa propiedad no existe, debe crearse en reactive-contact.component.ts.
 
-8. En reactive-contact.component.ts, debajo del método ngOnInit( ), se escribe el método onSubmit( ), que no devuelve nada, y que solamente consta de un console.log( ) que muestre los valores del formulario:
+8. En reactive-contact.component.ts, debajo del método `ngOnInit()`, se escribe el método `onSubmit()`, que no devuelve nada, y que solamente consta de un `console.log()` que muestre los valores del formulario:
 
 ```
 onSubmit(): void {
@@ -339,11 +339,12 @@ onSubmit(): void {
 
 *Existen varias clases para trabajar con los formularios reactivos. Por ejemplo, FormControl (cuando se tiene un solo input). En este caso se puede crear una propiedad (“`myField`”, por ejemplo) e igualarla a FormControl; así, este campo hereda del FormControl y da acceso a todas las propiedades de FormControl. Si se desea ver cada vez que cambie el valor de ese input (`this.myField.valueChanges`, esto realmente es un Observable), se puede hacer. No se hará aquí, pero es importante conocer esta opción.*
 
-10. Se utilizará FormGroup. Se recomienda escribir el método initForm( ), que va a devolver un FormGroup. Aquí se declaran las propiedades del formulario, para ello se utiliza `FormBuilder`, que se debe importar en el constructor( ). 
+10. Se utilizará `FormGroup`. Se recomienda escribir el método `initForm()`, que va a devolver un FormGroup. Aquí se declaran las propiedades del formulario, para ello se utiliza `FormBuilder`, que se debe importar en el constructor( ). 
 `constructor(private readonly fb: FormBuilder) { }`
 `FormBuilder` y `FormGroup` se importan desde ‘@angular/forms’, asegurarse de tener las importaciones declaradas.
 
 11. El método initForm( ) trabajará con `this.fb.group`. Este método espera un objeto, que define los campos. En cada uno, se sigue la misa sintaxis: En el caso de `name`, se ponen dos puntos, se abren corchetes, y el primer argumento es el valor por defecto (se dejará vacío). Se pone una coma y se escriben las validaciones, que puede ser sólo una, o bien, un array. Para trabajar con las validaciones se debe importar `validators` desde ‘@angular/forms’. Al poner un punto, se pueden ver todos los métodos y propiedades a los que se tiene acceso en el formulario. Por ejemplo, es posible validar que ese campo es requerido, o también, por ejemplo, que el campo `name` tenga un mínimo de, por ejemplo, tres caracteres. En cuanto a los otros campos: `checkAdult` y `comment`, estos son requeridos. Por su parte `department` no es requerido ni necesita validación; por lo tanto, el método initForm( ) quedará de esta manera:
+
 ```
 initForm(): FormGroup {
 	return this.fb.group({
@@ -420,7 +421,6 @@ Al correr la aplicación en el navegador, en la consola se obtiene este error: `
 
 # 12. Routing
 
-
 Las rutas permiten:
 * La navegación de un componente a otro.
 * Pasar parámetros.
@@ -441,9 +441,9 @@ Por último, desde app.component.ts, se invoca la directiva `<router-outlet></ro
 
 2. Cuando se crea por primera vez el proyecto de Angular, la CLI pregunta si se desea que el proyecto tenga rutas. Si la respuesta es afirmativa, entonces se genera automáticamente el módulo de routing. Pero el presente proyecto fue creado omitiendo el paso de crear automáticamente las rutas, por lo tanto se deben generar los módulos y componentes de manera manual. En el directorio raíz (root) de la carpeta app se crea un archivo llamado app.routing.module.ts. 
 
-3. El módulo de rutas es una Clase de TypeScript (llamada AppRoutingModule en la línea que declara `export class AppRoutingModule`) decorada @NgModule( ), este decorador permite pasar una configuración a la clase a fin de modificar su comportamiento. En dicho decorador se insertarán dos propiedades:
-`imports`: se importa el RouterModule de Angular.forRoot( ).
-`exports`: únicamente RouterModule, pero requiere un argumento: el array de rutas a utilizar en la aplicación. Para ello se crea una constante llamada `routes`, que será igual a un array de tipo Routes, importado desde @angular/router, y esa constante se pasa al RouterModule.forRoot() como argumento. Se debe importar NgModule desde @angular/core.
+3. El módulo de rutas es una Clase de TypeScript (llamada AppRoutingModule en la línea que declara `export class AppRoutingModule`) decorada `@NgModule()`, este decorador permite pasar una configuración a la clase a fin de modificar su comportamiento. En dicho decorador se insertarán dos propiedades:
+`imports`: se importa el `RouterModule` de `Angular.forRoot()`.
+`exports`: únicamente `RouterModule`, pero requiere un argumento: el array de rutas a utilizar en la aplicación. Para ello se crea una constante llamada `routes`, que será igual a un array de tipo Routes, importado desde @angular/router, y esa constante se pasa al `RouterModule.forRoot()` como argumento. Se debe importar NgModule desde `'@angular/core'`.
 
 4. Se crean tres rutas: una para el template-driven form, otra para el reactive form, y la tercera para el home. En la constante `routes` se debe enviar un array de objetos, los cuales contienen varias propiedades: la primera es `path` (ruta), se escribe coma (`,`) y luego viene `component`. Por ejemplo, en el caso de ‘contact-reactive’, se requerirá que Angular imprima el ‘ContactReactiveComponent’. Se debe repetir este objeto tantas veces como rutas se requieran:
 
@@ -627,9 +627,9 @@ A continuación se describe el funcionamiento de los `QueryParams`, utilizando `
 
 Podría darse el caso en que se requiera enviar el nombre de un cliente como `QueryParam`, con la intención de que cuando este acceda al formulario de contacto, se pueda imprimir su nombre.
 
-1. En el archivo `navbar.component.ts`, en el `constructor( )`, se va a inyectar la clase `router`, de tipo `Router`, importada desde `’@angular/router’`.
+1. En el archivo `navbar.component.ts`, en el `constructor()`, se va a inyectar la clase `router`, de tipo `Router`, importada desde `’@angular/router’`.
 
-2. Se crea, dentro de esa clase, el método `goToReactive( )`, que devuleve `:void`. En este método podemos acceder a la instancia que tenemos del Router y vamos a buscar por aquí un método que es el navigate. A este método se le envía una URL que en este caso será `’contact-reactive’` , y como segundo parámetro se le pueden poner extras, se abren llaves, y se invoca la propiedad `queryParams`, dos puntos, a continuación las opciones, en este caso un objeto con una propiedad `name`, dos puntos, y un string que será ‘Gabriela’:
+2. Se crea, dentro de esa clase, el método `goToReactive()`, que devuleve `:void`. En este método podemos acceder a la instancia que tenemos del Router y vamos a buscar por aquí un método que es el navigate. A este método se le envía una URL que en este caso será `’contact-reactive’` , y como segundo parámetro se le pueden poner extras, se abren llaves, y se invoca la propiedad `queryParams`, dos puntos, a continuación las opciones, en este caso un objeto con una propiedad `name`, dos puntos, y un string que será ‘Gabriela’:
 
 ```
 import { Component, onInit } from ‘@angular/core’;
@@ -651,11 +651,11 @@ export class NavbarComponent implements OnInit {
 }
 ```
 
-3. En el archivo `navbar.component.html`, en el enlace correspondiente al formulario reactivo, se sustituye`routerLink` por `(click)=”goToReactive( )”`. El click sobre el enlace activará el método `goToReactive( )`.
+3. En el archivo `navbar.component.html`, en el enlace correspondiente al formulario reactivo, se sustituye`routerLink` por `(click)=”goToReactive()”`. El click sobre el enlace activará el método `goToReactive()`.
 
 4. Al hacer click en la barra de navegación en el enlace `Reactive`, se navega normalmente, pero en la barra de direcciones, en el URL, hay un queryParam, donde está el signo de interrogación, el nombre de la propiedad, que en este caso es `name`, un signo `=` y el valor asignado, en este caso, fue `Gabriela`. Esto significa que este valor está siendo enviado como queryParam.
 
-5. Para recuperar ese valor, se debe ir al archivo `contact-reactive.component.ts`, pues se espera recibir el valor en `contact-reactive.component.html`. Se crea una propiedad que se llame `name`, (que será un string, y como no está inicializado, se le adjunta el signo de exclamación); en esa variable se almacenará el valor enviado por la URL. A continuación, se utilizará una directiva que será llamada `route` y será de tipo `ActivatedRoute`. En el `constructor( )` se crea la propiedad `route`, tipada con la interface `ActivatedRoute`:
+5. Para recuperar ese valor, se debe ir al archivo `contact-reactive.component.ts`, pues se espera recibir el valor en `contact-reactive.component.html`. Se crea una propiedad que se llame `name`, (que será un string, y como no está inicializado, se le adjunta el signo de exclamación); en esa variable se almacenará el valor enviado por la URL. A continuación, se utilizará una directiva que será llamada `route` y será de tipo `ActivatedRoute`. En el `constructor()` se crea la propiedad `route`, tipada con la interface `ActivatedRoute`:
 
 ```
    name!: string;
@@ -666,7 +666,7 @@ export class NavbarComponent implements OnInit {
    )
 ```
 
-6. En el mismo archivo, en el método `ngOnInit( )`, se accede a la propiedad `route`, y se invocan los `QueryParams`. Esta expresión es un Observable, según se indica al colocar el cursor sobre el nombre de la propiedad, por ello, es posible llamar al método `subscribe` para hacer seguimiento de esta variable. Esta suscripción devuelve todos los `params` (tipo `Params`), de los cuales se requiere la propiedad `name` recientemente creada. Se invoca `params` y se especifica que la propiedad a leer es `name`; (es la misma que proviene del `QueryParam` declarado en `navbar.component.ts`. Una vez escrito el método `ngOnInit( )`, se debe importar la interface `Param`. Se guarda el archivo.
+6. En el mismo archivo, en el método `ngOnInit()`, se accede a la propiedad `route`, y se invocan los `QueryParams`. Esta expresión es un Observable, según se indica al colocar el cursor sobre el nombre de la propiedad, por ello, es posible llamar al método `subscribe` para hacer seguimiento de esta variable. Esta suscripción devuelve todos los `params` (tipo `Params`), de los cuales se requiere la propiedad `name` recientemente creada. Se invoca `params` y se especifica que la propiedad a leer es `name`; (es la misma que proviene del `QueryParam` declarado en `navbar.component.ts`. Una vez escrito el método `ngOnInit()`, se debe importar la interface `Param`. Se guarda el archivo.
 
 ```
    ...
@@ -692,7 +692,7 @@ Los Parámetros son propiedades que pueden transmitirse desde un componente haci
 
 Por ejemplo, si se requiere imprimir el `id` de un usuario en el componente `template-driven`, se puede proceder de la siguiente manera:
 
-1. En el archivo `navbar.component.ts`, al listado de métodos se agregará uno llamado `goToTemplate( )`. Este método devuelve `void`, invoca `router.navigate`, y se le envía una ruta, que en el caso presente es `’contact-template’`. Se coloca una coma y se envía otro argumento (puede ser un string, o el nombre de una propiedad, pero se dejará un string). Se guardan los cambios: 
+1. En el archivo `navbar.component.ts`, al listado de métodos se agregará uno llamado `goToTemplate()`. Este método devuelve `void`, invoca `router.navigate`, y se le envía una ruta, que en el caso presente es `’contact-template’`. Se coloca una coma y se envía otro argumento (puede ser un string, o el nombre de una propiedad, pero se dejará un string). Se guardan los cambios: 
 
 ```
    ...
@@ -701,7 +701,7 @@ Por ejemplo, si se requiere imprimir el `id` de un usuario en el componente `tem
    }
 ```
 
-2. En el archivo `navbar.component.html` se  duplica la ruta que conduce a `’contact-template’`, se comenta la original para no confundirlas, y se procede de forma similar al caso de `’contact-reactive’`: se sustituye `routerLink` por `(click)=”goToTemplate( )”`:
+2. En el archivo `navbar.component.html` se  duplica la ruta que conduce a `’contact-template’`, se comenta la original para no confundirlas, y se procede de forma similar al caso de `’contact-reactive’`: se sustituye `routerLink` por `(click)=”goToTemplate()”`:
 
 3. Para hacer dinámico el parámetro que aparece luego de la barra diagonal, al final de la URL, se debe realizar una modificación en el módulo de rutas `app.routing.module.ts`: En la ruta que conduce a `’contact-template’`, a continuación se especifica una propiedad (se llamará `id`), que se debe recuperar al momento de imprimirla en otros componentes:
 
@@ -714,7 +714,7 @@ const routes: Routes = [
 
 4. En la aplicación, el routing debería reconocer la ruta con ese `id`, y si se modifica esa propiedad en la barra de direcciones, también debería reconocerla.
 
-5. Para recuperar el `id`, en el archivo `contact.component.ts`, se va a declarar un `id` (tipo string), y en el `constructor( )` se debe inyectar la interface `ActivatedRoute`. La interface se importa desde `’@angular/route’`. En el método `ngOnInit( )`, se accede a `route.params`, que es un Observable. Se activa la suscripción, y se reciben los `params`. (tipo `Params`), luego se inserta una función flecha, y se establece que lo recibido en el parámetro `id` será enviado a la propiedad `id`. Debe recordarse que `id` es un parámetro que existe en la ruta, especificado en `app.routing.module.ts`. Se debe importar `Params` desde `’@angular/route’`. 
+5. Para recuperar el `id`, en el archivo `contact.component.ts`, se va a declarar un `id` (tipo string), y en el `constructor()` se debe inyectar la interface `ActivatedRoute`. La interface se importa desde `’@angular/route’`. En el método `ngOnInit()`, se accede a `route.params`, que es un Observable. Se activa la suscripción, y se reciben los `params`. (tipo `Params`), luego se inserta una función flecha, y se establece que lo recibido en el parámetro `id` será enviado a la propiedad `id`. Debe recordarse que `id` es un parámetro que existe en la ruta, especificado en `app.routing.module.ts`. Se debe importar `Params` desde `’@angular/route’`. 
 
 6. Posteriormente, en `contact.component.html` se interpola ese `id`:
 
@@ -724,7 +724,7 @@ const routes: Routes = [
 
 7. Al abrir la aplicación en el navegador, la ruta debe ser reconocida y el id es renderizado. Pero si volvemos a la homepage, recordemos que tenemos “hardcodeado” (asignado manualmente) el id = 580, y si volvemos a la ruta Template-driven, y lo que venga ya dinámicamente es lo que nosotros vamos a recuperar, y podríamos enviarlo a la API u otros lugares. 
 
-####Rutas hijas
+#### Rutas hijas
 
 Rutas hijas: Provienen de una ruta común; por ejemplo las rutas `http:/home/components/ ruta_hija1` y `http:/home/components/ ruta_hija2`. Es un tema muy interesante y que podría requerirse en aplicaciones grandes, medianas o pequeñas. 
 
