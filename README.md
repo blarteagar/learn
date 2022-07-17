@@ -88,17 +88,17 @@ Es la barra de navegación, que permite ir a las diferentes vistas de la aplicac
 Es el componente que renderiza cada vista en la aplicación principal, en un elemento tipo root ubicado en app.component.html. Renderiza el componente que coincide con el array de rutas declarado en app.routing.module.ts.
 
 ## 3. Estructura de un proyecto de Angular
-En el directorio raíz del proyecto, se puede encontrar la estructura de archivos y carpetas que conforman el proyecto de Angular. Entre ellos, destacan los siguientes:
+En la carpeta root (directorio raíz) del proyecto, se puede encontrar la estructura de archivos y carpetas que conforman el proyecto de Angular. Entre ellos, destacan los siguientes:
 
 Un conjunto de archivos relacionados con la configuración de TypeScript:
-* `tsconfig.app.json`, que extiende desde tsconfig.json.
-* `tsconfig.json`, donde se expresa configuración de typescript para Angular.
-* `tsconfig.spec.json`, relacionado con los testings.
+* tsconfig.app.json, que extiende desde tsconfig.json.
+* tsconfig.json, donde se expresa configuración de typescript para Angular.
+* tsconfig.spec.json, relacionado con los testings.
 
-El archivo `package.json` contiene la información de los paquetes que conforman el proyecto, la mayoría de ellos son similares a los de cualquier proyecto de node:
-* El apartado `scripts` muestra los scripts ejecutables.
-* El apartado `dependencies` muestra las dependencias de Angular instaladas por el CLI.
-* El apartado `devDependencies` contiene las dependencias que sólo utilizaremos durante el desarrollo de la aplicación. Entre ellos, Typescript, Karma para testing y tipos.
+El archivo package.json contiene la información de los paquetes que conforman el proyecto, la mayoría de ellos son similares a los de cualquier proyecto de node:
+* El apartado scripts muestra los scripts ejecutables.
+* El apartado dependencies muestra las dependencias de Angular instaladas por el CLI.
+* El apartado devDependencies contiene las dependencias que sólo utilizaremos durante el desarrollo de la aplicación. Entre ellos, Typescript, Karma para testing y tipos.
 
 El archivo angular.json está relacionado con la configuración del proyecto:
 * Aquí se configuran algunas opciones, como por ejemplo el directorio donde se guardarán los archivos al hacer el build (bundle final a publicar en un hosting u otros lugares). Normalmente estos archivos se almacenan en la carpeta dist (distribución).
@@ -363,6 +363,7 @@ ngOnInit(): void {
 ```
 
 #### Validaciones en Reactive Forms
+
 En template-driven forms se utilizó una directiva/atributo `hidden` y se evaluaron las condiciones en que el campo era `valid` o `pristine` (no modificado por el usuario). En reactive forms, esa directiva será eliminada, y en su lugar se utiliza la directiva ngIf en el `<div>` con el mensaje de error, bajo la condición: será impreso si el campo ha sido tocado, y también, si el campo es inválido. 
 
 A. Para acceder al formulario se usa la propiedad contactForm.get(); entre paréntesis se debe pasar el nombre del campo en forma de string; en este caso, name. También se debe acceder a la propiedad `errors`, que sólo existe cuando se presentan errores, por eso, cuando esta se invoca se debe utilizar question mark (`?`): para asegurar que la propiedad existe (ya que pdría ser null). La directiva ngIf queda de la siguiente manera:
@@ -384,6 +385,7 @@ Para manejar el error generado cuando el campo se deja en blanco y es obligatori
 Las validaciones de errores se escribieron en el archivo HTML pero se pueden llevar a TS, mediante la escritura de varios métodos en los que se pueda comprobar el nombre del campo y manejar los errores generados. Esto da facilidad para agregar unit tests.
 
 #### Diferencia entre los Métodos patchValue( ) y setValue( )
+
 1. Dentro del archivo reactive-contact.component.ts se escribe el método onPatchValue( ), no va a devolver nada, y dentro del método se accede al formulario (this.contactForm). Se utiliza el método patchValue( ), al que se le puede pasar un objeto, donde se puede indicar uno o varios campos. El método onPatchValue() será llamado desde ngOnInit(), con la línea this.onPatchValue():
 ```
 ngOnInit(): void {
@@ -416,13 +418,13 @@ ngOnSetValue(): void {
 Al correr la aplicación en el navegador, en la consola se obtiene este error: `Must set a name for name property`. Esto ocurre porque el método setValue( ) obliga a asignar valores a todas las propiedades del formulario.
 
 
-## 12. Routing
+# 12. Routing
+
 
 Las rutas permiten:
-
 * La navegación de un componente a otro.
-* Enviar parámetros.
-* Redirigir si una ruta no es correcta.
+* Pasar parámetros.
+* Redireccionar si una ruta no es correcta.
 * Proteger rutas (guards) mediante clases que permiten proteger las rutas
 * Asegurarse de que la data esté lista antes de imprimir un componente (resolvers).
 
@@ -544,7 +546,7 @@ background: red;
 }
 ```
 
-18. El enlace `home` está activo inicialmente, pero al seleccionar otra ruta, el enlace de home no pierde el estilo, y el seleccionado no toma el estilo correspondiente. Para solventar esto, Angular tiene una class llamada routerLinkActive, que se aplica como un atributo, y debe igualarse a “active”, que es la clase a aplicar cuando la ruta está activa:
+17. El enlace `home` está activo inicialmente, pero al seleccionar otra ruta, el enlace de home no pierde el estilo, y el seleccionado no toma el estilo correspondiente. Para solventar esto, Angular tiene una class llamada routerLinkActive, que se aplica como un atributo, y debe igualarse a “active”, que es la clase a aplicar cuando la ruta está activa:
 
 ```
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -570,7 +572,7 @@ background: red;
 </nav>
 ```
 
-19. Es importante evaluar la forma en que Angular compara la coincidencia de las rutas. Como la ruta “/home” comienza con la barra diagonal `/`, todas las rutas coinciden. Para solventar esto, se sustituye la ruta `/` por `/home` en las referencias a las rutas en navbar.component.html. De igual forma, es posible modificar la manera en que Angular verifica la coincidencia de rutas. Para ello, en la primera alternativa de ruta, se puede aplicar el atributo [routerLinkActiveOptions], que se iguala al objeto: `{exact: true]`:
+18. Es importante evaluar la forma en que Angular compara la coincidencia de las rutas. Como la ruta “/home” comienza con la barra diagonal `/`, todas las rutas coinciden. Para solventar esto, se sustituye la ruta `/` por `/home` en las referencias a las rutas en navbar.component.html. De igual forma, es posible modificar la manera en que Angular verifica la coincidencia de rutas. Para ello, en la primera alternativa de ruta, se puede aplicar el atributo [routerLinkActiveOptions], que se iguala al objeto: `{exact: true]`:
 
 ```
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
@@ -614,6 +616,7 @@ const routes: Routes = [
 3. Si el usuario pone una ruta que no existe, será redirigido a la Página 404 (componente `Pagenotfound`). También podría hacerse una redirección automática a otros componentes de la aplicación, pero esto no es muy recomendable. Es importante poner un mensaje al usuario indicando que el recurso al que está intentando acceder, no existe. 
 
 #### QueryParams
+
 Los `QueryParams` son conjuntos de propiedades y valores ubicados al final de una URL, después del símbolo de interrogación. 
 
 Si, por ejemplo, se requiere encontrar todos los clientes cuya ciudad de residencia sea Lima, podríamos utilizar la URL: `http://myapi.com/customers?city=lima`.
@@ -630,7 +633,7 @@ Podría darse el caso en que se requiera enviar el nombre de un cliente como `Qu
 
 ```
 import { Component, onInit } from ‘@angular/core’;
-import { Router ] from ‘@angular/core’;
+import { Router } from ‘@angular/core’;
 
 @Component({
    selector: ‘app-navbar’,
@@ -684,6 +687,7 @@ export class NavbarComponent implements OnInit {
 8. Debería aparecer la propiedad `name` en conjunto con el título del formulario. Si se realizan modificaciones en el query Param de la URL en la barra de direcciones, al refrescar la página, los cambios deben aparecer reflejados:
 
 #### Parámetros
+
 Los Parámetros son propiedades que pueden transmitirse desde un componente hacia otro, mediante una dirección URL.
 
 Por ejemplo, si se requiere imprimir el `id` de un usuario en el componente `template-driven`, se puede proceder de la siguiente manera:
@@ -721,6 +725,7 @@ const routes: Routes = [
 7. Al abrir la aplicación en el navegador, la ruta debe ser reconocida y el id es renderizado. Pero si volvemos a la homepage, recordemos que tenemos “hardcodeado” (asignado manualmente) el id = 580, y si volvemos a la ruta Template-driven, y lo que venga ya dinámicamente es lo que nosotros vamos a recuperar, y podríamos enviarlo a la API u otros lugares. 
 
 ####Rutas hijas
+
 Rutas hijas: Provienen de una ruta común; por ejemplo las rutas `http:/home/components/ ruta_hija1` y `http:/home/components/ ruta_hija2`. Es un tema muy interesante y que podría requerirse en aplicaciones grandes, medianas o pequeñas. 
 
 1. Crear un componente con el siguiente comando de la CLI:
@@ -807,17 +812,310 @@ const routes: Routes = [
 11. En la aplicación, los enlaces `Users List` y `Details` ya deben ser funcionales, en el sentido de imprimir el componente correspondiente a cada uno.
 En resumen, el uso de las rutas hijas consiste en: definir las mismas en el módulo de rutas, generar el enlace en la barra de navegación para el componente raíz de esas rutas hijas (`users`), invocar a los componentes de las rutas hijas en el HTML del componente raíz, en el cual debe insertarse también la directiva `<router-outlet></router-outlet>` para que estos puedan imprimirse.
 
-## 13. Lazy Loading
+# Guards
 
+Los Guardianes (`Guards`) ayudan a proteger una determinada ruta, bien sea para evitar que los usuarios accedan a una ruta.
 
+Por ejemplo, se podría proteger esta ruta para asegurar que el usuario haya iniciado sesión en la aplicación. 
 
+Otra posibilidad podría ser cuando el usuario intente abandonar una ruta, podríamos verificar si en un formulario quedan datos por guardar, etc.
 
+Para ilustrar la situación en que un usuario intenta acceder a una ruta para la que no tiene los permisos requeridos:
 
-## 14. Guards
+1. Se ejecuta en la terminal el siguiente comando:
 
+```
+ng g guard permissions
+```
 
+2. La CLI de Angular preguntará cuál es la `interface` que se desea implementar. Se selecciona `Can Activate` y se presiona `ENTER`. Esto crea el guard `permissions`.
 
+3. Se crea otro `guard`, y esta vez se solicita a la CLI omitir la creación del archivo de testing. Este `guard` se llamará `withoutSave`:
 
+```
+ng g guard withoutSave --skip-tests=true
+```
+
+4. Se presiona `ENTEṚ`. La bandera `skip tests` impide que se generen los archivos de testing.
+
+5. En un mismo `guard` se pueden tener simultáneamente varias implementaciones de interfaces. Se selecciona `Can Deactivate` y se presiona `ENTER`.
+
+6. Se crea una carpeta `guards` para agrupar los recientemente generados. Los archivos de testing se pueden eliminar. El `guard` es una Clase de TypeScript que implementa una interface nativa de Angular. En este caso, `CanActivate` es la interface que controla el acceso de un usuario a una determinada ruta. En este momento no se tiene un sistema de `login` u otro mecanismo similar, por ello, en el archivo `permissions.guards.ts` se debe crear un método que simule si un usuario está autorizado o no. El método se llama `hasUser()`. Por ahora, el método devuelve `false`; en la interface `CanActivate` no se utilizarán rutas ni estados. Se debe comprobar, dentro de un `if()`, si el método `hasUser()` es `true` o `false`. Si es `true`, retorna `true`, y si es `false`, retorna `false`; en este último caso, a falta de otros componentes, se dispara una alerta para indicar al usuario que :
+```
+import { Injectable } from ‘@angular/core’;
+import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from ‘@angular/router’;
+import { Observable } from ‘rxjs’;
+
+@Injectable({
+   providedIn: ‘root’
+})
+export class PermissionsGuards implements CanActivate {
+   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      if (this.hasUser()) {
+         return true;
+      }
+      //Redirect Login
+      alert(‘You do not have permissions’);
+      return false;
+   }
+
+   hasUser(): boolean {
+      return false;
+   }
+}
+```
+
+7. En el módulo de rutas (`app.routing.module.ts`) se implementa la protección de la URL del acceso de usuarios no autorizados; para ello se establece que, dentro de la ruta a proteger, se desea utilizar `canActivate`, a la que se envía un array, ya que es posible utilizar más de un `guard` que aplique para una ruta. En el caso presente, el `guard` se llama `PermissionsGuard`:
+
+```
+const routes: Routes = [
+   ...
+   { path: ‘users’, component: UserComponent, canActivate: [PermissionsGuard],
+   children: [
+      {path: ‘list’, component: ListComponent },
+      path: ‘details’, component: DetailsComponent },
+      ],
+   }
+...
+];
+```
+
+8. En la app, se espera poder navegar normalmente por las diferentes rutas, pero al querer acceder a `Users` aparece la alerta indicando que el usuario no tiene permisos, ya que el método `hasUser()` de `permissions.guard.ts`, por defecto devuelve `false`. Si se modifica el archivo y se cambia a `true`, entonces se podrá volver a acceder a esa ruta sin mayor inconveniente. Si se vuelve a cambiar a `false`, vuelve a negar el acceso, aun cuando se intente desde la barra de direcciones. E incluso, las rutas hijas, como `UsersList`, tampoco son accesibles, ya que están bajo la tutela del componente padre `users`. En `permissions.guards.ts`, la interface `CanActivate` también protege a las rutas hijas.
+
+En resumen, en el método `canActivate()`, si se necesita que el usuario esté autorizado, no se muestra la ruta, sino que se deshabilita de alguna forma. Una opción es redirigir al Login, si se tiene ese componente preparado.
+
+Segundo ejemplo: Uso de un `guard` para cuando el usuario intente abandonar un componente de formulario sin haber completado todos los datos.
+
+1. En el archivo `withoutSave.guards.ts` se procederá de manera similar a la del ejemplo anterior: se crea un método llamado `hasUser()`, que devuelve un booleano, inicialmente `false` (usuario no ha iniciado sesión). En este método se podría recibir un componente (típicamente un formulario), como parámetro, puesto que normalmente estos `guards` son para los casos en que un usuario está interactuando con un formulario, pero de repente abandona (por ejemplo, hace click en la tecla `back` del navegador). La aplicación debe preguntar si el usuario se irá sin guardar sus cambios.
+
+2. En el método `canDeactivate()`, se debe realizar una comprobación, con un `if()`. Si el usuario inició sesión, entonces el método `hasUser()` está devolviendo `true` porque el usuario está logado. En caso contrario, se utiliza el método `confirm()` de JavaScript; es un alert con la opción de cancelar o continuar; con el mensaje ‘You have unsaved changes’. El método `confirm()` es un booleano: si devuelve true, se le permite al usuario continuar, y de no ser así, se le impide seguir. 
+
+```
+@Injectable({
+   providedIn: ‘root’
+})
+export class WithoutSaveGuard implements CanDeactivate<unknown> {
+   canDeactivate(): 
+      cmponent: unknown,
+      currentRoute: ActivatedRouteSnapshot,
+      currentState: RouterStateSnapshot,
+      nextState: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+         return true;
+      }
+      //Redirect Login
+      alert(‘You have unsaved changes’);
+      return true;
+   }
+   hasUser(): boolean {
+      return false;
+   }
+}
+```
+
+3. Para implementar este `guard`, se abre el archivo `app.routing.module.ts` y se ubica la ruta del formulario reactivo, se pone una coma y la propiedad a utilizar: para el caso presente, es `canDeactivate`, aquí también es posible pasar un array de `guards`, el de este ejemplo fue llamado `WithoutSaveGuard`. Se guardan los cambios.
+
+4. En la app desplegada en el navegador, se espera poder navegar normalmente hasta el `Reactive Form`. No se ha implementado una lógica para comprobar si faltan datos por guardar; pero si el usuario intenta salir del reactive, se le da la advertencia de que no debería salir del form y que confirme que desea salir. Si se hace click en `cancel`, se mantiene al usuario en la misma ruta. Si se intenta volver a salir, vuelve a salir la pregunta, y si se hace click en `accept`, permite salir hacia otras rutas.
+5. Queda por verificar si el usuario ha guardado o no, o si el formulario está `dirty`, punto a partir del cual se genera la confirmación. Si la respuesta es no, se perderían los cambios, y si la respuesta es sí, entonces que se asegure de guardar. Esta parte no se ha implementado aún.
+
+Resumen del `Guard` de Angular: Asegurarse de si un usuario tiene permisos para acceder a una ruta (`canActivate`), o determinar si el usuario puede dejar esa ruta (`canDeactivate`).
+Hay otras interfaces que se pueden implementar: `canLoad` y `canActivateChild`.
+
+#### Resolvers en Angular
+
+* Un resolver es una interface que las clases pueden implementar para ser un proveedor de datos.
+* Se debe usar con el router para resolver para resolver datos durante la navegación.
+* Se debe implementar un método `resolve()` que se invoca cuando comienza la navegación.
+* El router espera a que se resuelvan los datos antes de que finalmente se active la ruta.
+
+El resolver es una interface que las clases implementan para ser un proveedor de datos, pero más que eso, sirve como una especie de middleware que cuando inicia la navegación en Angular, él se encargará de retrasar la impresión de un componente hasta que no se tenga la data. Se debe usar con el `router` de Angular, entonces, cuando ese proceso de navegación inicia, el resolver se dispara y hace el `fetch` de la data.
+
+En resumen, un resolver es un mecanismo de Angular que se encarga de tener unos datos listos para imprimir y el componente no inicia su ciclo de vida hasta que la data está lista, en el momento en que se va a llamar a un componente.
+
+La manera de utilizarlo consiste en crear una clase en la que se implementa el método `resolve()`.
+
+1. Dentro de la carpeta `app` se crea una carpeta `resolvers`, y dentro de ella un archivo llamado `data.resolver.service.ts`. El `resolver` se habría podido crear con la CLI de Angular, pero también se puede crear manualmente. Básicamente en Angular, todos los archivos, ya sean un servicio, un guard, un resolver, un componente, siguen el mismo proceso. Todos ellos son clases de typescript, que normalmente estarán decoradas por un decorador. En este caso, esta clase será llamada `DataResolverService`. Esta clase será decorada con el decorador `@Injectable`, y se indicará que está `providedIn: root`.
+
+2. Esta clase tiene que implementar la interface `Resolve`. Esta interface se debe importar desde `’@angular/router’`. Si se hace `ctrl+click` sobre el nombre de esta interface, es posible ver su estructura. Implementa el método `resolve()`, recibe una ruta, un parámetro, un state, entre otros. De momento no se especificarán todas esas propiedades, pues hasta ahora no se tiene una API que esté sirviendo datos. Normalmente esto se suele hacer cuando se tiene una petición a una API y la respuesta puede ser un objeto sumamaente extenso, o no se tiene garantías de que la API responda en el tiempo estipulado; en esos casos se hace un `resolve()` para asegurar que el componente será cargado únicamente cuando se tenga esa data disponible.
+
+```
+import { Injectable } from “@angular/core”;
+import { Resolve } from “@angular/route”;
+
+@Injectable({ providedIn: ‘root’ })
+export class DataResolverService implements Resolve {
+   }
+```
+
+3. Una vez importada la interface, se crea el método `resolve( )`. Este método por ahora devuelve un `Observable<>`, de cualquier tipo (tipo `any`), la interfaz `Resolve<>` también será tipada con `any` porque no se ha creado una interface para esto. 
+
+4. Se importamos el `Observable` desde `‘rxjs’`. Como todavía no se tiene un service o un API en la aplicación, dentro del método se coloca un comentario con una tarea pendiente: `//TO DO: CALL SERVICE`. Normalmente el resolver se utiliza para hacer peticiones a la API. Antes del decorador `@Injectable`, y por debajo del área de importaciones, se crea una constante `departments`, que consta de un array de strings con los valores: `‘Marketing’, ‘Sales’, ‘Other’`. El método `resolve()` devuelve `return of()`; este último es un método proveniente de `rxjs`; esta expresión convierte el array en un Observable. En este método se pone la constante `departments` como argumento.
+
+5. Una vez creado el método `resolve()`, este debe ser implementado. Lo primero para ello es ir a `app.routing.module.ts` (módulo de rutas). Supóngase que este resolve se desea aplicar a la ruta `‘contact-reactive’`. En dicha ruta ya está incorporado el guard `canDeactivate`. Se escribe coma, se agrega la propiedad `resolve`, que espera un objeto , y dentro del mismo se encuentra la propiedad `departments`, a la cual se asigna el resolver, en este caso llamado `DataResolverService`. Se importa desde su ubicación de origen.
+
+Con lo anterior, el resolver está creado e implementado. Podría utilizarse el mismo resolver en otra ruta, puede ser la del `template-driven form`, por ejemplo. Para asegurar que la data ya está lista antes de imprimir el componente:
+
+A. Se debe ir al código del componente; en este caso, el de `reactive.component.ts`. En el `constructor()`, donde está inyectado ,`route`, en las primeras líneas del método `ngOnInit()`, se escribe `this.route.` y se accede a una propiedad llamada `snapshot` y de esta se invoca la propiedad data. Se abren corchetes y se solicita la data, que en este caso se llama ‘departments’.
+
+B. Para ver si esto se cumple, debajo del área de imports, y antes del constructor, se crea una variable llamada `departments`, y se inicializa como un array vacío. Se vuelve al método `ngOnInit()` y se establece que `this.departments` será igual a lo que se recupere en la petición de la data:
+
+```
+export class ContactReactiveComponent implements OnInit {
+   contactForm!: FormGroup;
+   name!: string;
+   departments: string[] = [];
+
+constructor(
+   private readonly fb: FormBuilder,
+   private readonly route: ActivatedRoute) { }
+
+ngOnInit( ): void {
+   this.departments = this.route.snapshot.data[‘departments’];
+   ...
+}
+```
+
+C. No se conoce el tipo de data a recuperar, pero se puede ir al archivo `reactive.component.html`, incluir en las líneas iniciales `<pre>{{ departments }}</pre>` y desplegar la aplicación en el navegador para ver qué se visualiza.
+
+D. Como comportamiento ideal, se espera la impresión del array de strings. No es posible notar el proceso de búsqueda de la data, o del aseguramiento de recuperación de la data, previo a la impresión, porque la data no viene de un servicio externo y tampoco es una data extensa. Pero debe quedar bien establecida la idea de que Angular se asegura de que el componente no se renderiza hasta que la data no esté lista. Si se implementa esto con una API, se verá que el componente no se renderiza hasta que la data no esté lista. 
+
+E. El array de strings corresponde a las categorías del `<select>` en el formulario reactivo. En el archivo `reactive.component.html`, en el `<select>` se incluirá la directiva `*ngFor`, con la variable iteradora local `department` para recorrer el array `departments`. Se crea el atributo `[value]` y se iguala a `department`, y en la etiqueta de la opción correspondiente, se interpolará `department`:
+
+```
+  <div class="mb-4">
+    <label for="department" class="form-label">Department</label>
+    <select name="department" id="department" class="form-select form-select-sm" formControlName="department">
+      <option selected>Open this select menu</option>
+      <option *ngFor="let department of departments" [value]="department">{{department}}</option>
+    </select>
+  </div>
+```
+
+F. Al abrir la aplicación en el navegador, se observa la impresión del array ubicado al inicio del formulario reactivo, y el `<select>` recorre el array elemento por elemento para desplegar las opciones.
+De manera dinámica, si en el archivo `data.resolve.service.ts`, se añaden nuevos elementos al array `departments`, se renderizarán en el `<select>` del reactive form.
+Resolver sirve para asegurar que, antes de la impresión de un componente, ya la data esté disponible y lista para ser renderizada.
+
+# Lazy Loading
+
+* El Lazy Loading en Angular, o la carga diferida, es una técnica que retrasa la carga de un determinado módulo hasta que realmente el usuario o la aplicación lo necesite.
+* Lazy Loading puede contribuir a mejorar el desempeño de la aplicación.
+
+Esto se puede entender mejor si se abre la terminal y, en la ruta de la aplicación, se ejecuta el comando `ng build`. Esto hace que Angular prepare la aplicación para llevarla a producción. El resultado del bundle final de Angular se muestra a continuación. Se tiene un archivo `main.js`, un archivo `polyfills`, para la compatibilidad entre navegadores, `runtime.js` y un archivo de estilos:
+
+```
+Initial Chunk Files                       | Names      | Raw Size    | Estimated Transfer Size
+main.b71da01d8d5bba40.js         | main         | 271.72 kB  | 68.74 kB
+polyfills.a31312576955ba21.js    | polyfills    | 36.22 kB    | 11.49 kB
+runtime.44018e33d142a47b.js     | runtime     | 1.04 kB      | 598 bytes
+styles.0512d26f419c5714.css      | styles         | 25 bytes     | 29 bytes
+                                                     | Initial total | 309.00 kB | 80.84 kB
+```
+
+Por defecto, la aplicación carga todos los módulos, independientemente de si se necesiten o no. Por ejemplo, si el usuario está visitando la home page, ya está disponible toda la información necesaria para los formularios. Eso no tiene sentido, puesto que el usuario no está interactuando con esa parte de la aplicación en ese momento.
+
+Si se abre la pestaña `Network`, de las herramientas del desarrollador de `Chrome Developer Tools`, y se refresca la carga de la aplicación en el navegador, pueden verse los archivos que cargan inicialmente. El `runtime`, el `polyfills`, el `main`, cargan todos a la vez. Sin embargo, es necesario indicarle a Angular que debe cargar ciertos módulos únicamente cuando se necesiten, y eso ayudará al desempeño de la aplicación.
+
+En el código, es necesario generar un feature module y un módulo de rutas también, para que el Lazy Loading pueda funcionar.
+
+1. Se ejecuta el siguiente comando en la terminal: 
+
+`ng g m contact-reactive --routing:true`
+
+`m` significa módulo
+
+`contact-reactive` es el archivo donde se desea crear el módulo.
+
+`routing:true` significa que creará dos módulos: Uno para las rutas, y otro módulo, conocido como feature module, que tiene la función de independizarse de la aplicación principal. Debajo de la línea de comandos, la respuesta que da la CLI al comando de creación del módulo en `contact-reactive`, muestra la creación de los dos módulos. Se cierra la terminal. 
+
+2. Dentro de la carpeta del componente `contact-reactive` puede apreciarse la creación de los archivos `contact-reactive.routing.module.ts` (módulo de routing) y `contact-reactive.module.ts` (este es el feature module). En el feature module se hace la importación del módulo de routing:
+
+```
+import { NgModule } from ‘@angular/core’;
+import { CommonModule } from ‘@angular/common’;
+import { ContactReactiveRoutingModule } from ‘./contact-reactive-routing.module’;
+
+@NgModule({
+   declarations: [],
+   imports: [
+      CommonModule,
+      ContactReactiveRoutingModule
+      ]
+})
+export class ContactReactiveModule { }
+```
+
+3. En el módulo de routing `contact-reactive.routing.module.ts`, se definen las rutas relacionadas con este módulo en cuestión. En este archivo se tienen elementos similares a los de `app.routing.module.ts` (el routing de la aplicación principal): Se inicializan las rutas, se hace la importación del módulo de ruta de Angular, aunque aquí hay una diferencia: en `app.routing.module.ts` se utiliza el `forRoot` y en `contact-reactive.routing.module.ts`, el `forChild`. En `contact-reactive.routing.module.ts` es posible configurar todo lo que tenga que ver con el `contact-reactive`.
+Desde el módulo principal donde están definidas las rutas (`app.routing.module.ts`), el objeto de rutas relacionado con `contact-reactive` se comentará de `app.routing.module.ts` y se copia y pega en `contact-reactive.module.ts`. La propiedad `path` se deja como un string vacío, ya que la ruta completa será importada dinámicamente en `app.routing.module.ts`:
+
+```
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+
+const routes: Routes = [
+   {
+      path: '',
+      component: ContactReactiveComponent,
+      canDeactivate: [WithoutSaveGuard],
+      resolve: { departments: DataResolverService }
+   },
+];
+
+@NgModule({
+   imports: [RouterModule.forChild(routes)],
+   exports: [RouterModule]
+})
+export class ContactReactiveRoutingModule { }
+```
+
+4. Debido a que la ruta absoluta del `reactive-contact` se establecer en `app.routing.module.ts`, entonces, en el `contact-reactive.routing.module.ts`, en la variable `routes` de inicialización de las rutas, se establece path: ‘’ Luego se escribe (coma), se utilizará una propiedad llamada loadChildren (dos puntos, función flecha y utilizando el dynamic import, se realizará la importación del módulo de manera dinámica. Se escribe `import` y se le envía un string, y en este string irá la ruta de ese componente hijo: `./contact-reactive/contact-reactive.module`. Esto devuelve una promesa, que a su vez devuelve un módulo `m` llamado `ContactReactiveModule`:
+
+```
+const routes: Routes = [
+{ path: ‘ ‘, redirectTo: ‘./home’, pathMatch: ‘full’ },
+{
+   path: ‘contact-reactive’, loadChildren: () =>
+      import(‘./contact-reactive/contact-reactive.module’).then(m => m.ContactReactiveModule)
+},
+{
+   path: ‘contact-template/:id, component: ContactComponent,
+   resolve: { departments: DataResolverService }
+},
+{
+   path: ‘users’, component: UserComponent, canActivate: [PermissionGuard],
+   children: [
+      { path: ‘list’, component: ListComponent },
+      { path: ‘details’, component: DetailsComponent },
+   ]
+},
+{ path: ‘**‘, component: PageNotFoundComponent },
+];
+```
+
+5. Ahora se debe trabajar con el routing del reactive form (`contact-reactive.routing.module.ts`). Se debe hacer la importación de todo lo que se requiere, como el Guard, el Resolver, y el componente como tal. Ya que se tiene un feature module, realmente, en el archivo `reactive-component.module.ts` se debe ir al apartado `declarations` e importar el formulario reactivo, que se llama `ContactReactiveComponent`. Del mismo modo, se tiene que sacar del módulo principal (`app.module.ts`), ya que esto estaba todo antes en el mismo bundle, se elimina la declaración y la importación de `ContactReactiveComponent`. Todo lo relacionado con el módulo de formularios, debe estar también en el feature module del formulario (reactive-component.module.ts); en este archivo se debe importar el `ReactiveFormsModule` desde `’@angular/forms’`:
+
+```
+import { NgModule } from ‘@angular/core’;
+import { CommonModule } from ‘@angular/common’;
+import { ContactReactiveRoutingModule } from ‘./contact-reactive-routing.module’;
+import { ContactReactiveComponent } from ‘./contact-reactive.component’;
+import { ReactiveFormsModule } from ‘@angular/forms’;
+
+@NgModule({
+   declarations: [ContactReactiveComponent],
+   imports: [
+      CommonModule,
+      ContactReactiveRoutingModule,
+      ReactiveFormsModule,
+   ]
+})
+export class ContactReactiveModule { }
+```
+
+6. El nombre del módulo `ReactiveFormsModule` también se puede eliminar, tanto de la lista de declaraciones como de la de importaciones de `app.module.ts`.
+7. Se abre la aplicación en el navegador, con su consola abierta en la pestaña `Network`, y se observa que el módulo `contact-reactive.module.ts` se carga únicamente cuando se navega hacia la ruta correspondiente. Se carga el módulo junto con todas sus dependencias.
+
+Así se gana en performance, con el código modularizado.
+
+Al comparar los resultados de los `ng build` de la app, antes y después de implementar un lazy loading de rutas, al finalizar el bundle aparece un nuevo apartado: `Lazy Chunk Files`, que corresponde a ese módulo independiente que se carga únicamente cuando es requerido.
 
 ## 15. Observables
 
