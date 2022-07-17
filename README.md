@@ -145,14 +145,14 @@ Angular está conformado por diversas piezas de código, entre ellas se cuentan 
 Cada uno de estos artefactos es, en esencia, una Clase de TypeScript modificada por un decorador, el cual por su parte es un tipo de atributo o declaración, capaz de transformar el comportamiento de dicha clase mediante una configuración.
 
 ## 5. Componentes
-El bloque más pequeño de Angular es el Component (componente). En este caso el decorador se llama @Component y le otorga las siguientes propiedades:
-* selector: es el nombre del componente.
-* templateURL: es el enlace hacia el archivo HTML, también llamado template o plantilla.
-* styleUrls: es el enlace hacia la hoja de estilos, que normalmente están en código SCSS.
+El bloque más pequeño de Angular es el Component (componente). En este caso el decorador se llama `@Component` y le otorga las siguientes propiedades:
+* `selector`: es el nombre del componente.
+* `templateURL`: es el enlace hacia el archivo HTML, también llamado template o plantilla.
+* `styleUrls`: es el enlace hacia la hoja de estilos, que normalmente están en código SCSS.
 
 Esto significa que el componente está coformado por varios archivos: uno de lenguaje de marcado (HTML), uno de lógica (TS) y una hoja de estilos (SCSS). Su combinación crea una UI (User Interface).
 
-Si se desea insertar una pequeña cantidad de código HTML en un componente, se puede cambiar la propiedad templateURL por template e insertar etiquetas HTML, con la sintaxis de backsticks. Del mismo modo, podría modificarse styleUrls por styles y escribir todos los estilos necesarios, pero esto no se considera una buena práctica. Lo más profesional es tener la hoja de estilos en un archivo aparte.
+Si se desea insertar una pequeña cantidad de código HTML en un componente, se puede cambiar la propiedad `templateURL` por `template` e insertar etiquetas HTML, con la sintaxis de backsticks. Del mismo modo, podría modificarse `styleUrls` por `styles` y escribir todos los estilos necesarios, pero esto no se considera una buena práctica. Lo más profesional es tener la hoja de estilos en un archivo aparte.
 
 Debajo del decorador hay una sentencia de exportación de la clase, que contiene el constructor y los métodos.
 Un componente B puede ser invocado desde un componente A, mediante una notación similar a las de la etiquetas HTML. Por ejemplo, un componente llamado app-button puede invocarse con la etiqueta: `<app-button></app-button>`
@@ -165,7 +165,7 @@ Sintaxis de ejemplo:
 
 `<p> The value of the property is: {{property}} </p>`
 
-Donde property es una propiedad declarada en el archivo TS del componente. En el One Way Data Binding, las propiedades creadas en el archivo TypeScript son de sólo lectura, no se pueden modificar.
+Donde `property` es una propiedad declarada en el archivo TS del componente. En el One Way Data Binding, las propiedades creadas en el archivo TypeScript son de sólo lectura, no se pueden modificar.
 
 ## 7. Two-way Data Binding
 El enlace bidireccional permite enlazar una propiedad en el TS, imprimirla o tenerla en el HTML y modificar su valor simultáneamente desde el input.
@@ -173,7 +173,7 @@ La sintaxis del two-way data binding es conocida también como “banana in the 
 
 `<input type=”text” [(ngModel)]=”name”>`
 
-Para usarlo se debe importar el módulo de formularios AngularFormsModule en el archivo app.module.ts. 
+Para usarlo se debe importar el módulo de formularios `AngularFormsModule` en el archivo `app.module.ts`. 
 El two-way data binding genera un doble enlace que permite actualizar el valor de una propiedad renderizado en una UI, cada vez que cambia el valor de dicha propiedad en un input de HTML, o bien, si cambia su valor declarado en el archivo TS.
 
 ## 8. Events Binding
@@ -193,16 +193,20 @@ El cometido principal de los Pipes es transformar datos. Por ejemplo, dar format
 Para crear un Pipe personalizado, se puede usar la terminal o puede ser creado desde cero como una Clase de TypeScript. Por ejemplo, se desea crear un filtro para encontrar los elementos de un array.
 
 El Pipe recibirá un array de strings, así como un criterio de búsqueda (tipo string), y devolverá los valores del listado que coincidan con el criterio.
-Se debe crear una carpeta llamada pipes y dentro de ella un archivo llamado filter.pipe.ts.
+Se debe crear una carpeta llamada pipes y dentro de ella un archivo llamado `filter.pipe.ts`.
 
-El Pipe es una Clase de TypeScript, que será llamada FilterPipe y debe implementar una interface que se llama PipeTransform:
+El Pipe es una Clase de TypeScript, que será llamada FilterPipe y debe implementar una interface que se llama `PipeTransform`:
 
 Es importante asegurarse siempre de tener los métodos e interfaces necesarios, debidamente importados e implementados, cada vez que se trabaje con un artefacto de Angular (Module, Component, Directive, Service, Pipe, Observer, etc.).
 
-En las líneas superiores, debajo del área de importación, se escribe el decorador @Pipe({}). Dentro de las llaves del Pipe se colocarán las propiedades y valores que definen al Pipe, como por ejemplo el nombre y su naturaleza (pure o impure).
+En las líneas superiores, debajo del área de importación, se escribe el decorador `@Pipe({})`. Dentro de las llaves del Pipe se colocarán las propiedades y valores que definen al Pipe, como por ejemplo el nombre y su naturaleza (pure o impure).
 
-El Pipe recibe un array de valores `values` y un argumento `arg`. Estos parámetros deben ser tipados, de esta manera: <code>values: string[]</code> (un array de strings donde se realizará la búsqueda); arg: string (el string que ingresa el usuario en un input para compararlo con los strings del array principal).
-El método devolverá un array de strings que contendrá todos los valores que coincidan con el criterio de búsqueda.
+El Pipe recibe un array de valores `values` y un argumento `arg`. Estos parámetros deben ser tipados, de esta manera:
+
+`values: string[]`(un array de strings donde se realizará la búsqueda); 
+`arg: string` (el string que ingresa el usuario en un input para compararlo con los strings del array principal).
+
+El método devuelve un array de strings que contiene todos los valores que coincidan con el criterio de búsqueda.
 
 * En el archivo filter.pipe.ts se crea el método transform( ), que en primer lugar verifica con un if ( ) si el argumento es null, es vacío o es cero; o bien, si su longitud es mayor a 3 caracteres. En esos casos, se debe devolver el array de valores. Luego, se implementa un bucle for, cuya variable iteradora value, recorrerá el array principal values, e irá comprobando si ese valor value coincide con el criterio arg; para ello se utiliza el bloque de decisión if( ) y el método indexOf( ); este último busca dentro de un substring para tratar de encontrar el argumento arg (introducido por el usuario en el input). Es necesario asegurar que tanto la entrada en el filtro de búsqueda, como los elementos del array, estén todos en minúsculas, de modo que se pueda hacer esa comparación, independientemente de si la entrada está escrita en minúsculas, mayúsculas, o todas las posibles combinaciones. Entonces todo será transformado a minúsculas aplicando el método toLowerCase( ) tanto al valor value que estamos buscando dentro del array, como al criterio de búsqueda arg que estamos introduciendo en el input de filtrado.
 
