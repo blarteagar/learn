@@ -47,15 +47,6 @@ La aplicación tiene varias vistas:
 * Template-driven form
 * Users
 
-25. El método `updateCity()` utiliza la sentencia `return this.http.put` y a este método se le envían los siguientes parámetros: `URL` y `body`. Lo de la `URL` cambia un poco, ya que, según la documentación de la API en uso [{“crud”:”crud”}](https://crudcrud.com/), se debe indicar el recurso y luego, incorporar `/id`. Entonces, esto se debe concatenar dentro del método. Se escribe una `template` de JavaScript (que inicia con comillas invertidas o backsticks ```):
-
-```
-`${this.API}/${_id}`
-```
-
-
-
-
 La navegación entre ellas se realiza a través de una Barra de Navegación, que aloja los enlaces de las rutas que componen la aplicación.
 En Home se muestra un listado de ciudades, recuperado de una API, provista de su propio código Backend, que realiza automáticamente operaciones CRUD (Create, Read, Update y Delete). La aplicación realiza peticiones HTTP a la API, y esta realiza las operaciones CRUD que la aplicación solicite. Tales solicitudes provienen de la interacción del usuario con el listado de ciudades, a saber:
 
