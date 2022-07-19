@@ -22,7 +22,7 @@
 ## 1. Preámbulo
 ### ¿Qué es Angular / Angular CLI?
 * Angular es un framework para aplicaciones web.
-* Desarrollado en TypeScript (TS), de código `` `` abierto, mantenido por Google.
+* Desarrollado en TypeScript (TS), de código ``` abierto, mantenido por Google.
 * Su punto fuerte es la creación de SPA (single page applications).
 
 Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
