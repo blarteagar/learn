@@ -25,10 +25,6 @@
 * Desarrollado en TypeScript (TS), de código abierto, mantenido por Google.
 * Su punto fuerte es la creación de SPA (single page applications).
 
-```
-`${this.API}/${_id}`
-```
-
 Para trabajar con Angular se requiere la herramienta Angular CLI, que permite:
 
 * Crear nuevos proyectos.
