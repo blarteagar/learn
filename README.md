@@ -13,9 +13,25 @@
 * [12. Routing](#12-routing)
 * [13. Guards](#13-guards)
 * [14. Lazy Loading](#14-lazy-loading)
-* [15. Observables](#15-observables)
-* [16. Services](#16-services)
-* [17. HTTP Requests](#17-http-requests)
+* [15. HTTP Requests](#15-http-requests)
+* [16. Observables](#16-observables)
+* [17. Services](#17-services)
+
+
+
+## 12. Routing en Angular
+## 13. QueryParams en Routing de Angular
+## 14. Parámetros en Routing de Angular
+## 15. Rutas hijas
+## 16. Guards
+## 17. Resolvers en Angular
+## 18. Lazy Loading
+## 19. HTTP Requests
+## 20. Observables
+## 21. Services
+
+
+
 
 ***
 
@@ -423,7 +439,7 @@ ngOnSetValue(): void {
 Al correr la aplicación en el navegador, en la consola se obtiene este error: `Must set a name for name property`. Esto ocurre porque el método setValue( ) obliga a asignar valores a todas las propiedades del formulario.
 
 
-# 12. Routing
+## 12. Routing en Angular
 
 Las rutas permiten:
 * La navegación de un componente a otro.
@@ -619,7 +635,7 @@ const routes: Routes = [
 
 3. Si el usuario pone una ruta que no existe, será redirigido a la Página 404 (componente `Pagenotfound`). También podría hacerse una redirección automática a otros componentes de la aplicación, pero esto no es muy recomendable. Es importante poner un mensaje al usuario indicando que el recurso al que está intentando acceder, no existe. 
 
-#### QueryParams
+## 13. QueryParams en Routing de Angular
 
 Los `QueryParams` son conjuntos de propiedades y valores ubicados al final de una URL, después del símbolo de interrogación. 
 
@@ -690,7 +706,7 @@ export class NavbarComponent implements OnInit {
 
 8. Debería aparecer la propiedad `name` en conjunto con el título del formulario. Si se realizan modificaciones en el query Param de la URL en la barra de direcciones, al refrescar la página, los cambios deben aparecer reflejados:
 
-#### Parámetros
+## 14. Parámetros en Routing de Angular
 
 Los Parámetros son propiedades que pueden transmitirse desde un componente hacia otro, mediante una dirección URL.
 
@@ -728,7 +744,9 @@ const routes: Routes = [
 
 7. Al abrir la aplicación en el navegador, la ruta debe ser reconocida y el id es renderizado. Pero si volvemos a la homepage, recordemos que tenemos “hardcodeado” (asignado manualmente) el id = 580, y si volvemos a la ruta Template-driven, y lo que venga ya dinámicamente es lo que nosotros vamos a recuperar, y podríamos enviarlo a la API u otros lugares. 
 
-#### Rutas hijas
+
+## 15. Rutas hijas
+
 
 Rutas hijas: Provienen de una ruta común; por ejemplo las rutas `http:/home/components/ ruta_hija1` y `http:/home/components/ ruta_hija2`. Es un tema muy interesante y que podría requerirse en aplicaciones grandes, medianas o pequeñas. 
 
@@ -816,7 +834,9 @@ const routes: Routes = [
 11. En la aplicación, los enlaces `Users List` y `Details` ya deben ser funcionales, en el sentido de imprimir el componente correspondiente a cada uno.
 En resumen, el uso de las rutas hijas consiste en: definir las mismas en el módulo de rutas, generar el enlace en la barra de navegación para el componente raíz de esas rutas hijas (`users`), invocar a los componentes de las rutas hijas en el HTML del componente raíz, en el cual debe insertarse también la directiva `<router-outlet></router-outlet>` para que estos puedan imprimirse.
 
-# Guards
+
+## 16. Guards
+
 
 Los Guardianes (`Guards`) ayudan a proteger una determinada ruta, bien sea para evitar que los usuarios accedan a una ruta.
 
@@ -924,7 +944,9 @@ export class WithoutSaveGuard implements CanDeactivate<unknown> {
 Resumen del `Guard` de Angular: Asegurarse de si un usuario tiene permisos para acceder a una ruta (`canActivate`), o determinar si el usuario puede dejar esa ruta (`canDeactivate`).
 Hay otras interfaces que se pueden implementar: `canLoad` y `canActivateChild`.
 
-#### Resolvers en Angular
+
+## 17. Resolvers en Angular
+
 
 * Un resolver es una interface que las clases pueden implementar para ser un proveedor de datos.
 * Se debe usar con el router para resolver para resolver datos durante la navegación.
@@ -998,7 +1020,7 @@ F. Al abrir la aplicación en el navegador, se observa la impresión del array u
 De manera dinámica, si en el archivo `data.resolve.service.ts`, se añaden nuevos elementos al array `departments`, se renderizarán en el `<select>` del reactive form.
 Resolver sirve para asegurar que, antes de la impresión de un componente, ya la data esté disponible y lista para ser renderizada.
 
-# Lazy Loading
+## 18. Lazy Loading
 
 * El Lazy Loading en Angular, o la carga diferida, es una técnica que retrasa la carga de un determinado módulo hasta que realmente el usuario o la aplicación lo necesite.
 * Lazy Loading puede contribuir a mejorar el desempeño de la aplicación.
@@ -1121,19 +1143,509 @@ Así se gana en performance, con el código modularizado.
 
 Al comparar los resultados de los `ng build` de la app, antes y después de implementar un lazy loading de rutas, al finalizar el bundle aparece un nuevo apartado: `Lazy Chunk Files`, que corresponde a ese módulo independiente que se carga únicamente cuando es requerido.
 
-## 15. Observables
+
+## 19. HTTP Requests
+
+
+Se describe a continuación el funcionamiento del `HTTP Client` de Angular, con los métodos `POST`, `GET`, `PUT` y `DELETE`, a fin de implementar los métodos crear, leer, actualizar y borrar (CRUD: `Create`, `Read`, `Update`, `Delete`).
+
+La aplicación tiene un array estático; sus valores están declarados en el archivo `home.component.ts`:
+
+`cities =[‘Barcelona’, ‘Madrid’, ‘Lima’, ‘Quito’];`
+
+Cuando se invoca el método `addNewCity()`, se hace `push()` al array, pero cuando se actualiza la aplicación, las nuevas ciudades añadidas desaparecen, puesto que estos datos no persisten.
+
+1. Se sugiere cambiar un poco el estilo del listado de ciudades, en el componente `cities.component.ts` donde se incorporan los `<ul></ul>` que están en `home.component.ts`.
+
+2. Se utilizan clases de Bootstrap para mejorar un poco su apariencia:
+
+`<ul class=”list-group”>`
+
+3. En el elemento `<li></li>` se agrega una clase de Bootstrap:
+
+`<li class=”list-group-item”>`
+
+4. En `cities.component.ts`, entre los atributos de `<li>` se pondrá como única clase dentro del `[ngClass]`, la clase `active`.
+
+Se agrega la clase `mt-1` al `<li></li>`:
+
+`<li class=”list-group-item mt-1”>`
+
+5. Se añade un botón para eliminar los elementos indeseados. Dentro de `<li></li>` se coloca un `<div></div>` y dentro de él se coloca un botón `<button></button>`; este botón debe tener la etiqueta `Delete` y a este botón se le pueden poner unas clases de Bootstrap: `class=”’btn btn-danger’”`. Se agrega `type=”button”` y una clase de Bootstrap llamada “float-end”.
+
+6. El evento click del botón llamará a un método llamado `onCityDelete()`, al que se le envía un string correspondiente al `id`; por ahora se le asigna un valor de `‘1’`.
+
+7. Se debe crear el método que será invocado. Dentro del mismo archivo `cities.component.ts` se debe crear el método `onCityDelete()`; este método retorna una variable de tipo `:void` y recibe un `id`, que es un string, y dentro del método se va a emitir, para ello se crea un evento; este último se llamará `”cityDeleteEvent”` y emite un string (cuyo tipo se escribe entre paréntesis angulares `< >`). El método `onCityDelete()` va a recibir un id que es un string, devuelve `void`, y emite el `id` que se está recibiendo aquí. El método tiene esta forma:
+
+```
+onCityDelete(id:string): void {
+   this.cityDeleteEvent.emit(id);
+   }
+}
+```
+
+8. Al revisar el otro método del componente, `onCityClicked()`, se observa que ese nombre resulta poco adecuado, pues en este momento se tiene otro evento relacionado con la acción de hacer click en el nombre de una ciudad. Por lo tanto, es preferible modificar ese nombre: En el `<li></li>`, en lugar de tener el método `onCityClicked()`, se va a colocar `onCitySelected(city)`. Esto se tiene que cambiar también en el evento que emite, el cual se llamará `”citySelectedEvent”`, en el componente home: `home.component.html`, puesto que se utiliza en el punto donde se invoca al componente `<app-cities></app-cities>`:
+
+`(cityClickedEvent)=”onCityClicked($event)”` debe cambiarse por `(citySelectedEvent)=”onCitySelected($event)”`
+
+Debe recordarse que recientemente se modificaron en `cities.component.ts` y en `home.component.html`, donde se utilizan esos eventos.
+
+9. Ahora se tiene un nuevo evento, que aún no se está escuchando, y que se debe comenzar a escuchar desde home (`home.component.html`). En el apartado donde se utiliza el componente de ciudades, se escucha el evento personalizado y se responde con el método `onCityDelete()`, al cual se le envía el `$event`:
+
+```
+(cityDeleteEvent)=”onCityDelete($event)”
+```
+10. También se debe crear el método `onCityDelete()` en `home.component.ts`, que recibe un `id` (un string), devuelve `void`, y por ahora se hará un `console.log()` del elemento a eliminar:
+
+```
+onCityDelete(id:string): void {
+console.log(‘id’, id);
+}
+```
+
+11. Comportamiento esperado: Con la aplicación desplegada en el navegador, a vista de consola, cada vez que se haga click en alguno de los botones `Delete` adjuntos a cada nombre de ciudad, debe aparecer en consola el string `‘1’`, dado que el `id` tiene esa asignación estática (está “hardcodeado”) en el componente respectivo. Aún no se ha declarado la propiedad `id` para la variable `city` que existe dentro del componente `cities.component.ts¨.
+
+12. Es necesario modificar el formato de la variable `city`, para que sea un objeto con las propiedades: `name`, `id`, a fin de implementar el CRUD.
+
+13. Pero antes, es necesario crear un Service. En la terminal, se ejecuta el comando:
+
+`ng g s services/data --skip-tests:true`
+
+`s` significa Service
+
+`services/data` corresponde a la carpeta donde se desea crear el Service.
+
+`--skip-tests:true` se usa para saltarse la creación del archivo de testing.
+
+14. Se ha creado la carpeta `services` y dentro de ella el archivo `data.service.ts`. El Service tiene esta forma:
+
+```
+import { Injectable } from '@angular/core';
+
+@Injectable({
+providedIn: 'root'
+})
+export class DataService {
+
+constructor() { }
+
+}
+```
+
+15. Se crea una interface `City`, que tendrá: `̣_id`, de tipo string, y `name`, también de tipo string.:
+
+```
+export interface City {
+_id: string;
+name: string;
+}
+```
+
+16. Debajo del decorador `@Injectable`, y luego de la declaración `providedIn:` es el punto donde se han de crear los métodos para hacer las peticiones `HTTP`.
+
+17. Antes de escribir los métodos `HTTP`, es importante hablar del sistema de backend a utilizar. Se trata de una página web llamada [{“crud”:”crud”}](https://crudcrud.com/), y es un servicio que, de manera gratuita, permite realizar 100 peticiones para crear, leer, actualizar y borrar (Create, Read, Update and Delete: CRUD). Se copia el enlace que la página pone a disposición al inicio, vamos al dashboard para ver el status de dicho enlace, y la primera vez permite 100 peticiones; si requiriéramos más, tendríamos que pagar. 100 peticiones serán suficientes para nosotros en este caso. 
+
+18. Ese servicio se utilizará como backend de la aplicación, y la URL será, en el caso presente: `https://crudcrud.com/api/b841419a0e994d6c9a1de4bb4e60bacc`. Es preciso crear una entity a partir de esta URL. Por entity nos referimos a tener esta URL principal, barra ciudades, y bajo esa entity se creará el listado de ciudades: `https://crudcrud.com/api/b841419a0e994d6c9a1de4bb4e60bacc/cities`.
+
+19. De vuelta al Service, es el momento de crear los 4 métodos que permiten la comunicación con la API:
+
+A. Debajo de la línea `constructor() {};` se crea el método  para añadir una nueva ciudad: `addNewCity()`, que devolverá un Observable de tipo `City`:
+
+```
+addNewCity(): Observable<City>{};
+```
+
+B. También se requiere un método para recuperar las ciudades `getCities()`, que devolverá un Observable de tipo City, en este caso será un array:
+
+```
+getCities(): Observable<City[]> {};
+```
+
+C. Del mismo modo, se necesita el método para modificar una ciudad: `updateCity()`, esto va a necesitar que se le envíe la ciudad `city` que se desea modificar, que será de tipo `City`, y devolverá un observable. En este caso no devolverá una ciudad, porque esta API devuelve un `’1’` si todo va bien, por tanto podría devolver `void`: 
+
+```
+updateCity(city:City): Observable<void> {};
+```
+
+D. El otro método requerido es el `deleteCity()`: aquí se puede enviar el `id`, que es un string, y el Observable devolverá también `void`:
+
+```
+deleteCity(id: string): Observable<void> {};
+```
+
+20. Se necesita empezar a trabajar con el `HTTPClient` de Angular, que facilita la comunicación hacia el `server`. Para ello se debe ir primero al `app.module.ts`, y en el apartado de `imports:` se incorpora la sentencia:
+
+```
+HttpClientModule,
+```
+
+En el área de importaciones se incluye la sentencia:
+
+```
+import { HttpClientModule } from ‘@angular/common/http’;
+```
+
+21. Una vez que se tiene esta importación del módulo, se regresa al archivo `data.service.ts`, y en el `constructor()` se inserta la utilización del `HTTPClient`:
+
+```
+constructor(private readonly http: HttpClient) { }
+```
+
+Nota: Si aparece un icono de bombillo, es porque se requiere implementar esa importación, y `VisualStudio Code` lo puede hacer automáticamente. Es buena idea permitirle a VSC que realice las importaciones necesarias.
+
+22. Al retomar el método de añadir una nueva ciudad: `addNewCity()`, esta función retorna `this.http.` y a continuación, el método o el verbo (el método tiene el nombre del verbo HTTP: POST, GET, PUT, UPDATE, DELETE, entre otros) . Se debe usar el método (o verbo) que Angular proporciona para hacer esa petición; en este caso, `post`. Esto devuelve una variable tipo `<City>`, y a este método se le debe enviar, primero la URL que se desea atacar, y luego el `body`. Se crea una propiedad, debajo de la sentencia `export class Dataservice {`, la variable API, privada, de sólo lectura, que inicialmente es igual a un string vacío:
+
+```
+private readonly API = ‘ ‘;
+```
+
+23. Dentro del método `addNewCity()` se crea una constante que será llamada `body`, cuyo formato es de tipo objeto. Se necesita recibir como parámetro, el nombre de la ciudad `city`, especificar que es de tipo string.
+El verbo `post` espera los argumentos: La `URL` que atacará en el backend, y el `body`, que corresponde al nombre de la ciudad que se desea guardar. El método queda de la siguiente manera:
+
+```
+addNewCity(city:string):Observable<city> {
+const body = {name: city);
+return this.http.post<City>(this.API, body);
+}
+```
+
+24. En el método `getCities()` se incluyen la sentencia: `return this.http.get`, el verbo HTTP espera primero la `URL`, y luego, algunas opciones que, en este caso, no se requieren. La variable que espera es de tipo `City` y es un array de objetos. Este método queda así:
+
+```
+getCities():Observable<City[]> {
+return this.http.get<City[]>(this.API);
+}
+```
+
+25. El método `updateCity()` utiliza la sentencia `return this.http.put` y a este método se le envían los siguientes parámetros: `URL` y `body`. Lo de la `URL` cambia un poco, ya que, según la documentación de la API en uso [{“crud”:”crud”}](https://crudcrud.com/), se debe indicar el recurso y luego, incorporar `/id`. Entonces, esto se debe concatenar dentro del método. Se escribe una `template` de JavaScript (que inicia con comillas invertidas o backsticks ```):
+
+```
+`${this.API}/${_id}`
+```
+
+26. Se debe crear también una constante que se llame `body`, correspondiente al nombre de la ciudad:
+
+```
+const body = {name: city. name};
+```
+
+27. Para expresar el `id` requerido, la expresión de la URL quedaría de esta forma:
+
+```
+`${this.API}/${city._id}`
+```
+
+28. El método `updateCity()` queda de esta forma:
+
+```
+updateCity(city: City):Observable<void> {
+const body = {name: city. name};
+return this.http.put<void>(`${this.API}/${city._id}`, body);
+}
+```
+
+29. Para escribir el método `delete` en la API a utilizar, se debe manejar un formato de `URL` similar al de `update`, con la diferencia de que el `id` viene directamente como argumento. Con este formato, el verbo HTTP sabrá cuál es el objeto a eliminar:
+
+```
+return this.http.delete<void>(`${this.API}/${id}`);
+```
+
+30. El método `deleteCity()` queda de esta manera:
+
+```
+deleteCity(id: string): Observable<void> {
+return this.http.delete<void> (`${this.API}/${id}`);
+}
+```
+
+31. Estos son los 4 métodos necesarios para un CRUD normal. Ahora se debe indicar la variable `private readonly API`. Para ello se copia la `URL` de la `API` que aparece en la documentación de la website [{“crud”:”crud”}](https://crudcrud.com/), con el fin de comenzar a trabajar.
+
+32. En la estructura del proyecto en `Visual Studio Code`, se debe ubicar un archivo llamado `environment.ts` y al objeto se le anexa la propiedad `api`. Como valor, se pega la `URL` de la `API`, agregándole la `entity`, que en este caso es `/cities`. La clase `environment`, con la propiedad `api` añadida, tiene este aspecto: 
+
+```
+export const environment = {
+production: false,
+api: ‘https://crudcrud.com/api/b841419a0e994d6c9a1de4bb4e60bacc/cities’
+};
+```
+
+33. En `Visual Studio Code`, en `data.services.ts` se inicializa la variable `private readonly API`, de la siguiente manera:
+
+```
+private readonly API = environment.api;
+```
+
+34. Es preciso hacer varios cambios en `home.component.ts`. En el método `onClear()`, no se va a poner directamente en blanco la propiedad `city`, sino que ahora debe poner en blanco las dos propiedades del objeto. El método va a tener ahora este aspecto:
+
+```
+onClear(): void {
+this.selection = {
+_id: ‘’,
+name: ‘’
+};
+}
+```
+
+35. Ahora se debe modificar la variable declarada `selection`, y tiparla como `City`. Se debe importar la interface usando la autoimportación de VSC:
+
+```
+selection!: City;
+```
+
+36. Ahora es posible dejar en blanco el array `cities`, donde se recibirá un array de objetos, donde cada objeto se llama `city` y tiene el tipo `City`:
+
+```
+cities: City[] = [];
+```
+
+37. La propiedad `name` se puede eliminar, puesto que ya no se necesita.
+
+38. Se comentará un momento el contenido del método `addCities()`. Se implementa el método `onInit()` y VSC implementa automáticamente (bajo demanda) el método `ngOnInit()`:
+
+```
+export class HomeComponent implements OnInit {
+```
+
+39. En el cuerpo del método `onInit()`, es donde se realizará la petición a la API para recuperar el listado de ciudades guardadas en la API [{“crud”:”crud”}](https://crudcrud.com/). Para ello, debajo de las primeras declaraciones de variables, y antes del método `ngOnInit()`, escribiremos el método `constructor(){}`, en el cual se debe hacer la inyección del Service :
+
+```
+constructor(private readonly dataSvc: DataService){}
+```
+
+40. En el método `ngOnInit()` se invoca el método `getCities()` que está en el Service `DataService`. Como es un Observable, debe realizarse la suscripción para recibir una respuesta `res` (recibir la data). Se llama al array de ciudades `cities`, que debería ser un array dentro del response y se le asigna lo que se recupere (esto tiene sintaxis de parámetros REST). La respuesta que se recibe del HTTP request se llama directamente `cities`. El método queda con esta forma:
+
+```
+ngOnInit(): void {
+   this.dataSvc.getCities()
+   .subscribe(cities => {
+   this.cities = [...cities];
+)}
+```
+
+41. Este es el primer paso, donde se recuperan los datos de la API. 
+
+42. En `home.component.html`, en el filter de `cities` y en `selection` se encuentran errores, debidos a los cambios en los tipos de variables. En el caso de `cities`, anteriormente era un array de strings, ahora es un array de objetos. Y `selection`, antes era un string, ahora es un objeto.
+
+43. En el archivo `cities.component.ts`, en los `@Input()` se cambia el tipo a la propiedad `selection` de string a `City` (previa importación de esta interface). Asimismo, la propiedad `city` es de tipo `City`. Y cuando se selecciona una ciudad, que anteriormente era de tipo string, ahora será de tipo `City`.
+Y en los `@Output()` de `citySelectedEvent()`, la variable anterior era de tipo string, ahora pasará a ser tipo `City`.
+
+44. El método `onCitySelected()` recibe el argumento `(city: City)` en lugar de `(city: string)`. Y en la interpolación de la variable `city`, entre los elementos `<li></li>`, en lugar de la variable `city` (a secas) se debe especificar qué propiedad se desea interpolar; esto debido a que `city` dejó de ser un string, ahora es un objeto. Por lo tanto, queda como `city.name`. Se le agrega el tipo `City` a la variable `city`. Entonces, esa sentencia queda:
+
+```
+<li class = “[‘active’: city === selection]”> {{city?.name | titlecase}}
+```
+
+45. De igual forma, al momento de especificar la clase cuando el objeto es seleccionado, se debe considerar la nueva condición de las variables, y especificar el `id` correspondiente de esos objetos:
+
+```
+<li class = “[‘active’: city?._id === selection?._id]”> {{city?.name | titlecase}}
+```
+
+46. Las question marks `?` se usan para asegurar que las propiedades existen.
+
+47. En el botón `Delete`, que recibe `city` como parámetro, se debe especificar el `id` del objeto:
+
+```
+(click)=”onCityDelete(city._id)”
+```
+
+48. En `home.component.html` sigue ocurriendo un error, relacionado con el Pipe de filtrado; por lo tanto, en `filter.pipe.ts` se debe analizar lo que está ocurriendo. En este archivo se recibe un listado de ciudades, de modo que en la línea donde se implementa el `transform`, en la propiedad `values` se especificará la interface `City[]` (donde los corchetes indican que se recibe un array de objetos), y lo mismo después de los dos puntos, para indicar que esa será la salida: un array de objetos tipo `City[]`. Se prefiere reemplazar `value` por `cities`. El Pipe debe quedar de esta manera:
+
+```
+export class FilterPipe implements PipeTransform {
+   transform(cities: City[], arg: string): City[] {
+      if(!arg || arg?.length < 3) return cities;
+      let result: City[] = [];
+      for (const city of cities) {
+      if (city.name.toLowerCase().indexOf(arg.toLowerCase()) > -1) {
+      result = [...result, city];
+      }
+   }
+   return result;
+   }
+}
+```
+
+49. Los cambios realizados en el Pipe son principalmente de tipado, y al realizar los mismos, los errores deben desaparecer.
+
+50. Si se despliega de nuevo la aplicación, no se imprime ningún nombre de ciudad; esto es porque la data se está consumiendo desde la API y en este momento no se ha creado ninguna ciudad.
+
+51. Se  trabaja con el método `addNewCity()`: En `home.component.ts` se encuentra el método `addNewCity()`, pero su contenido estaba comentado. Se tiene también inyectado el Service `DataService`. Dentro de ese Service se encuentra el método `addNewCity()`, entonces se invoca con `this.dataSvc.addNewCity()`. El método espera un string. Como es un observable, se realiza la suscripción, de la cual se obtiene una respuesta llamada `res`. Dicha respuesta se añade al array de ciudades mediante el método `push()`. El método queda de este modo:
+
+```
+addNewCity(city: string): void {
+   this.dataSvc.addNewCity(city).subscribe( res => {
+      this.cities.push(res);
+   });
+}
+```
+
+52. Es preciso realizar algunos cambios en el archivo `form-new-item.component.ts`:
+
+A. Se crea un nuevo `@Input` para `selection` (de tipo `City`), se debe importar la interface con `Visual Studio Code`, y se necesita saber cuándo el usuario selecciona una ciudad (se le adjunta `?`).
+
+B. En el método `onAddNewItem()` se debe eliminar el `console.log()` del item. 
+
+C. En el archivo HTML de este mismo componente (`form-new-item.component.html`), se enlaza el `<input />` identificado con la variable de plantilla `#newItem` con el `[ngModel]`, de esta forma:
+
+```
+[ngModel]=”selection”
+```
+
+D. En `home.component.html` se agrega el atributo `selection` al componente `app-form-new-item`:
+
+```
+[selection]=”selection” 
+```
+
+*(creo que esto permite tener el texto correspondiente al nombre de la ciudad ya en el input, o bien, es simplemente para que el formulario escuche la ciudad que fue seleccionada) *
+
+E. Ocurre un error que exige ponerle `name` al `<input/>`, se le pondrá el nombre de `newItem`.
+
+53. Al abrir la aplicación en el navegador ¡Funciona! ¡parece que funciona! Ver en la pestaña `Network` si aparece la petición hecha al array `cities`.
+
+54. Se requieren varias cosas: La primera, limpiar el `<input/>` de `addNewCity()` luego de dar click en el botón `Add City`. La segunda: que el botón `Delete` no aparezca siempre, sino cuando se seleccione la ciudad. Otra cosa: Corregir el valor interpolado impreso en pantalla al seleccionar la ciudad. Debe ser el nombre de la ciudad, no el objeto completo.
+
+55. En el archivo `form-new-item-component.html`, en la línea donde se invoca el método `onAddNewItem()`, se debe agregar punto y coma e introducir la expresión `newItem.value=’’”`. También en la línea donde está `ngModel` introducir `[ngModel]=”selection?.name”`.
+
+56. En `home.component.html`, en el `<div class=”col-md-4”` se debe sustituir `selection` por `selection?.name`.
+
+57. Para controlar cuando mostrar el botón `Delete`, en el archivo `cities.component.ts`, se debe utilizar la misma condicional para aplicar la clase `”active”` en cada `<li></li>` que imprime el nombre de la ciudad. Este condicional se utilizará para una directiva `*ngIf` en la etiqueta que envuelve el botón, para que lo oculte o lo muestre: `*ngIf=”city?._id===selection?._id”`.
+
+58. Al hacer click en `Delete`, se muestra el `id` en consola. Ese `console.log()` viene desde el componente `home`. Se trabaja con el verbo `delete` de la API en uso. Para ello se debe abrir el archivo `home.component.ts`, método `onCityDelete()`. En primer lugar se introduce un `confirm()` para saber si el usuario desea continuar con la eliminación del elemento. Si la respuesta es afirmativa, se procede a invocar el verbo HTTP `delete` proveniente del Service `DataService`. Como es un Observable, se procede a la suscripción. La API, en el momento de eliminar el elemento, devuelve `’1’` si el procedimiento es correcto. La respuesta obtenida se simboliza `res`. Se crea un array local llamado `tempArr`,  de donde se eliminará esa ciudad. En ese array local se aplica un filtro; de allí se obtiene como parámetro el objeto `city`, se inserta una función flecha: Si el `id` de esa ciudad es diferente al `id` recibido en este método, se realiza un filtrado para mostrar todos los `id`s, excepto el que está siendo borrado. Entonces, al array `cities` se le agrega el array temporal `tempArr` usando notación de parámetros REST. Con esto, de hecho, la respuesta `res` se hace irrelevante. Por lo tanto, el método queda de la siguiente manera:
+
+```
+onCityDelete(id: string): void {
+   if (confirm(‘Are you sure?’)){
+      this.dataSvc.deleteCity(id).subscribe(() => {
+         const tempArr = this.cities.filter(city => city._id !== id);
+         this.cities = [...tempArr];
+      });
+   }
+}
+```
+
+Al revisar la aplicación en el navegador, se observa que a pesar de haber sido borrado, el objeto persiste en algunos elementos de la página. Para solventar esto, se puede invocar al método onClear( ). El método onDeleteCity( ) quedaría de esta manera:
+
+```
+onCityDelete(id: string): void {
+   if (confirm(‘Are you sure?’)){
+      this.dataSvc.deleteCity(id).subscribe(() => {
+         const tempArr = this.cities.filter(city => city._id !== id);
+         this.cities = [...tempArr];
+         this.onClear();
+      });
+   }
+}
+```
+
+59. Cómo hacer el update de las ciudades: En el archivo `home.component.ts` se declara el método `updateCity()`, el cual recibe una `city`, de tipo `City`, y devuelve `void` (“no devuelve nada”). Se debe ir a la sentencia que invoca el Service (`this.dataSvc`) , de allí invocar el método `updateCity()`, este método recibe el parámetro `city`, se debe realizar la suscripción. Aquí ocurre lo mismo que en el método `delete`, la API devuelve `’1’`, entonces se debe seguir el mismo enfoque; es decir, se debe crear un array temporal local y mostrar todos los objetos excepto el que se está seleccionando, pero con algunas modificaciones. El argumento de `filter` no será `city`, sino `item`. Este argumento corresponde a cada una de las ciudades, y como se recibe `city` en el método principal, se muestran solamente los objetos `city` cuyo `id` no corresponda al `id` que se está borrando:
+
+```
+const tempArr = this.cities.filter(item => item._id !== city._id);
+```
+
+60. Luego se debe hacer el mismo proceso de añadirlo a nuestro array. Es como un `delete` combinado con un `post`.
+
+61. Posterior a la creación de este array, se hace necesario asignar el array `cities` a dicho array local, agregándole también la nueva ciudad agregada:
+this.cities = [...tempArr, city];
+
+62. Y por último, invocar el método `onClear()` para que el `<input/>` del `form-new-item` quede limpio después de cada operación:
+
+```
+this.onClear();
+```
+
+63. Con todas estas adiciones, el método queda de esta manera:
+
+```
+onCityDelete(id: string): void {
+   this.dataSvc.updateCity(city).subscribe(res => {
+      const tempArr = this.cities.filter(item => item._id !== city._id);
+      this.cities = [...tempArr, city];
+      this.onClear();
+   });
+}
+
+64. El `update` se debe gestionar desde el formulario de `form-new-item` (como hemos dicho antes, la elección de ese nombre no fue la mejor). Se abre el archivo `form-new-item.component.html`.
+
+65. En la lista de decoradores `@Output`, se debe copiar un decorador `@Output` adicional; con el fin de crear un nuevo evento personalizado. Se podría utilizar el que ya existe, pero lo mejor será crear uno nuevo, llamado `”updateItemEvent”`. Este método emitirá una variable de tipo `City`.
+
+66. En la lista de métodos, se agrega un método `onUpdateItem()`. Esto va a recibir un `item` que será de tipo `City`. Por lo pronto, el método queda de esta forma:
+
+```
+onUpdateItem(Item: string): void {
+   this.newItemEvent.emit(item);
+}
+```
+
+67. En el archivo `form-new-item-component.html` se tiene un botón `Add new`. Se duplica ese mismo botón, pero sencillamente ese botón nuevo va a llamar al método de `onUpdateItem(newItem.value)`. En este método, se requiere saber cuál es la `city` que está seleccionada (variable `selection`), así como el nuevo valor que está introduciendo el usuario en el momento de editar el nombre de la ciudad (`newItem.value`). Entonces al método `onUpdateItem()` que está en el archivo html, se le agrega el argumento `selection`:
+
+```
+onUpdateItem(selection, newItem.value)
+```
+
+68. Para ello, en el método `onUpdateItem()` del archivo `form-new-item.component.ts` se agregará como parámetro de entrada la variable `change: string`, y quedará de esta manera:
+
+```
+onUpdateItem(item: City, change:string): void {
+```
+
+69. Posteriormente se le cambia el `label` al botón: `Add` pasa a ser `Update`. De nuevo en `form-new-item.component.ts` se continúa trabajando en el método `onUpdateItem(item:City, change:string)`.
+
+70. Antes de emitir, yo quiero modificar la data. Agregaremos un `console.log()` del `item` y un `console.log()` del `change`. Y por un segundo se comentará la línea donde se invoca el método `emit`.
+
+71. En la aplicación se ven los dos botones, en un momento se realizará un toggle para mostrar u ocultar uno u otro. 
+
+72. Se seleccionará una ciudad, el input capturará el nombre de la ciudad seleccionada, y en ese momento se podrá realizar un cambio (la ciudad seleccionada y el cambio, se mostrará en la consola).
+
+
+73. Para guardar dicho cambio se hace click en el botón “update city”. En `Visual Studio Code`, en el método `onUpdateItem()`, luego de los `console.log()` se escribe el siguiente objeto:
+
+```
+const city = {
+   _id: item._id,
+   name: change
+};
+```
+
+Donde:
+`item._id` es el parámetro recibido por la función.
+
+Se descomenta la línea que invoca al `emit` y en lugar de enviarle el `item`, se le pasa la variable `city`. Se borran los dos `console.log()`. El método finalmente queda de esta manera:
+
+```
+onUpdateItem(item: City, change:string): void {
+   const city: City = {
+      _id: item._id,
+      name: change
+   };
+   this.updateItemEvent.emit(city);
+}
+```
+
+74. En el componente home `home.component.html`, entre las etiquetas del componente `app-form-new-item` se coloca el evento personalizado `”updateItemEvent”` y se enlaza a `updateCity($event)`. Esas líneas HTML quedan de esta manera:
+
+```
+<app-form-new-item [selection]=”selection”
+   (updateItemEvent)=”updateCity($event)”
+   (newItemEvent)=”addNewCity($event)” [label]=”’city’”
+   [className]=”’btn-info’”>
+</app-form-new-item>
+```
+
+75. Ahora se debe mostrar u ocultar el botón. Por simplicidad, se usa un `*ngIf=”!selection?.name”`; es decir, si no se tiene una selección, se muestra el botón `Add City`. De lo contrario, el botón `Update City`. Se sugiere escribir el código de un solo botón que reciba el label y el método.
 
 
 
 
-## 16. Services
+
+## 20. Observables
 
 
 
 
 
-## 17. HTTP Requests
-
-
+## 21. Services
 
 
